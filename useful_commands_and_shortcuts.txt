@@ -27,4 +27,8 @@ rosnode kill [node_name]	to kill a node (same as Ctrl+C in the
 rosnode ping [node_name]	to ping the node like a server to check
 				is that node is in the graph and connected
 
+rosrun rqt_graph rqt_graph	to show all the active nodes in a graph
+				and information about their interactions,
+				where are they publishing... etc.
+
 
