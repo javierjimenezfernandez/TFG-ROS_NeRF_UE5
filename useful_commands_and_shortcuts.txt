@@ -31,4 +31,5 @@ rosrun rqt_graph rqt_graph	to show all the active nodes in a graph
 				and information about their interactions,
 				where are they publishing... etc.
 
-
+rosrun turtlesim [turlte_nodes]	testing package with nodes to test some
+				ROS functionalities
