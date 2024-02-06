@@ -1,0 +1,30 @@
+
+xTerminal (linux)
+--------------------------------------------------------
+Shift+Ctrl+O 			to split the window horizontally
+Shift+Ctrl+E 			to split the window vertically
+Alt+arroy_keys 			to navigate between different terminals
+
+ROS
+--------------------------------------------------------
+roscore				to initilize ROS
+
+rosnode list			to show currenntly initilized nodes
+				/rosout will allways be running while
+				roscore is active 
+
+rosrun [package] [executable]	to run any node from anywhere (please
+				make sure you roscore before). Once you
+				write package name press TAB for 
+				autocompletion features
+
+rosnode info [node_name]	to see information about the node, the
+				publisher and services
+
+rosnode kill [node_name]	to kill a node (same as Ctrl+C in the
+				window where the node is being executed)
+
+rosnode ping [node_name]	to ping the node like a server to check
+				is that node is in the graph and connected
+
+
