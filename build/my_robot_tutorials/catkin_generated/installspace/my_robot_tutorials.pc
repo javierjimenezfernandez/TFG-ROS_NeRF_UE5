@@ -1,0 +1,8 @@
+prefix=/home/robcib/catkin_ws/install
+
+Name: my_robot_tutorials
+Description: Description of my_robot_tutorials
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
