@@ -1,12 +1,24 @@
 
 xTerminal (linux)
---------------------------------------------------------
+-----------------------------------------------------------------------
 Shift+Ctrl+O 			to split the window horizontally
 Shift+Ctrl+E 			to split the window vertically
 Alt+arroy_keys 			to navigate between different terminals
 
+
+catkin
+-----------------------------------------------------------------------
+catkin_make			to create the workspace if it doesn't
+				exist and to compile it. It will compile
+				every package code included in its src
+				folder which is listed in its CMakeLists.txt
+
+catkin_create_pkg [pkg_name]	to create a pkg. Typical dependencies are:
+ [dependencies]			roscpp rospy and std_msgs
+
+
 ROS
---------------------------------------------------------
+-----------------------------------------------------------------------
 roscore				to initilize ROS
 
 rosnode list			to show currenntly initilized nodes
@@ -33,3 +45,20 @@ rosrun rqt_graph rqt_graph	to show all the active nodes in a graph
 
 rosrun turtlesim [turlte_nodes]	testing package with nodes to test some
 				ROS functionalities
+
+rostopic list			shows all rostopics that are currently
+				being published
+
+rostopic echo [rostopic_name]	to listen to any rostopic from the command
+				window
+
+Notes about nodes
+------------------------------------------------------------------------
+when you create a python node it has to be stored in the scripts folder
+of your package and execution pemissions have to be enabled with:
+chmod +x [file_name]
+when you create a cpp node it has to be stored in the src folder inside
+the package directory and added to the CMakeLists.txt to be compiled with:
+catkin_make
+catkin_make has to be performed in the father catkin_ws directory
+
