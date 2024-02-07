@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
+
+# Convenience name for target.
+smartphone_node: my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
+
+.PHONY : smartphone_node
+
+# fast build rule for target.
+smartphone_node/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/build
+.PHONY : smartphone_node/fast
+
+# Convenience name for target.
 my_robot_tutorials/CMakeFiles/node_cpp.dir/rule:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/node_cpp.dir/rule
 .PHONY : my_robot_tutorials/CMakeFiles/node_cpp.dir/rule
@@ -271,6 +286,21 @@ std_msgs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/std_msgs_generate
 std_msgs_generate_messages_lisp/fast:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+# Convenience name for target.
+robot_news_radio_transmitter: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+.PHONY : robot_news_radio_transmitter
+
+# fast build rule for target.
+robot_news_radio_transmitter/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build
+.PHONY : robot_news_radio_transmitter/fast
 
 # Convenience name for target.
 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/rule:
@@ -434,6 +464,60 @@ src/my_first_node.cpp.s:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/node_cpp.dir/build.make my_robot_tutorials/CMakeFiles/node_cpp.dir/src/my_first_node.cpp.s
 .PHONY : src/my_first_node.cpp.s
 
+src/robot_news_radio_transmitter.o: src/robot_news_radio_transmitter.cpp.o
+
+.PHONY : src/robot_news_radio_transmitter.o
+
+# target to build an object file
+src/robot_news_radio_transmitter.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/src/robot_news_radio_transmitter.cpp.o
+.PHONY : src/robot_news_radio_transmitter.cpp.o
+
+src/robot_news_radio_transmitter.i: src/robot_news_radio_transmitter.cpp.i
+
+.PHONY : src/robot_news_radio_transmitter.i
+
+# target to preprocess a source file
+src/robot_news_radio_transmitter.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/src/robot_news_radio_transmitter.cpp.i
+.PHONY : src/robot_news_radio_transmitter.cpp.i
+
+src/robot_news_radio_transmitter.s: src/robot_news_radio_transmitter.cpp.s
+
+.PHONY : src/robot_news_radio_transmitter.s
+
+# target to generate assembly for a file
+src/robot_news_radio_transmitter.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/src/robot_news_radio_transmitter.cpp.s
+.PHONY : src/robot_news_radio_transmitter.cpp.s
+
+src/smartphone_node.o: src/smartphone_node.cpp.o
+
+.PHONY : src/smartphone_node.o
+
+# target to build an object file
+src/smartphone_node.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/src/smartphone_node.cpp.o
+.PHONY : src/smartphone_node.cpp.o
+
+src/smartphone_node.i: src/smartphone_node.cpp.i
+
+.PHONY : src/smartphone_node.i
+
+# target to preprocess a source file
+src/smartphone_node.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/src/smartphone_node.cpp.i
+.PHONY : src/smartphone_node.cpp.i
+
+src/smartphone_node.s: src/smartphone_node.cpp.s
+
+.PHONY : src/smartphone_node.s
+
+# target to generate assembly for a file
+src/smartphone_node.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/src/smartphone_node.cpp.s
+.PHONY : src/smartphone_node.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -444,6 +528,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
+	@echo "... smartphone_node"
 	@echo "... node_cpp"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... std_msgs_generate_messages_nodejs"
@@ -452,6 +537,7 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... list_install_components"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... robot_news_radio_transmitter"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... install"
 	@echo "... std_msgs_generate_messages_eus"
@@ -466,6 +552,12 @@ help:
 	@echo "... src/my_first_node.o"
 	@echo "... src/my_first_node.i"
 	@echo "... src/my_first_node.s"
+	@echo "... src/robot_news_radio_transmitter.o"
+	@echo "... src/robot_news_radio_transmitter.i"
+	@echo "... src/robot_news_radio_transmitter.s"
+	@echo "... src/smartphone_node.o"
+	@echo "... src/smartphone_node.i"
+	@echo "... src/smartphone_node.s"
 .PHONY : help
 
 

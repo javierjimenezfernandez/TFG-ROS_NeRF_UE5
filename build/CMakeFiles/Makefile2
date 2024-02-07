@@ -136,7 +136,9 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest.dir/clean
 # Directory level rules for directory my_robot_tutorials
 
 # Recursive "all" directory target.
+my_robot_tutorials/all: my_robot_tutorials/CMakeFiles/smartphone_node.dir/all
 my_robot_tutorials/all: my_robot_tutorials/CMakeFiles/node_cpp.dir/all
+my_robot_tutorials/all: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/all
 
 .PHONY : my_robot_tutorials/all
 
@@ -146,6 +148,7 @@ my_robot_tutorials/preinstall:
 .PHONY : my_robot_tutorials/preinstall
 
 # Recursive "clean" directory target.
+my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/smartphone_node.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/node_cpp.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
@@ -153,6 +156,7 @@ my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/roscpp_generate_messages
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
 my_robot_tutorials/clean: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/clean
@@ -410,6 +414,33 @@ gtest/googletest/CMakeFiles/gtest.dir/clean:
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
 
 #=============================================================================
+# Target rules for target my_robot_tutorials/CMakeFiles/smartphone_node.dir
+
+# All Build rule for target.
+my_robot_tutorials/CMakeFiles/smartphone_node.dir/all:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/depend
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/robcib/catkin_ws/build/CMakeFiles --progress-num=13,14 "Built target smartphone_node"
+.PHONY : my_robot_tutorials/CMakeFiles/smartphone_node.dir/all
+
+# Build rule for subdir invocation for target.
+my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/smartphone_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 0
+.PHONY : my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
+
+# Convenience name for target.
+smartphone_node: my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
+
+.PHONY : smartphone_node
+
+# clean rule for target.
+my_robot_tutorials/CMakeFiles/smartphone_node.dir/clean:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/clean
+.PHONY : my_robot_tutorials/CMakeFiles/smartphone_node.dir/clean
+
+#=============================================================================
 # Target rules for target my_robot_tutorials/CMakeFiles/node_cpp.dir
 
 # All Build rule for target.
@@ -597,6 +628,33 @@ std_msgs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/std_msgs_generate
 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
 	$(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 .PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+
+#=============================================================================
+# Target rules for target my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir
+
+# All Build rule for target.
+my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/all:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/depend
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/robcib/catkin_ws/build/CMakeFiles --progress-num=11,12 "Built target robot_news_radio_transmitter"
+.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/all
+
+# Build rule for subdir invocation for target.
+my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 0
+.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+# Convenience name for target.
+robot_news_radio_transmitter: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+.PHONY : robot_news_radio_transmitter
+
+# clean rule for target.
+my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/clean:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/clean
+.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/clean
 
 #=============================================================================
 # Target rules for target my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir

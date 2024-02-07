@@ -136,6 +136,8 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/my_robot_tutorials_node.cpp)
 
 add_executable(node_cpp src/my_first_node.cpp)
+add_executable(robot_news_radio_transmitter src/robot_news_radio_transmitter.cpp)
+add_executable(smartphone_node src/smartphone_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,6 +155,8 @@ add_executable(node_cpp src/my_first_node.cpp)
 # )
 
 target_link_libraries(node_cpp ${catkin_LIBRARIES})
+target_link_libraries(robot_news_radio_transmitter ${catkin_LIBRARIES})
+target_link_libraries(smartphone_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##
