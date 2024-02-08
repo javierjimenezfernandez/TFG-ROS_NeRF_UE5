@@ -376,6 +376,19 @@ rosgraph_msgs_generate_messages_nodejs/fast:
 .PHONY : rosgraph_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named number_counter
+
+# Build rule for target.
+number_counter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 number_counter
+.PHONY : number_counter
+
+# fast build rule for target.
+number_counter/fast:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/number_counter.dir/build.make my_robot_tutorials/CMakeFiles/number_counter.dir/build
+.PHONY : number_counter/fast
+
+#=============================================================================
 # Target rules for targets named std_msgs_generate_messages_lisp
 
 # Build rule for target.
@@ -452,6 +465,19 @@ rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
 rosgraph_msgs_generate_messages_cpp/fast:
 	$(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named number_publisher
+
+# Build rule for target.
+number_publisher: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 number_publisher
+.PHONY : number_publisher
+
+# fast build rule for target.
+number_publisher/fast:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/number_publisher.dir/build.make my_robot_tutorials/CMakeFiles/number_publisher.dir/build
+.PHONY : number_publisher/fast
 
 #=============================================================================
 # Target rules for targets named std_msgs_generate_messages_cpp
@@ -547,12 +573,14 @@ help:
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
+	@echo "... number_counter"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... robot_news_radio_transmitter"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... number_publisher"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_lisp"

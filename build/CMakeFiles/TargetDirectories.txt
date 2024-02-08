@@ -47,6 +47,7 @@
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/list_install_components.dir
+/home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/number_counter.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir
@@ -55,6 +56,7 @@
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/install/strip.dir
+/home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/number_publisher.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir
 /home/robcib/catkin_ws/build/my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir
