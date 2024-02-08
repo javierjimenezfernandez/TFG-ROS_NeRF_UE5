@@ -21,6 +21,10 @@ ROS
 -----------------------------------------------------------------------
 roscore				to initilize ROS
 
+[ros_command] -h		to see a list of all the options available
+				for [ros_command] and some useful information
+				about the [ros_command]
+
 rosnode list			to show currenntly initilized nodes
 				/rosout will allways be running while
 				roscore is active 
@@ -30,8 +34,9 @@ rosrun [package] [executable]	to run any node from anywhere (please
 				write package name press TAB for 
 				autocompletion features
 
-rosnode info [node_name]	to see information about the node, the
-				publisher and services
+rosnode info [node_name]	to see information about the node: topics
+				to where the node is publishing or subscribed,
+				services and connections
 
 rosnode kill [node_name]	to kill a node (same as Ctrl+C in the
 				window where the node is being executed)
@@ -40,7 +45,7 @@ rosnode ping [node_name]	to ping the node like a server to check
 				is that node is in the graph and connected
 
 rosrun rqt_graph rqt_graph	to show all the active nodes in a graph
-				and information about their interactions,
+ (also just rqt_graph)		and information about their interactions,
 				where are they publishing... etc.
 
 rosrun turtlesim [turlte_nodes]	testing package with nodes to test some
@@ -51,6 +56,14 @@ rostopic list			shows all rostopics that are currently
 
 rostopic echo [rostopic_name]	to listen to any rostopic from the command
 				window
+
+rostopic info [rostopic_name]	to show the type, the Publishers and
+				Subscribers of the topic
+
+rostopic pub -r [rate]		to publish a message with rate Hz (use TAB
+ [rostopic_name] [data_type]	for autocompletion for data type and subtype)
+ "[subtype]: '[message]'"
+
 
 Notes about nodes
 ------------------------------------------------------------------------
