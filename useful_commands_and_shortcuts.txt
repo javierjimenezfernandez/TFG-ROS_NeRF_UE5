@@ -64,6 +64,10 @@ rostopic pub -r [rate]		to publish a message with rate Hz (use TAB
  [rostopic_name] [data_type]	for autocompletion for data type and subtype)
  "[subtype]: '[message]'"
 
+rosservice list			gives a list of current active services
+
+rosservice call /[service_name]	to use a service from the command line
+
 
 Notes about nodes
 ------------------------------------------------------------------------
