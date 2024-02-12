@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  rospy_tutorials
 )
 
 ## System dependencies are found with CMake's conventions
@@ -140,6 +141,8 @@ add_executable(robot_news_radio_transmitter src/robot_news_radio_transmitter.cpp
 add_executable(smartphone_node src/smartphone_node.cpp)
 add_executable(number_publisher src/number_publisher.cpp)
 add_executable(number_counter src/number_counter.cpp)
+add_executable(add_two_ints_server src/add_two_ints_server.cpp)
+add_executable(add_two_ints_client src/add_two_ints_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -161,6 +164,8 @@ target_link_libraries(robot_news_radio_transmitter ${catkin_LIBRARIES})
 target_link_libraries(smartphone_node ${catkin_LIBRARIES})
 target_link_libraries(number_publisher ${catkin_LIBRARIES})
 target_link_libraries(number_counter ${catkin_LIBRARIES})
+target_link_libraries(add_two_ints_server ${catkin_LIBRARIES})
+target_link_libraries(add_two_ints_client ${catkin_LIBRARIES})
 
 #############
 ## Install ##
