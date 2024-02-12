@@ -60,5 +60,8 @@ my_robot_tutorials/CMakeFiles/number_counter.dir/src/number_counter.cpp.o
  /opt/ros/noetic/include/ros/wall_timer_options.h
  /opt/ros/noetic/include/rosconsole/macros_generated.h
  /opt/ros/noetic/include/std_msgs/Int64.h
+ /opt/ros/noetic/include/std_srvs/SetBool.h
+ /opt/ros/noetic/include/std_srvs/SetBoolRequest.h
+ /opt/ros/noetic/include/std_srvs/SetBoolResponse.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcValue.h
