@@ -4,7 +4,7 @@ import rospy
 from rospy_tutorials.srv import AddTwoInts
 
 if __name__ == '__main__':
-	rospy.init_node("add_two_ints_client")
+	rospy.init_node("add_two_ints_client", anonymous=True)
 
 	# This line will block the execution of the node until the
 	# Service is advertised

@@ -3,7 +3,8 @@
 
 int	main(int argc, char **argv)
 {
-	ros::init(argc, argv, "add_two_nodes_client");
+	ros::init(argc, argv, "add_two_nodes_client", \
+		ros::init_options::AnonymousName);
 	ros::NodeHandle nh;
 
 	// We create the client node with the following syntax. We create a client
