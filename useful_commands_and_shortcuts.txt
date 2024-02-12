@@ -66,7 +66,14 @@ rostopic pub -r [rate]		to publish a message with rate Hz (use TAB
 
 rosservice list			gives a list of current active services
 
-rosservice call /[service_name]	to use a service from the command line
+rosservice call [service_name]	to directly call a service from the terminal,
+ "[arg_1]: [value] ..."		press TAB for argument autocompletion
+
+rosservice info [service_name]	it will give you which nodes are using the
+				service, what is the type of the service file
+				with the request and the response, and then the
+				args, so basically the request you need to send
+				to the service.
 
 
 Notes about nodes
@@ -78,4 +85,20 @@ when you create a cpp node it has to be stored in the src folder inside
 the package directory and added to the CMakeLists.txt to be compiled with:
 catkin_make
 catkin_make has to be performed in the father catkin_ws directory
+
+
+Notes about services
+------------------------------------------------------------------------
+Only one server can exist for every service, if you need multiple one you
+will have to use prefixes like /turtle1/teleport, /turtle2/teleport etc.
+You may have multiple clients for the same service.
+If you search in ROS Wiki doc about service types you may find that there
+is some arguments (or subtypes) above a line and some below, like this:
+
+int64 a
+int64 b
+---
+int64 sum
+
+The above types are contained in the request and the below ones in the response
 
