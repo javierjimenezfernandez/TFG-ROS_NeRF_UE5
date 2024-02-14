@@ -75,9 +75,32 @@ rosservice info [service_name]	it will give you which nodes are using the
 				args, so basically the request you need to send
 				to the service.
 
+rosmsg [params]			command to work with message definition, to 
+				interact with messages from the command line please 
+				use rostopic.
+
+rosmsg list			lists all messages available in the current
+				ROS installation. To search for a specific one
+				it is very useful to use the grep pipe.
+
+rosmsg show [msg_name]		shows the defintion of the msg.
+
+rossrv [params]			command to work with service definition, to
+				interact with services from the command line please 
+				use rosservice.
+
+rossrv list			lists all services available in the current
+				ROS installation. To search for a specific one
+				it is very useful to use the grep pipe.
+
+rossrv show [srv_name]		shows the definition of the service including
+				request and response messages.
+
 
 Notes about nodes
 ------------------------------------------------------------------------
+Definition:
+
 when you create a python node it has to be stored in the scripts folder
 of your package and execution pemissions have to be enabled with:
 chmod +x [file_name]
@@ -87,18 +110,44 @@ catkin_make
 catkin_make has to be performed in the father catkin_ws directory
 
 
+Notes about Topics
+------------------------------------------------------------------------
+Definition: a topic is defined by two things: a name, which is the
+interface to reach, and a message definition which is the data structure
+of the information you send.
+
+Custom messages can be created from scratch or using some already existing
+primitive definitions in the ROS Wiki.
+
+An interesting recommendation is that all message definitions are contained
+in a message definition package, so when that message is needed you just
+need to add a dependency to that package and you won't have a dependency mess.
+
+ATTENTION: after compiling a new message package you will have to refresh
+the cmd window (type: source .bashrc) or open a new one in order to use a 
+node that have a dependency on the brand new message package.
+
+
 Notes about services
 ------------------------------------------------------------------------
+Definition: a service is also defined by two things: a name, which is the
+interface to reach, and a service definiton. This service definition 
+contains one message definition for the request and one message definition 
+for the response.
+
 Only one server can exist for every service, if you need multiple one you
 will have to use prefixes like /turtle1/teleport, /turtle2/teleport etc.
 You may have multiple clients for the same service.
-If you search in ROS Wiki doc about service types you may find that there
-is some arguments (or subtypes) above a line and some below, like this:
+
+When searching in ROS Wiki doc about service types you may find that there
+are some arguments (or types) above three dashes and some below, like this:
 
 int64 a
 int64 b
 ---
 int64 sum
 
-The above types are contained in the request and the below ones in the response
+So you have two message definitions separated by three dashes. The above are 
+the types from the request message definition and the below ones the types 
+from the response message definition.
 
