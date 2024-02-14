@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   std_srvs
   rospy_tutorials
+  my_robot_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -144,6 +145,9 @@ add_executable(number_publisher src/number_publisher.cpp)
 add_executable(number_counter src/number_counter.cpp)
 add_executable(add_two_ints_server src/add_two_ints_server.cpp)
 add_executable(add_two_ints_client src/add_two_ints_client.cpp)
+add_executable(hw_status_publisher src/hw_status_publisher.cpp)
+add_executable(led_panel_node src/led_panel.cpp)
+add_executable(battery_node src/battery.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -167,6 +171,9 @@ target_link_libraries(number_publisher ${catkin_LIBRARIES})
 target_link_libraries(number_counter ${catkin_LIBRARIES})
 target_link_libraries(add_two_ints_server ${catkin_LIBRARIES})
 target_link_libraries(add_two_ints_client ${catkin_LIBRARIES})
+target_link_libraries(hw_status_publisher ${catkin_LIBRARIES})
+target_link_libraries(led_panel_node ${catkin_LIBRARIES})
+target_link_libraries(battery_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

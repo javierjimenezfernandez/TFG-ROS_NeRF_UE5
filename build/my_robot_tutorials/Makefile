@@ -56,17 +56,17 @@ CMAKE_BINARY_DIR = /home/robcib/catkin_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
 
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target install
 install: preinstall
@@ -80,15 +80,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
 
-.PHONY : list_install_components/fast
+.PHONY : rebuild_cache/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -101,29 +102,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -134,6 +112,28 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,34 +168,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
+my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule
 
 # Convenience name for target.
-add_two_ints_client: my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
+led_panel_node: my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule
 
-.PHONY : add_two_ints_client
+.PHONY : led_panel_node
 
 # fast build rule for target.
-add_two_ints_client/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/build.make my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/build
-.PHONY : add_two_ints_client/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
-
-# Convenience name for target.
-add_two_ints_server: my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
-
-.PHONY : add_two_ints_server
-
-# fast build rule for target.
-add_two_ints_server/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/build.make my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/build
-.PHONY : add_two_ints_server/fast
+led_panel_node/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/led_panel_node.dir/build.make my_robot_tutorials/CMakeFiles/led_panel_node.dir/build
+.PHONY : led_panel_node/fast
 
 # Convenience name for target.
 my_robot_tutorials/CMakeFiles/number_counter.dir/rule:
@@ -213,66 +198,6 @@ number_counter/fast:
 .PHONY : number_counter/fast
 
 # Convenience name for target.
-my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_py: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_py
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_py/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-.PHONY : rosgraph_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_lisp: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-.PHONY : roscpp_generate_messages_lisp
-
-# fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_lisp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_lisp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_eus: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_eus
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_eus/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
-.PHONY : rosgraph_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
 my_robot_tutorials/CMakeFiles/number_publisher.dir/rule:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/number_publisher.dir/rule
 .PHONY : my_robot_tutorials/CMakeFiles/number_publisher.dir/rule
@@ -286,141 +211,6 @@ number_publisher: my_robot_tutorials/CMakeFiles/number_publisher.dir/rule
 number_publisher/fast:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/number_publisher.dir/build.make my_robot_tutorials/CMakeFiles/number_publisher.dir/build
 .PHONY : number_publisher/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
-
-.PHONY : roscpp_generate_messages_nodejs
-
-# fast build rule for target.
-roscpp_generate_messages_nodejs/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
-.PHONY : roscpp_generate_messages_nodejs/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_py: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/rule
-
-.PHONY : roscpp_generate_messages_py
-
-# fast build rule for target.
-roscpp_generate_messages_py/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/roscpp_generate_messages_py.dir/build
-.PHONY : roscpp_generate_messages_py/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
-
-# Convenience name for target.
-robot_news_radio_transmitter: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
-
-.PHONY : robot_news_radio_transmitter
-
-# fast build rule for target.
-robot_news_radio_transmitter/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build
-.PHONY : robot_news_radio_transmitter/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_nodejs/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
-.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_eus: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-.PHONY : roscpp_generate_messages_eus
-
-# fast build rule for target.
-roscpp_generate_messages_eus/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/build.make my_robot_tutorials/CMakeFiles/roscpp_generate_messages_eus.dir/build
-.PHONY : roscpp_generate_messages_eus/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_cpp: my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-.PHONY : roscpp_generate_messages_cpp
-
-# fast build rule for target.
-roscpp_generate_messages_cpp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-.PHONY : roscpp_generate_messages_cpp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_cpp.dir/rule:
@@ -438,51 +228,6 @@ std_srvs_generate_messages_cpp/fast:
 .PHONY : std_srvs_generate_messages_cpp/fast
 
 # Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : std_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_py: my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-
-.PHONY : std_msgs_generate_messages_py
-
-# fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-rospy_tutorials_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
-
-.PHONY : rospy_tutorials_generate_messages_nodejs
-
-# fast build rule for target.
-rospy_tutorials_generate_messages_nodejs/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/build
-.PHONY : rospy_tutorials_generate_messages_nodejs/fast
-
-# Convenience name for target.
 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_eus.dir/rule:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_eus.dir/rule
 .PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_eus.dir/rule
@@ -498,124 +243,19 @@ rospy_tutorials_generate_messages_eus/fast:
 .PHONY : rospy_tutorials_generate_messages_eus/fast
 
 # Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
+my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
 
 # Convenience name for target.
-std_srvs_generate_messages_eus: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
+add_two_ints_client: my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/rule
 
-.PHONY : std_srvs_generate_messages_eus
+.PHONY : add_two_ints_client
 
 # fast build rule for target.
-std_srvs_generate_messages_eus/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/build
-.PHONY : std_srvs_generate_messages_eus/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-rospy_tutorials_generate_messages_lisp: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
-
-.PHONY : rospy_tutorials_generate_messages_lisp
-
-# fast build rule for target.
-rospy_tutorials_generate_messages_lisp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/build
-.PHONY : rospy_tutorials_generate_messages_lisp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-std_srvs_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
-
-.PHONY : std_srvs_generate_messages_nodejs
-
-# fast build rule for target.
-std_srvs_generate_messages_nodejs/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build
-.PHONY : std_srvs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-std_srvs_generate_messages_py: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
-
-.PHONY : std_srvs_generate_messages_py
-
-# fast build rule for target.
-std_srvs_generate_messages_py/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/build
-.PHONY : std_srvs_generate_messages_py/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_srvs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
-
-.PHONY : std_srvs_generate_messages_lisp
-
-# fast build rule for target.
-std_srvs_generate_messages_lisp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/build
-.PHONY : std_srvs_generate_messages_lisp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rospy_tutorials_generate_messages_cpp: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
-
-.PHONY : rospy_tutorials_generate_messages_cpp
-
-# fast build rule for target.
-rospy_tutorials_generate_messages_cpp/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/build
-.PHONY : rospy_tutorials_generate_messages_cpp/fast
-
-# Convenience name for target.
-my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
-.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
-
-# Convenience name for target.
-rospy_tutorials_generate_messages_py: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
-
-.PHONY : rospy_tutorials_generate_messages_py
-
-# fast build rule for target.
-rospy_tutorials_generate_messages_py/fast:
-	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/build
-.PHONY : rospy_tutorials_generate_messages_py/fast
+add_two_ints_client/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/build.make my_robot_tutorials/CMakeFiles/add_two_ints_client.dir/build
+.PHONY : add_two_ints_client/fast
 
 # Convenience name for target.
 my_robot_tutorials/CMakeFiles/node_cpp.dir/rule:
@@ -633,6 +273,21 @@ node_cpp/fast:
 .PHONY : node_cpp/fast
 
 # Convenience name for target.
+my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/rule
+
+# Convenience name for target.
+hw_status_publisher: my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/rule
+
+.PHONY : hw_status_publisher
+
+# fast build rule for target.
+hw_status_publisher/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/build.make my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/build
+.PHONY : hw_status_publisher/fast
+
+# Convenience name for target.
 my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
 .PHONY : my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
@@ -646,6 +301,171 @@ smartphone_node: my_robot_tutorials/CMakeFiles/smartphone_node.dir/rule
 smartphone_node/fast:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/smartphone_node.dir/build.make my_robot_tutorials/CMakeFiles/smartphone_node.dir/build
 .PHONY : smartphone_node/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+std_srvs_generate_messages_eus: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/rule
+
+.PHONY : std_srvs_generate_messages_eus
+
+# fast build rule for target.
+std_srvs_generate_messages_eus/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_eus.dir/build
+.PHONY : std_srvs_generate_messages_eus/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+std_srvs_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/rule
+
+.PHONY : std_srvs_generate_messages_nodejs
+
+# fast build rule for target.
+std_srvs_generate_messages_nodejs/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build
+.PHONY : std_srvs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+std_srvs_generate_messages_lisp: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/rule
+
+.PHONY : std_srvs_generate_messages_lisp
+
+# fast build rule for target.
+std_srvs_generate_messages_lisp/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_lisp.dir/build
+.PHONY : std_srvs_generate_messages_lisp/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+rospy_tutorials_generate_messages_lisp: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/rule
+
+.PHONY : rospy_tutorials_generate_messages_lisp
+
+# fast build rule for target.
+rospy_tutorials_generate_messages_lisp/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_lisp.dir/build
+.PHONY : rospy_tutorials_generate_messages_lisp/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+std_srvs_generate_messages_py: my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/rule
+
+.PHONY : std_srvs_generate_messages_py
+
+# fast build rule for target.
+std_srvs_generate_messages_py/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/std_srvs_generate_messages_py.dir/build
+.PHONY : std_srvs_generate_messages_py/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rospy_tutorials_generate_messages_cpp: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/rule
+
+.PHONY : rospy_tutorials_generate_messages_cpp
+
+# fast build rule for target.
+rospy_tutorials_generate_messages_cpp/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_cpp.dir/build
+.PHONY : rospy_tutorials_generate_messages_cpp/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/battery_node.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/battery_node.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/battery_node.dir/rule
+
+# Convenience name for target.
+battery_node: my_robot_tutorials/CMakeFiles/battery_node.dir/rule
+
+.PHONY : battery_node
+
+# fast build rule for target.
+battery_node/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/battery_node.dir/build.make my_robot_tutorials/CMakeFiles/battery_node.dir/build
+.PHONY : battery_node/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
+
+# Convenience name for target.
+add_two_ints_server: my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/rule
+
+.PHONY : add_two_ints_server
+
+# fast build rule for target.
+add_two_ints_server/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/build.make my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/build
+.PHONY : add_two_ints_server/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+rospy_tutorials_generate_messages_nodejs: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/rule
+
+.PHONY : rospy_tutorials_generate_messages_nodejs
+
+# fast build rule for target.
+rospy_tutorials_generate_messages_nodejs/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_nodejs.dir/build
+.PHONY : rospy_tutorials_generate_messages_nodejs/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
+
+# Convenience name for target.
+rospy_tutorials_generate_messages_py: my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/rule
+
+.PHONY : rospy_tutorials_generate_messages_py
+
+# fast build rule for target.
+rospy_tutorials_generate_messages_py/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/build.make my_robot_tutorials/CMakeFiles/rospy_tutorials_generate_messages_py.dir/build
+.PHONY : rospy_tutorials_generate_messages_py/fast
+
+# Convenience name for target.
+my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+# Convenience name for target.
+robot_news_radio_transmitter: my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/rule
+
+.PHONY : robot_news_radio_transmitter
+
+# fast build rule for target.
+robot_news_radio_transmitter/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build.make my_robot_tutorials/CMakeFiles/robot_news_radio_transmitter.dir/build
+.PHONY : robot_news_radio_transmitter/fast
 
 src/add_two_ints_client.o: src/add_two_ints_client.cpp.o
 
@@ -700,6 +520,87 @@ src/add_two_ints_server.s: src/add_two_ints_server.cpp.s
 src/add_two_ints_server.cpp.s:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/build.make my_robot_tutorials/CMakeFiles/add_two_ints_server.dir/src/add_two_ints_server.cpp.s
 .PHONY : src/add_two_ints_server.cpp.s
+
+src/battery.o: src/battery.cpp.o
+
+.PHONY : src/battery.o
+
+# target to build an object file
+src/battery.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/battery_node.dir/build.make my_robot_tutorials/CMakeFiles/battery_node.dir/src/battery.cpp.o
+.PHONY : src/battery.cpp.o
+
+src/battery.i: src/battery.cpp.i
+
+.PHONY : src/battery.i
+
+# target to preprocess a source file
+src/battery.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/battery_node.dir/build.make my_robot_tutorials/CMakeFiles/battery_node.dir/src/battery.cpp.i
+.PHONY : src/battery.cpp.i
+
+src/battery.s: src/battery.cpp.s
+
+.PHONY : src/battery.s
+
+# target to generate assembly for a file
+src/battery.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/battery_node.dir/build.make my_robot_tutorials/CMakeFiles/battery_node.dir/src/battery.cpp.s
+.PHONY : src/battery.cpp.s
+
+src/hw_status_publisher.o: src/hw_status_publisher.cpp.o
+
+.PHONY : src/hw_status_publisher.o
+
+# target to build an object file
+src/hw_status_publisher.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/build.make my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/src/hw_status_publisher.cpp.o
+.PHONY : src/hw_status_publisher.cpp.o
+
+src/hw_status_publisher.i: src/hw_status_publisher.cpp.i
+
+.PHONY : src/hw_status_publisher.i
+
+# target to preprocess a source file
+src/hw_status_publisher.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/build.make my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/src/hw_status_publisher.cpp.i
+.PHONY : src/hw_status_publisher.cpp.i
+
+src/hw_status_publisher.s: src/hw_status_publisher.cpp.s
+
+.PHONY : src/hw_status_publisher.s
+
+# target to generate assembly for a file
+src/hw_status_publisher.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/build.make my_robot_tutorials/CMakeFiles/hw_status_publisher.dir/src/hw_status_publisher.cpp.s
+.PHONY : src/hw_status_publisher.cpp.s
+
+src/led_panel.o: src/led_panel.cpp.o
+
+.PHONY : src/led_panel.o
+
+# target to build an object file
+src/led_panel.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/led_panel_node.dir/build.make my_robot_tutorials/CMakeFiles/led_panel_node.dir/src/led_panel.cpp.o
+.PHONY : src/led_panel.cpp.o
+
+src/led_panel.i: src/led_panel.cpp.i
+
+.PHONY : src/led_panel.i
+
+# target to preprocess a source file
+src/led_panel.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/led_panel_node.dir/build.make my_robot_tutorials/CMakeFiles/led_panel_node.dir/src/led_panel.cpp.i
+.PHONY : src/led_panel.cpp.i
+
+src/led_panel.s: src/led_panel.cpp.s
+
+.PHONY : src/led_panel.s
+
+# target to generate assembly for a file
+src/led_panel.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/led_panel_node.dir/build.make my_robot_tutorials/CMakeFiles/led_panel_node.dir/src/led_panel.cpp.s
+.PHONY : src/led_panel.cpp.s
 
 src/my_first_node.o: src/my_first_node.cpp.o
 
@@ -842,51 +743,48 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
-	@echo "... install"
-	@echo "... list_install_components"
-	@echo "... edit_cache"
-	@echo "... add_two_ints_client"
-	@echo "... add_two_ints_server"
-	@echo "... number_counter"
-	@echo "... rosgraph_msgs_generate_messages_py"
-	@echo "... roscpp_generate_messages_lisp"
-	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... install/local"
-	@echo "... rosgraph_msgs_generate_messages_eus"
-	@echo "... number_publisher"
-	@echo "... roscpp_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... roscpp_generate_messages_py"
-	@echo "... robot_news_radio_transmitter"
-	@echo "... std_msgs_generate_messages_lisp"
-	@echo "... rosgraph_msgs_generate_messages_nodejs"
+	@echo "... install"
 	@echo "... rebuild_cache"
-	@echo "... roscpp_generate_messages_eus"
-	@echo "... roscpp_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... std_srvs_generate_messages_cpp"
-	@echo "... std_msgs_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_py"
-	@echo "... rospy_tutorials_generate_messages_nodejs"
-	@echo "... rospy_tutorials_generate_messages_eus"
-	@echo "... std_srvs_generate_messages_eus"
-	@echo "... rospy_tutorials_generate_messages_lisp"
-	@echo "... std_srvs_generate_messages_nodejs"
+	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... std_srvs_generate_messages_py"
-	@echo "... std_srvs_generate_messages_lisp"
-	@echo "... rospy_tutorials_generate_messages_cpp"
-	@echo "... rospy_tutorials_generate_messages_py"
+	@echo "... led_panel_node"
+	@echo "... list_install_components"
+	@echo "... number_counter"
+	@echo "... install/strip"
+	@echo "... number_publisher"
+	@echo "... std_srvs_generate_messages_cpp"
+	@echo "... rospy_tutorials_generate_messages_eus"
+	@echo "... add_two_ints_client"
 	@echo "... node_cpp"
+	@echo "... hw_status_publisher"
 	@echo "... smartphone_node"
+	@echo "... std_srvs_generate_messages_eus"
+	@echo "... std_srvs_generate_messages_nodejs"
+	@echo "... std_srvs_generate_messages_lisp"
+	@echo "... rospy_tutorials_generate_messages_lisp"
+	@echo "... std_srvs_generate_messages_py"
+	@echo "... rospy_tutorials_generate_messages_cpp"
+	@echo "... battery_node"
+	@echo "... add_two_ints_server"
+	@echo "... rospy_tutorials_generate_messages_nodejs"
+	@echo "... rospy_tutorials_generate_messages_py"
+	@echo "... robot_news_radio_transmitter"
 	@echo "... src/add_two_ints_client.o"
 	@echo "... src/add_two_ints_client.i"
 	@echo "... src/add_two_ints_client.s"
 	@echo "... src/add_two_ints_server.o"
 	@echo "... src/add_two_ints_server.i"
 	@echo "... src/add_two_ints_server.s"
+	@echo "... src/battery.o"
+	@echo "... src/battery.i"
+	@echo "... src/battery.s"
+	@echo "... src/hw_status_publisher.o"
+	@echo "... src/hw_status_publisher.i"
+	@echo "... src/hw_status_publisher.s"
+	@echo "... src/led_panel.o"
+	@echo "... src/led_panel.i"
+	@echo "... src/led_panel.s"
 	@echo "... src/my_first_node.o"
 	@echo "... src/my_first_node.i"
 	@echo "... src/my_first_node.s"
