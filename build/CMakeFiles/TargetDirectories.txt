@@ -35,6 +35,14 @@
 /home/robcib/catkin_ws/build/gtest/googletest/CMakeFiles/test.dir
 /home/robcib/catkin_ws/build/gtest/googletest/CMakeFiles/gtest_main.dir
 /home/robcib/catkin_ws/build/gtest/googletest/CMakeFiles/gtest.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/install/strip.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/install/local.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/install.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/list_install_components.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/rebuild_cache.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/edit_cache.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/test.dir
+/home/robcib/catkin_ws/build/my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir
 /home/robcib/catkin_ws/build/my_robot_msgs/CMakeFiles/install/strip.dir
 /home/robcib/catkin_ws/build/my_robot_msgs/CMakeFiles/install.dir
 /home/robcib/catkin_ws/build/my_robot_msgs/CMakeFiles/list_install_components.dir

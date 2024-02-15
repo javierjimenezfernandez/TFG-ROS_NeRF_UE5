@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/robcib/catkin_ws/build
 
 # The main recursive "all" target.
 all: gtest/all
+all: my_robot_bringup/all
 all: my_robot_msgs/all
 all: my_robot_tutorials/all
 
@@ -61,6 +62,7 @@ all: my_robot_tutorials/all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
+preinstall: my_robot_bringup/preinstall
 preinstall: my_robot_msgs/preinstall
 preinstall: my_robot_tutorials/preinstall
 
@@ -73,6 +75,7 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
+clean: my_robot_bringup/clean
 clean: my_robot_msgs/clean
 clean: my_robot_tutorials/clean
 
@@ -134,6 +137,24 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest_main.dir/clean
 gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest.dir/clean
 
 .PHONY : gtest/googletest/clean
+
+#=============================================================================
+# Directory level rules for directory my_robot_bringup
+
+# Recursive "all" directory target.
+my_robot_bringup/all:
+
+.PHONY : my_robot_bringup/all
+
+# Recursive "preinstall" directory target.
+my_robot_bringup/preinstall:
+
+.PHONY : my_robot_bringup/preinstall
+
+# Recursive "clean" directory target.
+my_robot_bringup/clean: my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+.PHONY : my_robot_bringup/clean
 
 #=============================================================================
 # Directory level rules for directory my_robot_msgs
@@ -470,6 +491,33 @@ gtest: gtest/googletest/CMakeFiles/gtest.dir/rule
 gtest/googletest/CMakeFiles/gtest.dir/clean:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/clean
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
+
+#=============================================================================
+# Target rules for target my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir
+
+# All Build rule for target.
+my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/robcib/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
+.PHONY : my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/all
+
+# Build rule for subdir invocation for target.
+my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robcib/catkin_ws/build/CMakeFiles 0
+.PHONY : my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# clean rule for target.
+my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : my_robot_bringup/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target my_robot_msgs/CMakeFiles/rosgraph_msgs_generate_messages_py.dir

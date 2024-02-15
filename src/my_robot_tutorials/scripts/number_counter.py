@@ -15,7 +15,7 @@ def callback_number(msg):
 	pub.publish(new_msg)
 
 def callback_reset_counter(req):
-	if req.data
+	if req.data:
 		global counter
 		counter = 0
 		return True, "Counter has been successfully reset"
@@ -28,6 +28,6 @@ if __name__ == '__main__':
 	pub = rospy.Publisher("/number_counter", Int64, queue_size=10)
 
 	reset_service = rospy.Service("/reset_counter", SetBool, callback_reset_counter)
-	rospy.login("Service server has been started")
+	rospy.loginfo("Service server has been started")
 
 	rospy.spin()

@@ -1,0 +1,8 @@
+prefix=/home/robcib/catkin_ws/devel
+
+Name: my_robot_bringup
+Description: Description of my_robot_bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
