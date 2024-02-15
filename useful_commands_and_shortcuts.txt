@@ -96,6 +96,20 @@ rossrv list			lists all services available in the current
 rossrv show [srv_name]		shows the definition of the service including
 				request and response messages.
 
+rosparam list			lists all parameters present in current ROS master.
+
+rosparam set [param_name]	to create a new parameter and its content or to 
+ [param_content]		modify an existing parameter with a new content.
+
+rosparam get [param_name]	to get the content of the parameter.
+
+roslaunch [pkg_name]		to launch a Launch File that will bring up all the
+ [launch_file]			Parameters and Nodes needed for the robot.
+				roslaunch will first check if there is a ROS Master
+				running in your environment. If there is not, it will
+				automatically create one. So you can run roslaunch
+				without running roscore before.
+
 
 Notes about nodes
 ------------------------------------------------------------------------
@@ -110,7 +124,7 @@ catkin_make
 catkin_make has to be performed in the father catkin_ws directory
 
 
-Notes about Topics
+Notes about Topics and Messages
 ------------------------------------------------------------------------
 Definition: a topic is defined by two things: a name, which is the
 interface to reach, and a message definition which is the data structure
@@ -122,6 +136,7 @@ primitive definitions in the ROS Wiki.
 An interesting recommendation is that all message definitions are contained
 in a message definition package, so when that message is needed you just
 need to add a dependency to that package and you won't have a dependency mess.
+A common name convention is to call that package [my_robot]_msgs
 
 ATTENTION: after compiling a new message package you will have to refresh
 the cmd window (type: source .bashrc) or open a new one in order to use a 
@@ -150,4 +165,47 @@ int64 sum
 So you have two message definitions separated by three dashes. The above are 
 the types from the request message definition and the below ones the types 
 from the response message definition.
+
+It is recommended to have all the service definitions in a separate package
+that can be the same package of message definitions [my_robot]_msgs.
+
+
+Notes about Parameters
+------------------------------------------------------------------------
+Definition: after launching the ROS master (roscore) the Parameter server is 
+automatically created inside the ROS master. The Parameter server is basically 
+a dictionary inside ROS master containing global variables which are accessible 
+globally, that means from anywhere in the current ROS environment. Those global 
+variables are called ROS Parameters. A ROS Parameter is one shared variable
+stored inside the parameter server. A ROS Parameter has a name and a data type.
+
+At any time a node can read a Parameter, modify a Parameter and create new 
+Parameters.
+
+If you modify a parameter and you want the new value to be used make sure
+that your node reads the parameter, because if it only reads it during its
+initialization then it will not be updated during runtime. Remember that
+ROS Parameters are stored in variables that live inside each node.
+
+Parameters are created everytime a ROS master is launched. If parameter
+definitions are not atuomatically set they will not be available after ROS
+master is killed. Here is where Launch Files come to save the day.
+
+
+Notes about Launch Files
+------------------------------------------------------------------------
+Definition: it is a file that will allow to start everything you need 
+from just one file. You can create parameters, start nodes, create groups 
+of parameters and nodes with a prefix. You can even use some conditional 
+statement and combine multiple launch files inside one launch file.
+
+That way you will be able to quickly launch your application and to create
+different launch files for different startup modes of your robot.
+
+It is recommended to have a separated package for launch files. A common
+naming convention is to call that package [my_robot]_bringup.
+
+Launch Files are written in xml. 
+
+Don't forget to make roslaunch after roscore!
 
