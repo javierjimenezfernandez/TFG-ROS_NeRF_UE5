@@ -271,6 +271,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "my_robot_msgs/CMakeFiles/my_robot_msgs_generate_messages_lisp.dir/DependInfo.cmake"
   "my_robot_msgs/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/DependInfo.cmake"
   "my_robot_msgs/CMakeFiles/my_robot_msgs_genpy.dir/DependInfo.cmake"
+  "my_robot_tutorials/CMakeFiles/oop_number_counter.dir/DependInfo.cmake"
   "my_robot_tutorials/CMakeFiles/led_panel_node.dir/DependInfo.cmake"
   "my_robot_tutorials/CMakeFiles/number_counter.dir/DependInfo.cmake"
   "my_robot_tutorials/CMakeFiles/number_publisher.dir/DependInfo.cmake"

@@ -675,6 +675,19 @@ my_robot_msgs_genpy/fast:
 .PHONY : my_robot_msgs_genpy/fast
 
 #=============================================================================
+# Target rules for targets named oop_number_counter
+
+# Build rule for target.
+oop_number_counter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 oop_number_counter
+.PHONY : oop_number_counter
+
+# fast build rule for target.
+oop_number_counter/fast:
+	$(MAKE) -f my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build.make my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build
+.PHONY : oop_number_counter/fast
+
+#=============================================================================
 # Target rules for targets named led_panel_node
 
 # Build rule for target.
@@ -986,6 +999,7 @@ help:
 	@echo "... my_robot_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... my_robot_msgs_genpy"
+	@echo "... oop_number_counter"
 	@echo "... led_panel_node"
 	@echo "... number_counter"
 	@echo "... number_publisher"

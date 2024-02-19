@@ -148,6 +148,7 @@ add_executable(add_two_ints_client src/add_two_ints_client.cpp)
 add_executable(hw_status_publisher src/hw_status_publisher.cpp)
 add_executable(led_panel_node src/led_panel.cpp)
 add_executable(battery_node src/battery.cpp)
+add_executable(oop_number_counter src/oop_number_counter.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -174,6 +175,7 @@ target_link_libraries(add_two_ints_client ${catkin_LIBRARIES})
 target_link_libraries(hw_status_publisher ${catkin_LIBRARIES})
 target_link_libraries(led_panel_node ${catkin_LIBRARIES})
 target_link_libraries(battery_node ${catkin_LIBRARIES})
+target_link_libraries(oop_number_counter ${catkin_LIBRARIES})
 
 #############
 ## Install ##

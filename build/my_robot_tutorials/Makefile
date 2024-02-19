@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+my_robot_tutorials/CMakeFiles/oop_number_counter.dir/rule:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/oop_number_counter.dir/rule
+.PHONY : my_robot_tutorials/CMakeFiles/oop_number_counter.dir/rule
+
+# Convenience name for target.
+oop_number_counter: my_robot_tutorials/CMakeFiles/oop_number_counter.dir/rule
+
+.PHONY : oop_number_counter
+
+# fast build rule for target.
+oop_number_counter/fast:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build.make my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build
+.PHONY : oop_number_counter/fast
+
+# Convenience name for target.
 my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule
 .PHONY : my_robot_tutorials/CMakeFiles/led_panel_node.dir/rule
@@ -683,6 +698,33 @@ src/number_publisher.cpp.s:
 	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/number_publisher.dir/build.make my_robot_tutorials/CMakeFiles/number_publisher.dir/src/number_publisher.cpp.s
 .PHONY : src/number_publisher.cpp.s
 
+src/oop_number_counter.o: src/oop_number_counter.cpp.o
+
+.PHONY : src/oop_number_counter.o
+
+# target to build an object file
+src/oop_number_counter.cpp.o:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build.make my_robot_tutorials/CMakeFiles/oop_number_counter.dir/src/oop_number_counter.cpp.o
+.PHONY : src/oop_number_counter.cpp.o
+
+src/oop_number_counter.i: src/oop_number_counter.cpp.i
+
+.PHONY : src/oop_number_counter.i
+
+# target to preprocess a source file
+src/oop_number_counter.cpp.i:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build.make my_robot_tutorials/CMakeFiles/oop_number_counter.dir/src/oop_number_counter.cpp.i
+.PHONY : src/oop_number_counter.cpp.i
+
+src/oop_number_counter.s: src/oop_number_counter.cpp.s
+
+.PHONY : src/oop_number_counter.s
+
+# target to generate assembly for a file
+src/oop_number_counter.cpp.s:
+	cd /home/robcib/catkin_ws/build && $(MAKE) -f my_robot_tutorials/CMakeFiles/oop_number_counter.dir/build.make my_robot_tutorials/CMakeFiles/oop_number_counter.dir/src/oop_number_counter.cpp.s
+.PHONY : src/oop_number_counter.cpp.s
+
 src/robot_news_radio_transmitter.o: src/robot_news_radio_transmitter.cpp.o
 
 .PHONY : src/robot_news_radio_transmitter.o
@@ -748,6 +790,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
+	@echo "... oop_number_counter"
 	@echo "... led_panel_node"
 	@echo "... list_install_components"
 	@echo "... number_counter"
@@ -794,6 +837,9 @@ help:
 	@echo "... src/number_publisher.o"
 	@echo "... src/number_publisher.i"
 	@echo "... src/number_publisher.s"
+	@echo "... src/oop_number_counter.o"
+	@echo "... src/oop_number_counter.i"
+	@echo "... src/oop_number_counter.s"
 	@echo "... src/robot_news_radio_transmitter.o"
 	@echo "... src/robot_news_radio_transmitter.i"
 	@echo "... src/robot_news_radio_transmitter.s"
