@@ -110,10 +110,22 @@ roslaunch [pkg_name]		to launch a Launch File that will bring up all the
 				automatically create one. So you can run roslaunch
 				without running roscore before.
 
+rosbag record [topic_name]	to record a topic in a bag file.
+
+rosbag info [bag_file]		shows duration, size, topic, types and number of 
+				messages recorded in the bag file.
+
+rosbag play [bag_file]		replays the messages stored. So it looks like if 
+				the real topic is being published.
+
 
 Notes about nodes
 ------------------------------------------------------------------------
-Definition:
+Definition: a node is a process that performs computation. It is an 
+executable program inside your robot application. Your application will 
+contain many nodes, which will be organized into packages. Nodes can 
+communicate with each other and run independently. Many nodes can run
+at the same time in parallel doing different tasks.
 
 when you create a python node it has to be stored in the scripts folder
 of your package and execution pemissions have to be enabled with:
@@ -122,6 +134,9 @@ when you create a cpp node it has to be stored in the src folder inside
 the package directory and added to the CMakeLists.txt to be compiled with:
 catkin_make
 catkin_make has to be performed in the father catkin_ws directory
+
+Nodes in src and scripts folder will then be accesible through rosrun
+command from anywhere in your computer.
 
 
 Notes about Topics and Messages
@@ -208,4 +223,35 @@ naming convention is to call that package [my_robot]_bringup.
 Launch Files are written in xml. 
 
 Don't forget to make roslaunch after roscore!
+
+
+Notes about ROS Bags
+------------------------------------------------------------------------
+Definition: ROS Bag enables you to record and store some messages and replay
+them later, so you can reproduce some conditions again. For example, you can 
+run your robot when it's raining, record all the data and then replay the data.
+
+
+Notes about catkin workspace
+------------------------------------------------------------------------
+Every time you create a new catkin workspace you have to add it to the 
+.bashrc file with the following line:
+source [path_to_the_catkin_ws]/[catkin_ws_folder_name]/devel/setup.bah
+
+for example:
+source ~/catkin_ws/devel/setup.bash
+
+But everytime that you open a new terminal it will only source the last
+one, because the last setup.bash path definition overrides previous ones.
+So the best way you have everytime you want to use a node in a different
+catkin workspace is to comment the line/s you don't need (with a #). Then
+you will always need to reload the command window.
+
+
+Useful resources
+------------------------------------------------------------------------
+- ROS Wiki: official ROS documentation
+- ROS answers: Q&A ROS website to get help with any issue
+- ROS discourse: a site where developers share ideas, new releases, new
+  packages.
 
