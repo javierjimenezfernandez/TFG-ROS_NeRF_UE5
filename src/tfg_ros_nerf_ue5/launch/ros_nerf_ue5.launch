@@ -1,0 +1,10 @@
+<launch>
+
+	<param name="/cmd_vel_publish_rate" value="100" />
+	<param name="/cmd_vel_publish_seconds" value="3.0" />
+	<param name="/normalizer_linear_scale" value="0.1" />
+	<param name="/normalizer_angular_scale" value="0.2" />
+
+	<node name="rosbridge_twist_normalizer" pkg="tfg_ros_nerf_ue5" type="rosbridge_twist_normalizer" />
+
+</launch>
