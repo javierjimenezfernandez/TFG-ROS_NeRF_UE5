@@ -1,0 +1,671 @@
+% Editor de fórmulas matemáticas
+%https://www.codecogs.com/latex/eqneditor.php?lang=es-es
+
+%%%%%%%%%%%%%%%%% - PREÁMBULO - %%%%%%%%%%%%%%%%%
+
+% --------- Composición de la página ---------- %
+% Para el texto escrito se utilizará siempre hojas blancas de tamaño A4 (297 x 210 mm) que estarán escritas, preferentemente, por las dos caras. Existen numerosas fuentes válidas aunque se recomienda utilizar “Arial” (tamaño 11 puntos) o “Times New Roman” (tamaño 12 puntos).
+\documentclass[a4paper, 12pt, spanish, twoside]{article}
+% Los márgenes tanto derecho, como izquierdo, superior e inferior serán de 25 mm.
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\raggedbottom
+% ---------------------------------------------- %
+
+
+
+% ------------- Paquetes generales ------------- %
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{float}
+\usepackage{caption}
+% ---------------------------------------------- %
+
+
+
+% ------------ Paquetes específicos ------------ %
+\usepackage{pdfpages} % Para insertar la portada en formato PDF.
+\usepackage{pdflscape}  % Para colocar páginas en formato apaisado.
+\usepackage{graphicx} % Para insertar imágenes.
+\graphicspath{{imagenes/}} % Configuración del paquete graphicx, imágenes en la carpeta images
+\usepackage{wrapfig} % Para posicionar imágenes alrededor del texto.
+\usepackage[hidelinks]{hyperref} % Para urls.
+% ---------------------------------------------- %
+
+
+
+% ---------------- Numeración ------------------ %
+\counterwithin{table}{section} % Se numeran las tablas con respecto al capítulo en el que se encuentran.
+\counterwithin{figure}{section} % Se numeran las figuras con respecto al capítulo en el que se encuentran.
+\counterwithin{equation}{section} % Se numeran las ecuaciones con respecto al capítulo en el que se encuentran.
+% ---------------------------------------------- %
+
+
+
+% ------------- Página en blanco ----------------%
+% Se define un comando (\blankpage) para insertar una página totalmente en blanco (sin número de página, encabezado y pie de página):
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \newpage}
+% ---------------------------------------------- %
+
+
+
+% ----------- Formato de los párrafos -----------%
+% El interlineado recomendado es el sencillo, con renglón libre entre párrafos. El texto debe ser justificado en ambos márgenes, de manera que quede constante la longitud de cada línea del párrafo.
+% Se define el formato de los párrafos:
+\setlength{\parindent}{0pt} % Se elimina la sangría en comienzo de párrafo (0pt).
+\setlength{\parskip}{1em} % Se define el espacio entre dos párrafos (1em).
+% ---------------------------------------------- % 
+
+
+
+% ---------- Leyendas y pies de foto ----------- %
+\captionsetup{justification=centering} % Justificación de las leyendas y pies de foto
+% ---------------------------------------------- %
+
+
+
+% -------------- Título adicional -------------- %
+% Se añade una profundidad adicional a los títulos (profundidad 4):
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4} % Se fija en 4 la profundidad de numeración de títulos.
+\setcounter{tocdepth}{4} % Se fija en 4 la profundidad de títulos incluidos en el índice.
+% Se modifica el formato de \paragraph (título de profundidad 4) para adaptarlo al formato del resto de títulos:
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex} 
+% ---------------------------------------------- %  
+
+
+
+% --------- Encabezado y pie de página -------- %
+% Es conveniente la utilización de encabezados y pies de páginas que proporcionen información auxiliar para la mejor lectura y compresión del proyecto, separados del cuerpo del texto por una línea continua y a 15 mm de los márgenes superior e inferior. A título orientativo, en las páginas pares se incluirá en el encabezamiento y justificado a la izquierda el apartado correspondiente (p.ej. Resultados) y en el pie se indicará justificado a la izquierda el número de página y justificado a la derecha “Escuela Técnica Superior de Ingenieros Industriales (UPM)”. En las páginas impares en el encabezamiento figurará justificado a la derecha el título entero del TFG o TFM o un título abreviado para que no exceda de una línea y en el pie se indicará justificado a la izquierda el nombre y apellidos del alumno y justificado a la derecha el número de página.
+% El encabezado y pie de página forman parte del paquete fancyhdr:
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+
+% Se ajusta el tamaño de fuente para el encabezado y pie de página (9pt)
+\fancyhf{\fontsize{2}{12}\selectfont}
+
+% Contenido del encabezado (\fancyhead):
+\fancyhead[RO]{\title} % Texto que se coloca en el encabezado de las páginas impares (O -> 'Odd', o impar) a la izquierda (R -> 'Odd')
+\fancyhead[LE]{\nouppercase{\rightmark}} % Texto que se coloca en el encabezado de las páginas pares (E -> 'Even', o par) a la izquierda (L -> 'Left'). \rightmark se utiliza para insertar automáticamente el título de la sección correspondiente, y \nouppercase para que no aparezca todo en mayúsculas (formato por defecto de \rightmark).
+
+% Contenido del pie de página (\fancyfoot):
+\fancyfoot[RE]{Escuela  Técnica  Superior  de  Ingenieros  Industriales  (UPM)} % Texto que se coloca en el pie de página de las páginas pares (E -> 'Even', o par) a la derecha (R -> 'Right')
+\fancyfoot[LO]{\author} % Texto que se coloca en el pie de página de las páginas impares (O -> 'Odd', o impar) a la izquierda (L -> 'Left')
+\fancyfoot[LE,RO]{\thepage} % El número de página (\thepage) se coloca a la izquierda en las páginas pares y a la derecha en las impares.
+
+% Se indica que sólo se quiere incorporar en \rightmark (utilizado más arriba) el título de la sección (y no de las subsecciones, subsubsecciones, etc.):
+\renewcommand{\sectionmark}[1]{\markright{\thesection. #1}}
+\renewcommand{\subsectionmark}[1]{}
+
+% Formato de la línea de separación horizontal:
+\renewcommand{\headrulewidth}{0.5pt} % Ancho de la línea del encabezado.
+\renewcommand{\footrulewidth}{0.5pt} % Ancho de la línea del pie de página.
+% ---------------------------------------------- % 
+
+
+
+% ----------- Fragmentos de código ------------- %
+% El paquete utilizado para insertar fragmentos de código en el documento es listings. En el presente bloque del preámbulo se definen ciertos parámetros de listings con el objetivo de adaptar dicho paquete a código escrito en Python.
+
+\usepackage{listings} % Paquete para insertar código. 
+\usepackage{xcolor} % Paquete para definir colores.
+
+% Se definen los distintos colores que se utilizan para resaltar ciertos elementos del código:
+\definecolor{codegreen}{rgb}{0.04314,0.6745,0.07843} % Verde.
+\definecolor{codegray}{rgb}{0.5,0.5,0.5} % Gris.
+\definecolor{codered}{rgb}{0.5373,0.02745,0.06275} % Rojo.
+\definecolor{codeblue}{rgb}{0.071,0.0258,0.9882} % Azul.
+\definecolor{codepurple}{rgb}{0.6,0.02745,0.5961} % Morado.
+
+% Se define el color de fondo:
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92} % Gris oscuro.
+
+% Se define el valor de ciertos parámetros de listings para adaptar dicho paquete a código escrito en Python:
+\lstdefinestyle{mystyle}{
+    % - General:
+    language=C++, % Lenguaje de programación.
+    basicstyle=\ttfamily\footnotesize, % Tipografía y tamaño de fuente.
+    % - Colores de los distintos elementos del código:
+    backgroundcolor=\color{backcolour}, % Color de fondo.  
+    commentstyle=\color{codegray}, % Color de los comentarios.
+    keywordstyle=\color{codeblue}, % Color de las palabras clave por defecto.
+    stringstyle=\color{codegreen}, % Color de los "string"
+    % - Palabras clave:
+    deletekeywords={print}, % Se elimina "print" del conjunto de palabras clave para posteriormente asignarle el color morado.
+    keywordstyle={[2]\ttfamily\color{codeblue}},
+    keywords=[2]{as}, % Se añaden las palabras clave de color azul.
+    keywordstyle={[3]\ttfamily\color{codepurple}},
+    keywords=[3]{True, False, ttk, list, None, dict, zip, range, len, print, float, sum}, % Se añaden las palabras clave de color morado.
+    keywordstyle={[4]\bfseries\ttfamily},
+    keywords=[4]{_read_excel}, % Se añaden las palabras clave en negrita.
+    emph={MyClass,__init__}, % Se añaden las palabras clave enfatizadas.   
+    % - Números de línea:
+    numberstyle=\tiny\color{codegray}, % Tamaño de fuente y color de los números de línea.
+    numbers=left, % Se colocan los números de línea en el lado izquierdo.                 
+    numbersep=5pt, % Separación horizontal de los números de línea.
+    % - Saltos a la línea, espacios, indentación:
+    breaklines=true, % Permitir saltos a la línea. 
+    breakatwhitespace=true, % Saltar a la línea únicamente al encontrar espacios.
+    postbreak = \mbox{{$\hookrightarrow$}\space}, % Se añade una flecha al cambiar de línea.
+    showspaces=false, % No mostrar los espacios. 
+    showstringspaces=false, % No mostrar los espacios en los "string".
+    keepspaces=true, % Mantener los espacios presentes en el código. 
+    tabsize=2, % Tamaño de indentación.
+    % - Título:
+    captionpos=b % Posición del título del fragmento de código (b=bottom - abajo).
+} 
+\lstset{style=mystyle} % Se asocia el estilo de listings al estilo que acaba de definirse ("mystyle")
+
+% Se realizan una serie de operaciones complementarias con el paquete listings (su comprensión no es necesaria para manejar dicho paquete):
+\makeatletter
+\def\lst@OpLiteratekey#1\@nil@{\let\lst@ifxopliterate\lst@if
+                             \def\lst@opliterate{#1}}
+\lst@Key{opliterate}{}{\@ifstar{\lst@true \lst@OpLiteratekey}
+                             {\lst@false\lst@OpLiteratekey}#1\@nil@}
+\lst@AddToHook{SelectCharTable}
+    {\ifx\lst@opliterate\@empty\else
+         \expandafter\lst@OpLiterate\lst@opliterate{}\relax\z@
+     \fi}
+\def\lst@OpLiterate#1#2#3{%
+    \ifx\relax#2\@empty\else
+        \lst@CArgX #1\relax\lst@CDef
+            {}
+            {\let\lst@next\@empty
+             \lst@ifxopliterate
+                \lst@ifmode \let\lst@next\lst@CArgEmpty \fi
+             \fi
+             \ifx\lst@next\@empty
+                 \ifx\lst@OutputBox\@gobble\else
+                   \lst@XPrintToken \let\lst@scanmode\lst@scan@m
+                   \lst@token{#2}\lst@length#3\relax
+                   \lst@XPrintToken
+                 \fi
+                 \let\lst@next\lst@CArgEmptyGobble
+             \fi
+             \lst@next}%
+            \@empty
+        \expandafter\lst@OpLiterate
+    \fi}
+
+\lstset{ 
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {Ã}{{\~A}}1 {ã}{{\~a}}1 {Õ}{{\~O}}1 {õ}{{\~o}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+  {º}{{\textordmasculine}}1}
+
+\lstset{opliterate=
+   *{0}{{{\color{codered}0}}}1 {1}{{{\color{codered}1}}}1 
+   {2}{{{\color{codered}2}}}1 {3}{{{\color{codered}3}}}1 
+   {4}{{{\color{codered}4}}}1 {5}{{{\color{codered}5}}}1 
+   {6}{{{\color{codered}6}}}1 {7}{{{\color{codered}7}}}1 
+   {8}{{{\color{codered}8}}}1 {9}{{{\color{codered}9}}}1}
+
+\DeclareCaptionType{code}[Código][ÍNDICE DE CÓDIGOS] % Se define el entorno "Código" (de forma que al introducir un fragmento de código en el documento aparezca como: Código 1.1: ...), y la lista con los distintos códigos ("Índice de códigos").
+\counterwithin{code}{section} % Se numeran los códigos con respecto al capítulo en el que se encuentran.
+% ---------------------------------------------- % 
+
+
+
+% --------------- Bibliografía ----------------- %
+% El manejo de la bibliografía se realiza mediante el paquete biblatex:
+\usepackage[backend=biber, style=authoryear, sorting=nyt, citestyle=authoryear, maxcitenames=2, maxbibnames=5, giveninits=true, uniquename=init]{biblatex} 
+
+% Los distintos parámetros que aparecen en la línea anterior corresponden a las siguientes características de la bibliografía:
+% - style: la manera en la que aparecen las referencias en la bibliografía. En este caso se opta por "authoryear", pero existen múltiples estilos posibles que se resumen en la siguiente guía: https://www.overleaf.com/learn/latex/biblatex_bibliography_styles.
+% - sorting: orden en el que aparecen las distintas referencias en la bibliografía. En este caso se opta por ordenarlas en primer lugar por el apellido del primer autor, en segundo lugar por el año de publicación, y por último por el título de la publicación (nyt=name-year-title)
+% - citestyle: elementos y orden de dichos elementos de una referencia al citarla en el documento. En este caso se escoge "authoryear" para que aparezca en primer lugar el apellido del autor (o de los autores) y en segundo lugar el año de publicación. Existe gran variedad de opciones en cuanto al parámetro citestyle que se resumen en: https://www.overleaf.com/learn/latex/biblatex_citation_styles.
+% maxcitenames: máximo número de autores que aparecen al citar una referencia en el documento. Al escoger un valor de 2 para este parámetro se pueden dar los siguientes casos: un único autor -> (autor, año), dos autores -> (autor 1 y/e autor 2, año), tres o más autores -> (autor 1 et al., año).
+% maxbibnames: parámetro idéntico al anterior pero para la bibliografía en lugar de las citas.
+% giveinits y uniquename: para mostrar únicamente las iniciales de los nombres de los autores.
+
+% Se importa el paquete csquotes para citar las referencias a lo largo del documento:
+\usepackage{csquotes} 
+
+% Se realizan una serie de operaciones para adaptar la bibliografía al estilo deseado (coma entre autor y año al citar una referencia, idioma castellano, etc.):
+\DeclareNameAlias{sortname}{family-given}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\setlength\bibitemsep{\baselineskip}
+\DefineBibliographyStrings{spanish}{%
+  andothers = {et\addabbrvspace al\adddot}
+}
+
+\makeatletter
+
+\newrobustcmd*{\parentexttrack}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \blx@bibopenparen#1\blx@bibcloseparen
+  \endgroup}
+
+\AtEveryCite{%
+  \let\parentext=\parentexttrack%
+  \let\bibopenparen=\bibopenbracket%
+  \let\bibcloseparen=\bibclosebracket}
+
+\makeatother
+
+\addbibresource{biblio.bib}
+% ---------------------------------------------- % 
+
+
+
+% ---------- Metadatos del documento ----------- %
+\title{TÍTULO}
+\author{Javier Jiménez Fernández}
+\date{Septiembre 2024}
+% ---------------------------------------------- %
+
+
+
+%%%%%%%%%%%% - INICIO DEL DOCUMENTO - %%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%% - PORTADA - %%%%%%%%%%%%%%%%%%
+
+% Se comienza una página nueva sin formato (sin número de página y sin encabezado/pie de página), ya que sólo incorpora la portada:
+\newpage
+\thispagestyle{empty}
+
+% La portada se inserta mediante el comando \includepdf seguido del archivo PDF correspondiente (que se ajusta automáticamente a las dimensiones de la página):
+\includepdf[landscape]{PORTADA_TFG_JAVIER_JIMENEZ_FERNANDEZ.pdf}
+
+% La página detrás de la portada va vacía
+\blankpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------- Numeración primeras páginas -------- %
+% Las páginas anteriores al contenido del TFG/TFM (previas a la introducción) suelen numerarse de forma distinta a las del cuerpo del informe, en este caso en números romanos:
+\pagenumbering{roman}
+% ---------------------------------------------- % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%% - PORTADA CAR - %%%%%%%%%%%%%%%%
+
+\newpage
+\thispagestyle{empty}
+
+%\includepdf{}
+Aquí va la portada del CAR \hfill \break
+\hfill \break
+\hfill \break
+
+logotipos \hfill \break
+\hfill \break
+
+UPM
+
+ETSII
+
+GITI \hfill \break
+\hfill \break
+
+Logotipo del CAR \hfill \break
+\hfill \break
+
+TFG
+
+Titulo \hfill \break
+\hfill \break
+\hfill \break
+
+Autor:
+
+Tutor Académico:
+
+Cotutor: \hfill \break
+\hfill \break
+\hfill \break
+
+Septiembre, 2024
+
+\afterpage{\blankpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%% - CITA - %%%%%%%%%%%%%%%%%%%%%
+
+% Se comienza una página nueva sin formato (sin número de página y sin encabezado/pie de página), ya que sólo incorpora la cita:
+\newpage
+\thispagestyle{empty}
+
+\begin{flushright} % Se alinea el texto en el lado derecho de la página.
+\vspace*{5cm} % Se añade un espacio vertical de 5cm para situar la cita en ~1/3 de la página.
+
+\textit{“La cita del trabajo iría aquí”} 
+
+\medskip % Salto a la línea de tamaño medio (existen \smallskip, \medskip y \bigskip)
+- El autor de la cita 
+
+\end{flushright}
+
+\afterpage{\blankpage} % Se añade una página en blanco después de la cita.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%% - AGRADECIMIENTOS - %%%%%%%%%%%%%%%%
+
+% Se comienza una página nueva con formato plano (sin encabezado/pie de página pero con número de página):
+\newpage
+\thispagestyle{plain}
+
+\section*{AGRADECIMIENTOS} % Se añade un asterisco a \section para que el título no esté numerado.
+\addcontentsline{toc}{section}{AGRADECIMIENTOS} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+Agradezco a \dots
+
+mi madre,
+Mandy,
+mi amigos,
+compañeros de la universidad,
+compañeros de trabajo,
+
+Barrientos,
+Chrystian,
+David,
+Jorge,
+
+Fernando Rivas y Volinga
+
+\afterpage{\blankpage} % Se añade una página en blanco después de los agradecimientos.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%% - RESUMEN EJECUTIVO - %%%%%%%%%%%%%
+
+\newpage
+\section*{RESUMEN EJECUTIVO} % Se añade un asterisco a \section para que el título no esté numerado.
+\markright{RESUMEN EJECUTIVO} % Al utilizar \section* se ha de añadir manualmente el título del apartado al encabezado.
+\addcontentsline{toc}{section}{RESUMEN EJECUTIVO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+Este documento constituye una guía (que sirve a su vez de plantilla) para la elaboración de informes de TFG o TFM en \LaTeX. No pretende abarcar todas y cada una de las funcionalidades que ofrece \LaTeX \ (¡las posibilidades son prácticamente infinitas!) pero sí tratar los aspectos fundamentales para la elaboración de un documento utilizando esta indispensable herramienta. Además de los elementos básicos de cualquier informe (índice, tablas, ecuaciones, bibliografía, etc.), esta guía incluye ``tutoriales'' y plantillas para algunos de los elementos presentes en todo (o casi todo) informe de TFG o TFM (como son el diagrama de Gantt o la EDP). 
+
+\textbf{Nota:} se ha tratado de explicar con detalle la mayor parte de elementos presentes en el documento, ya sea por medio de los capítulos y apartados que lo conforman o mediante explicaciones bajo la forma de comentarios en el código \LaTeX. Es especialmente importante examinar con atención el preámbulo de dicho código, ya que en él se llevan a cabo muchas de las operaciones esenciales que dan forma al documento.
+
+\afterpage{\blankpage} % Se añade una página en blanco después del resumen.
+
+\subsection*{Palabras clave} % Se añade un asterisco a \section para que el título no esté numerado.
+\addcontentsline{toc}{subsection}{Palabras clave} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+\subsection*{Códigos UNESCO}
+\addcontentsline{toc}{subsection}{Códigos UNESCO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%% - ÍNDICE - %%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\renewcommand*\contentsname{ÍNDICE} % Se modifica el nombre por defecto de la "Table Of Contents" (tabla de contenidos, índice) para pasar a llamarla "ÍNDICE".
+
+\tableofcontents % Se genera el índice de contenidos del documento que incorpora todos los títulos de \section, \subsection y \subsubsection (y también \paragraph, ver capítulo 1), así como los títulos añadidos con \addcontentsline (como el resumen ejecutivo, por ejemplo).
+
+\afterpage{\blankpage} % Se añade una página en blanco después del índice.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%% - ÍNDICE DE TABLAS - %%%%%%%%%%%%%%
+
+\newpage
+
+\renewcommand{\listtablename}{ÍNDICE DE TABLAS} % Se define el nombre del índice de tablas.
+\listoftables % Se genera automáticamente el índice con las distintas tablas del documento (entorno \table o \longtable).
+\addcontentsline{toc}{section}{ÍNDICE DE TABLAS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%% - ÍNDICE DE FIGURAS - %%%%%%%%%%%%%%
+
+\newpage
+
+\renewcommand{\listfigurename}{ÍNDICE DE FIGURAS} % Se define el nombre del índice de figuras.
+\listoffigures % Se genera automáticamente el índice con las distintas figuras del documento (entorno \figure).
+\addcontentsline{toc}{section}{ÍNDICE DE FIGURAS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%% - ÍNDICE DE CÓDIGOS - %%%%%%%%%%%%%
+
+\newpage
+
+\listofcodes % Se genera automáticamente el índice con los distintos códigos del documento (entorno \code).
+\addcontentsline{toc}{section}{ÍNDICE DE CÓDIGOS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
+
+\afterpage{\blankpage} % Se añade una página en blanco después del índice de códigos.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------- Numeración normal ------------- %
+% Se inicia una nueva página, y se restablece la numeración de las páginas, utilizando esta vez el sistema de numeración estándar (1, 2, 3, 4, ...)
+\newpage
+\pagenumbering{arabic}
+% ---------------------------------------------- % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%% - INTRODUCCIÓN - %%%%%%%%%%%%%%%%
+
+\newpage
+\section{INTRODUCCIÓN} \label{sec:introduccion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%% - ESTADO DEL ARTE - %%%%%%%%%%%%%%%
+
+\newpage
+\section{ESTADO DEL ARTE} \label{sec:estado_del_arte}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%% - OBJETIVOS - %%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{OBJETIVOS} \label{sec:objetivos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%% - HERRAMIENTAS UTILIZADAS - %%%%%%%%%%
+
+\newpage
+\section{HERRAMIENTAS UTILIZADAS} \label{sec:herramientas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%% - IMPLEMENTACIÓN - %%%%%%%%%%%%%%%
+
+\newpage
+\section{IMPLEMENTACIÓN} \label{sec:implementacion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%% - RESULTADOS Y DISCUSIÓN - %%%%%%%%%%%
+
+\newpage
+\section{RESULTADOS Y DISCUSIÓN} \label{sec:resultados_y_discusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%% - CONCLUSIONES - %%%%%%%%%%%%%%%%
+
+\newpage
+\section{CONCLUSIONES} \label{sec:conclusiones}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%% - LÍNEAS FUTURAS - %%%%%%%%%%%%%%%
+
+\newpage
+\section{LÍNEAS FUTURAS} \label{sec:lineas_futuras}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%% - BIBLIOGRAFÍA - %%%%%%%%%%%%%%%%
+
+\newpage
+\section*{BIBLIOGRAFÍA}
+\addcontentsline{toc}{section}{BIBLIOGRAFÍA} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+% Se genera la bibliografía mediante el comando \printbibliography (en ella aparecen únicamente las referencias citadas a lo largo del documento):
+\appto{\bibsetup}{\sloppy}
+\printbibliography[heading=bibintoc, title=BIBLIOGRAFÍA] % el argumento "title" puede modificarse indicando el título que convenga (bibliografía, referencias, etc.).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%% - ANEXOS - %%%%%%%%%%%%%%%%%%%
+% FALTA NUMERARLOS Y PONER LOS TÍTULOS EN MINÚSCULAS
+% (los índices de tablas, figuras y códigos son anexos y diría que las licencias también)
+
+\newpage
+
+\section*{ANEXOS} \label{sec:anexos} % Se añade un asterisco a \section para que el título no esté numerado.
+\addcontentsline{toc}{section}{ANEXOS} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+\markright{ANEXOS} % Al utilizar \section* se ha de añadir manualmente el título del apartado al encabezado.
+
+\renewcommand{\thesubsection}{\Alph{subsection}} % Se numeran los anexos con letras del alphabeto en lugar de números.
+% Se indica que las tablas, figuras y códigos se numeran con el código del anexo (A, B, C, ...) seguido del número de tabla, figura o código dentro del anexo (tabla A.2, figura C.1, etc.)
+\renewcommand{\thetable}{\Alph{subsection}.\arabic{table}}
+\renewcommand{\thefigure}{\Alph{subsection}.\arabic{figure}}
+\renewcommand{\thecode}{\Alph{subsection}.\arabic{code}}
+
+% ---------------- Primer anexo ---------------- %
+%%%%%%%%%%% - EVALUACIÓN DE IMPACTOS - %%%%%%%%%%%
+
+\subsection{Anexo I: Evaluación de impactos} \label{sec:anexo1}
+\subsubsection{Impacto ambiental} \label{sec:ambiental}
+\subsubsection{Impacto social} \label{sec:social}
+\subsubsection{Impacto ético} \label{sec:etico}
+\subsubsection{Impacto legal} \label{sec:legal}
+\subsubsection{Contribución a los Objetivos de Desarrollo Sostenible (ODS)} \label{sec:ods}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------------------- %
+
+
+% ---------------- Segundo anexo --------------- %
+%%% - PLANIFICACIÓN TEMPORAL Y PRESUPUESTOS - %%%%
+
+\newpage
+\subsection{Anexo II: Planificación temporal y presupuestos} \label{sec:anexo2}
+\subsubsection{Planificación temporal} \label{sec:temporal}
+\subsubsection{Presupuestos} \label{sec:presupuestos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------------------- %
+
+
+% ---------------- Tercer anexo ---------------- %
+%%%%%- ABREVIATURAS, UNIDADES Y ACRÓNIMOS - %%%%%%
+
+\newpage
+\subsection{Anexo III: Abreviaturas, unidades y acrónimos} \label{sec:anexo3}
+\subsubsection{Abreviaturas} \label{sec:abreviaturas}
+\subsubsection{Unidades} \label{sec:unidades}
+\subsubsection{Acrónimos} \label{sec:acronimos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------------------- %
+
+
+% ---------------- Cuarto anexo ---------------- %
+%%%%%%%%%%%%%%%%% - GLOSARIO - %%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Anexo IV: Glosario} \label{sec:anexo4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------------------- %
+
+
+% ---------------- Quinto anexo ---------------- %
+%%%%%%%%%%%%%%%%% - LICENCIAS - %%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Anexo V: Licencias} \label{sec:anexo5}
+
+\begin{wrapfigure}{L}{0.21\textwidth}
+    \vspace{-\baselineskip}
+    \href{http://creativecommons.org/licenses/by/4.0/}{\includegraphics[width=0.22\textwidth]{cc-by.png}}
+\end{wrapfigure} 
+
+\vspace*{\fill}
+``Plantilla en LaTeX acorde con la Normativa para la elaboración de informes de TFT de la ETSII (UPM)" \ by Javier Soto Pérez-Olivares is licensed under a \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International License}.
+% ---------------------------------------------- % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------------------- %
+
+
+%%%%%%%%%%%%%% - FIN DEL DOCUMENTO - %%%%%%%%%%%%%
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
