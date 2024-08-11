@@ -3,6 +3,14 @@
 
 %%%%%%%%%%%%%%%%% - PREÁMBULO - %%%%%%%%%%%%%%%%%
 
+
+% ---------- Metadatos del documento ----------- %
+\title{Digital Twins con control telemático inmersivo mediante el uso de realidad virtual generada por NeRF y 3DGS en tareas de rescate}
+\author{Javier Jiménez Fernández}
+\date{Septiembre 2024}
+% ---------------------------------------------- %
+
+
 % --------- Composición de la página ---------- %
 % Para el texto escrito se utilizará siempre hojas blancas de tamaño A4 (297 x 210 mm) que estarán escritas, preferentemente, por las dos caras. Existen numerosas fuentes válidas aunque se recomienda utilizar “Arial” (tamaño 11 puntos) o “Times New Roman” (tamaño 12 puntos).
 \documentclass[a4paper, 12pt, spanish, twoside]{article}
@@ -92,12 +100,12 @@
 \fancyhf{\fontsize{2}{12}\selectfont}
 
 % Contenido del encabezado (\fancyhead):
-\fancyhead[RO]{\title} % Texto que se coloca en el encabezado de las páginas impares (O -> 'Odd', o impar) a la izquierda (R -> 'Odd')
+\fancyhead[RO]{Digital Twins, control telemático y RV generada por NeRF y 3DGS en tareas de rescate} % Texto que se coloca en el encabezado de las páginas impares (O -> 'Odd', o impar) a la izquierda (R -> 'Odd')
 \fancyhead[LE]{\nouppercase{\rightmark}} % Texto que se coloca en el encabezado de las páginas pares (E -> 'Even', o par) a la izquierda (L -> 'Left'). \rightmark se utiliza para insertar automáticamente el título de la sección correspondiente, y \nouppercase para que no aparezca todo en mayúsculas (formato por defecto de \rightmark).
 
 % Contenido del pie de página (\fancyfoot):
 \fancyfoot[RE]{Escuela  Técnica  Superior  de  Ingenieros  Industriales  (UPM)} % Texto que se coloca en el pie de página de las páginas pares (E -> 'Even', o par) a la derecha (R -> 'Right')
-\fancyfoot[LO]{\author} % Texto que se coloca en el pie de página de las páginas impares (O -> 'Odd', o impar) a la izquierda (L -> 'Left')
+\fancyfoot[LO]{Javier Jiménez Fernández} % Texto que se coloca en el pie de página de las páginas impares (O -> 'Odd', o impar) a la izquierda (L -> 'Left')
 \fancyfoot[LE,RO]{\thepage} % El número de página (\thepage) se coloca a la izquierda en las páginas pares y a la derecha en las impares.
 
 % Se indica que sólo se quiere incorporar en \rightmark (utilizado más arriba) el título de la sección (y no de las subsecciones, subsubsecciones, etc.):
@@ -267,11 +275,14 @@
 % ---------------------------------------------- % 
 
 
+% ----------- Glosario y acrónimos ------------- %
+% Para el glosario y los acrónimos, que aparezcan en el índice y que sean una subsubsección
+\usepackage[section=subsubsection,acronym,toc]{glossaries}
 
-% ---------- Metadatos del documento ----------- %
-\title{TÍTULO}
-\author{Javier Jiménez Fernández}
-\date{Septiembre 2024}
+\makeglossaries
+\loadglsentries{glosario}
+\loadglsentries{acronimos}
+
 % ---------------------------------------------- %
 
 
@@ -293,6 +304,8 @@
 % La portada se inserta mediante el comando \includepdf seguido del archivo PDF correspondiente (que se ajusta automáticamente a las dimensiones de la página):
 \includepdf[landscape]{PORTADA_TFG_JAVIER_JIMENEZ_FERNANDEZ.pdf}
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 % La página detrás de la portada va vacía
 \blankpage
 
@@ -315,39 +328,33 @@
 \thispagestyle{empty}
 
 %\includepdf{}
-Aquí va la portada del CAR \hfill \break
-\hfill \break
-\hfill \break
+Aquí va la portada del CAR 
 
-logotipos \hfill \break
-\hfill \break
+logotipos 
 
 UPM
 
 ETSII
 
-GITI \hfill \break
-\hfill \break
+GITI 
 
-Logotipo del CAR \hfill \break
-\hfill \break
+Logotipo del CAR 
 
 TFG
 
-Titulo \hfill \break
-\hfill \break
-\hfill \break
+Digital Twins con control telemático inmersivo mediante el uso de realidad virtual generada por NeRF y 3DGS en tareas de rescate
 
-Autor:
+Autor: Javier Jiménez Fernández
 
-Tutor Académico:
+Tutor Académico: Antonio Barrientos Cruz
 
-Cotutor: \hfill \break
-\hfill \break
-\hfill \break
+Cotutor:  Christyan Mario Cruz Ulloa
 
 Septiembre, 2024
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+% La página detrás de la portada del CAR va vacía
 \afterpage{\blankpage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -370,6 +377,8 @@ Septiembre, 2024
 
 \end{flushright}
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 \afterpage{\blankpage} % Se añade una página en blanco después de la cita.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -400,6 +409,8 @@ Jorge,
 
 Fernando Rivas y Volinga
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 \afterpage{\blankpage} % Se añade una página en blanco después de los agradecimientos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -413,17 +424,17 @@ Fernando Rivas y Volinga
 \markright{RESUMEN EJECUTIVO} % Al utilizar \section* se ha de añadir manualmente el título del apartado al encabezado.
 \addcontentsline{toc}{section}{RESUMEN EJECUTIVO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
 
-Este documento constituye una guía (que sirve a su vez de plantilla) para la elaboración de informes de TFG o TFM en \LaTeX. No pretende abarcar todas y cada una de las funcionalidades que ofrece \LaTeX \ (¡las posibilidades son prácticamente infinitas!) pero sí tratar los aspectos fundamentales para la elaboración de un documento utilizando esta indispensable herramienta. Además de los elementos básicos de cualquier informe (índice, tablas, ecuaciones, bibliografía, etc.), esta guía incluye ``tutoriales'' y plantillas para algunos de los elementos presentes en todo (o casi todo) informe de TFG o TFM (como son el diagrama de Gantt o la EDP). 
 
-\textbf{Nota:} se ha tratado de explicar con detalle la mayor parte de elementos presentes en el documento, ya sea por medio de los capítulos y apartados que lo conforman o mediante explicaciones bajo la forma de comentarios en el código \LaTeX. Es especialmente importante examinar con atención el preámbulo de dicho código, ya que en él se llevan a cabo muchas de las operaciones esenciales que dan forma al documento.
-
-\afterpage{\blankpage} % Se añade una página en blanco después del resumen.
 
 \subsection*{Palabras clave} % Se añade un asterisco a \section para que el título no esté numerado.
 \addcontentsline{toc}{subsection}{Palabras clave} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
 
 \subsection*{Códigos UNESCO}
 \addcontentsline{toc}{subsection}{Códigos UNESCO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+\afterpage{\blankpage} % Se añade una página en blanco después del resumen.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -437,6 +448,8 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \tableofcontents % Se genera el índice de contenidos del documento que incorpora todos los títulos de \section, \subsection y \subsubsection (y también \paragraph, ver capítulo 1), así como los títulos añadidos con \addcontentsline (como el resumen ejecutivo, por ejemplo).
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 \afterpage{\blankpage} % Se añade una página en blanco después del índice.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -451,6 +464,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \listoftables % Se genera automáticamente el índice con las distintas tablas del documento (entorno \table o \longtable).
 \addcontentsline{toc}{section}{ÍNDICE DE TABLAS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -463,6 +479,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \listoffigures % Se genera automáticamente el índice con las distintas figuras del documento (entorno \figure).
 \addcontentsline{toc}{section}{ÍNDICE DE FIGURAS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -474,6 +493,8 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \listofcodes % Se genera automáticamente el índice con los distintos códigos del documento (entorno \code).
 \addcontentsline{toc}{section}{ÍNDICE DE CÓDIGOS} % Se añade manualmente el apartado al índice (Table Of Contents, TOC).
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 \afterpage{\blankpage} % Se añade una página en blanco después del índice de códigos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -495,6 +516,11 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \newpage
 \section{INTRODUCCIÓN} \label{sec:introduccion}
 
+Como todo en la vida existe un desencadenante, una chispa, un comienzo
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -503,6 +529,30 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \newpage
 \section{ESTADO DEL ARTE} \label{sec:estado_del_arte}
+
+La tecnología de \gls{renderizado} de \glspl{radiancefield} en tiempo real ha dado un salto importante en los últimos 2 años generando multitud de áreas de investigación e implementaciones que sorprenden por el realismo de los objetos y entornos generados.
+
+Según las publicaciones en papers como \acrfull{nerf} o \acrfull{3dgs} a partir de vídeo o imágenes tomadas por un dispositivo cualquiera, una \gls{redneuronal} es capaz de generar un modelo \acrshort{3d} realista del objeto o entorno filmado o fotografiado en un tiempo reducido de segundos. La inmediatez mencionada no siempre es operativamente cierta como veremos más adelante.
+
+%hablar de la historia de neural radiante fields (NeRF) y como era un concepto teórico que no había sido posible implementar en todo su potencial.
+
+%Contar un poco también de las movidas que conté en mi presentación del año pasado
+
+En enero de 2022 se publica un artículo
+%hablar de NVIDIA instant-ngp
+
+%hablar de como se ve su potencial en audiovisuales pero en realidad surge de un entorno cientifico
+
+%casos en los que se usa, hablar del congreso de NVIDIA y de las últimas tendencias
+
+%acercamiento a esta tecnología para digital twins
+
+%hablar de gaussian splatting
+
+
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -513,6 +563,17 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \newpage
 \section{OBJETIVOS} \label{sec:objetivos}
 
+Los modelos \acrshort{3d} de la realidad en los que se simulan los \glspl{digitaltwin} deben ser copias lo más fiables posibles del entorno en el que trabajan los robots. 
+
+El objeto de este trabajo es, por un lado, la creación de modelos \acrshort{3d} más realistas que los generados por \gls{fotogrametria} actualmente, especialmente mejorando la resolución y la interpretación de superficies transparentes o reflectantes. 
+
+Para ello se hará uso de nuevas tecnologías en generación de entornos \acrshort{3d}, como \acrfull{nerf} o \acrfull{3dgs}.
+
+Por otro lado, también es objeto del presente trabajo ensayar su robustez y el tiempo de despliegue de la tecnología en situaciones de aplicación realistas así como la compatibilidad con las líneas de investigación actuales del laboratorio \acrshort{robcib} del \acrshort{car} \acrshort{upm}-\acrshort{csic}.
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -521,6 +582,64 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \newpage
 \section{HERRAMIENTAS UTILIZADAS} \label{sec:herramientas}
+
+% -------- Neural Radiance Fields (NeRF) ------- %
+\subsection{Neural Radiance Fields (NeRF)} \label{sec:herramientas:nerf}
+% https://radiancefields.com/
+
+\subsubsection{instant-ngp} \label{sec:herramientas:nerf:instant-ngp}
+% https://nvlabs.github.io/instant-ngp/
+% https://github.com/NVlabs/instant-ngp
+% https://developer.nvidia.com/blog/getting-started-with-nvidia-instant-nerfs/
+
+\subsubsection{nerfstudio} \label{sec:herramientas:nerf:nerfstudio}
+% https://docs.nerf.studio/
+% ---------------------------------------------- %
+
+
+% -------- 3D Gaussian Splatting (3DGS) -------- %
+\subsection{3D Gaussian Splatting (3DGS)} \label{sec:herramientas:3dgs}
+% https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
+
+\subsubsection{nerfstudio} \label{sec:herramientas:3dgs:nerfstudio}
+% ---------------------------------------------- %
+
+
+% ------------- Unreal Engine (UE) ------------- %
+\subsection{Unreal Engine (UE)} \label{sec:herramientas:ue}
+% ---------------------------------------------- %
+
+
+% ------------------ Volinga ------------------- %
+\subsection{Volinga} \label{sec:herramientas:volinga}
+% https://docs.nerf.studio/extensions/unreal_engine.html
+% https://volinga.ai/
+% https://github.com/Volinga/volinga-model
+% ---------------------------------------------- %
+
+
+% ----------------- VirtualBox ----------------- %
+\subsection{VirtualBox} \label{sec:herramientas:virtualbox}
+% ---------------------------------------------- %
+
+
+% -------- Robot Operating System (ROS) -------- %
+\subsection{Robot Operating System (ROS)} \label{sec:herramientas:ros}
+% ---------------------------------------------- %
+
+
+% --------------- ROSIntegration --------------- %
+\subsection{ROSIntegration} \label{sec:herramientas:rosintegration}
+% ---------------------------------------------- %
+
+
+% ------------------ Blender ------------------- %
+\subsection{Blender} \label{sec:herramientas:blender}
+% ---------------------------------------------- %
+
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -531,6 +650,105 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \newpage
 \section{IMPLEMENTACIÓN} \label{sec:implementacion}
 
+% Hacer breve resumen de la implementacion
+
+% crear subsecciones
+
+% ir en orden de cómo fui haciendo las cosas y contar lo más importante de mi desarrollo
+
+% hacer referencia a los manuales (publicarlos en github?)
+
+Para empezar se probará la tecnología que hizo comenzar el presente trabajo: \gls{instant-ngp}.
+
+\gls{instant-ngp} desarrollado por NVIDIA pero una vez generado el modelo 3D como nube de puntos la exportación a un entorno gráfico 3D como Unity o Unreal Engine se hace perdiendo demasiada información (perdemos las mejoras que ganábamos con esta nueva tecnología).
+
+Se prueba NerfStudio en conjunto con Volinga Suite para generar una nube de puntos exportable a Unreal Engine 5 con resultado satisfactorio. Aunque tiene las siguientes pegas:
+
+\begin{itemize}
+\item La nube de puntos no interactúa físicamente con los Actores del juego (por ejemplo, el robot), es como si fuera una bruma, se puede atravesar.
+
+\item La integración con la realidad virtual no está optimizada, se puede ver con gafas de realidad virtual, pero se ve doble.
+\end{itemize}
+
+Se decide seguir adelante con la segunda opción: NerfStudio+Volinga.
+
+\subsection{Instant-ngp de NVIDIA}
+
+Requiere un entorno con paquete de desarrollo de motor gráfico Cuda 11.8 y toda la configuración que ello conlleva. Se decide crear el entorno en Ubuntu 18.04 por compatibilidad con ROS y lo ya desarrollado hasta el momento en el laboratorio.
+
+Se agregan todos los programas y librerías de dependencias para la instalación de Cuda así como todos los requisitos posteriores a la instalación como por ejemplo la prueba de los cuda-samples para verificar su correcto funcionamiento.
+
+Además, para la interpretación de la fotogrametría que incluye el flujo de trabajo de instant-ngp en su aplicación de Python es necesario un programa externo por ejemplo Colmap y ffmpeg. Se instalan y agregan sus dependencias.
+
+Por último, se descarga el código fuente de instant-ngp del GitHub de NVIDIA Labs que es open source. Una vez compilado e instaladas las dependencias ya está listo para usar.
+
+Para más detalle sobre la instalación ver anexos de configuración del entorno.
+
+Una vez configurado se puede lanzar el script de Python que transforma el vídeo directamente en su modelo 3D. Este hace uso de Colmap y ffmpeg para extraer fotogramas del vídeo formando un dataset y generar la fotogrametría de dicho dataset de imágenes. Esta información de fotogrametría junto con las imágenes es el input de la red neuronal que en segundos (entre 30 segundos y un minuto) es capaz de generar un modelo 3D de alta fidelidad del objeto o entorno de estudio.
+
+Por desgracia la generación de la fotogrametría es muy costosa y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar.
+
+La herramienta de instant-ngp de NVIDIA tiene un visor para observar los resultados de entrenamiento de la red en tiempo real y ver cómo la imagen 3D se va generando. Una vez obtenido un resultado aceptable el entrenamiento se puede detener y perfilar, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario.
+
+Moverse por dentro del entorno 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y no es muy cómodo debido a la lentitud de nuestro sistema. Aun así se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes.
+
+Una vez seleccionada un área de recorte (que puede incluir al modelo entero) se puede exportar el resultado en forma de objeto sólido o mesh interpretable por la mayoría de los motores gráficos del mercado.
+
+Este mesh está formado por vértices unidos mediante triángulos. Los dos principales problemas de este tipo de exportación de objeto sólido son:
+
+\begin{itemize}
+\item La resolución máxima a la que se puede exportar el objeto, es decir, el número máximo de vértices que contiene. Ésta viene limitada por la capacidad de procesamiento la unidad gráfica de nuestro ordenador.
+
+\item La pérdida de la propiedad del color. El estándar archivo generado de tipo .obj no contiene información de color sólo de la posición de los vértices. Aunque el archivo generado por instant-ngp sí contiene información sobre el color, ésta sólo es interpretada por algunos motores gráficos como MeshLab, pero no por la mayoría ni por los que se usan en el desarrollo de aplicaciones de robótica.
+\end{itemize}
+
+Por tanto, cuando tratamos de exportar este mesh por ejemplo a Unity lo veremos blanco y en baja resolución. Para objetos individuales se puede alcanzar una resolución aceptable, pero para un entorno como una habitación o una zona exterior la pérdida de información se multiplica y se convierte en aceptable, generándose volúmenes que poco se parecen a la realidad.
+
+Se intenta la exportación de la nube de puntos de forma directa, pero genera incompatibilidad de interpretación con los motores gráficos conocidos y se deshecha la idea.
+
+Dado que en la exportación se pierde todo su potencial y en la práctica no supone una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como ayuda a la generación de entornos 3D para el entrenamiento de robots mediante la tecnología de Digital Twins.
+
+\subsection{NerfStudio + Volinga}
+
+Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para instant-nerfs en Ubuntu 18.04. Siguiendo la guía de NerfStudio se consigue generar un resultado similar al de instant-nerfs a partir del mismo input. Por ahora la gran diferencia está en el visualizador web de NerfStudio que es mucho más cómodo y amable con el usuario que el visualizador de instant-ngp.
+
+Para su exportación a Unreal Engine se pide una clave de acceso anticipada para investigación en Volinga Suite. A través de su aplicación web se genera el objeto de tipo .nvol compatible con Unreal Engine. Volinga Suite sólo es compatible con Unreal Engine a partir de la versión 5.0 (UE5), esto será problemático en ciertos momentos en la integración de Unreal Engine con ROS.
+
+Para la instalación de UE5 en Ubuntu es necesaria la descarga y compilación del código fuente de la aplicación. Se pide acceso al panel de desarrolladores de Unreal Engine en la zona de registro de
+
+organizaciones de GitHub. Una vez concedido se descarga el código fuente y se genera el entorno de trabajo para UE5.
+
+El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que debemos generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg.
+
+Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 se hará en la nueva partición que hemos creado para Ubuntu 20.04.
+
+Es necesario instalar el plugin de Volinga en UE5 a fin de que éste interprete el objeto de tipo .nvol generado por la aplicación web de Volinga. Pero Volinga no soporta un entorno Linux, así que debemos instalar UE5 en Windows.
+
+Con el plugin de Volinga instalado en UE5 se puede arrastrar directamente el objeto y visualizar un modelo 3D muy similar al que se genera en la red neuronal original de NerfStudio previo al paso por la aplicación web de Volinga. Hay una cierta pérdida de resolución debida a la optimización del objeto para ser renderizado en un motor de videojuegos, pero la consideramos aceptable y supone igualmente una mejora enorme en cuanto a realismo con tecnologías previas.
+
+El único problema es el consumo de recursos de UE5, hace que la simulación con el ordenador vaya lenta y no es cómodo.
+
+Una vez tenemos esto intentamos la conexión con ROS, que para Unreal Engine se lleva a cabo con una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
+
+Para la comunicación con los robots se utiliza ROS, que es el estándar para aplicaciones de robótica. ROS está optimizado para funcionar en Ubuntu y su instalación en Windows es problemática, es por ello que para permitir la comunicación entre UE5 y ROS instalaremos Ubuntu 20.04. en una máquina vitual del VirtualBox 7 y realizaremos la conexión con el host de Windows mediante SSH. La conexión SSH se hace por defecto a través del puerto 22 de la máquina virtual, pero para no usar un puerto reservado la realizaremos a través de un puerto no reservado (entre el 1024 y el 65536) por ejemplo el puerto 2222.
+
+Para que funcione la conexión con ROS debemos instalar ROSBridge en nuestra máquina virtual y habilitar otro puerto para la conexión con el host de Windows. Se usa por convenio el puerto 9090. Debe lanzarse ROSBridge con una configuración específica para funcionar con ROSIntegration. Una vez establecida la conexión podemos publicar y suscribirnos a los topics o services de ROS que queramos a ambos lados de la conexión.
+
+Comprobamos que la comunicación entre ROS y UE5 a través de ROSBridge y ROSIntegration funciona correctamente.
+
+Por desgracia ROSIntegration sólo tiene implementada la suscripción a los mensajes estándar de ROS,
+
+TBD:
+
+A continuación, hablar de ROSIntegration e incompatibilidad, cómo hacer los topic y si se pueden modificar
+
+Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero)
+
+Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica”
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -539,6 +757,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \newpage
 \section{RESULTADOS Y DISCUSIÓN} \label{sec:resultados_y_discusion}
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -549,6 +770,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 \newpage
 \section{CONCLUSIONES} \label{sec:conclusiones}
 
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -557,6 +781,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \newpage
 \section{LÍNEAS FUTURAS} \label{sec:lineas_futuras}
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -571,6 +798,9 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 % Se genera la bibliografía mediante el comando \printbibliography (en ella aparecen únicamente las referencias citadas a lo largo del documento):
 \appto{\bibsetup}{\sloppy}
 \printbibliography[heading=bibintoc, title=BIBLIOGRAFÍA] % el argumento "title" puede modificarse indicando el título que convenga (bibliografía, referencias, etc.).
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -601,11 +831,14 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 %%%%%%%%%%% - EVALUACIÓN DE IMPACTOS - %%%%%%%%%%%
 
 \subsection{Anexo I: Evaluación de impactos} \label{sec:anexo1}
-\subsubsection{Impacto ambiental} \label{sec:ambiental}
-\subsubsection{Impacto social} \label{sec:social}
-\subsubsection{Impacto ético} \label{sec:etico}
-\subsubsection{Impacto legal} \label{sec:legal}
+\subsubsection{Impacto ambiental} \label{sec:anexo1:ambiental}
+\subsubsection{Impacto social} \label{sec:anexo1:social}
+\subsubsection{Impacto ético} \label{sec:anexo1:etico}
+\subsubsection{Impacto legal} \label{sec:anexo1:legal}
 \subsubsection{Contribución a los Objetivos de Desarrollo Sostenible (ODS)} \label{sec:ods}
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ---------------------------------------------- %
@@ -616,41 +849,45 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \newpage
 \subsection{Anexo II: Planificación temporal y presupuestos} \label{sec:anexo2}
-\subsubsection{Planificación temporal} \label{sec:temporal}
-\subsubsection{Presupuestos} \label{sec:presupuestos}
+\subsubsection{Planificación temporal} \label{sec:anexo2:temporal}
+\subsubsection{Presupuestos} \label{sec:anexo2:presupuestos}
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ---------------------------------------------- %
 
 
 % ---------------- Tercer anexo ---------------- %
-%%%%%- ABREVIATURAS, UNIDADES Y ACRÓNIMOS - %%%%%%
+%%%%%%%%%%%% - GLOSARIO Y ACRÓNIMOS - %%%%%%%%%%%%
 
 \newpage
-\subsection{Anexo III: Abreviaturas, unidades y acrónimos} \label{sec:anexo3}
-\subsubsection{Abreviaturas} \label{sec:abreviaturas}
-\subsubsection{Unidades} \label{sec:unidades}
-\subsubsection{Acrónimos} \label{sec:acronimos}
+\subsection{Anexo III: Glosario y acrónimos} \label{sec:anexo3}
+
+\glsaddall
+
+% Hacer más grande el tamaño del título de la subsubseccion glosario y acronimos
+%\renewcommand{\subsubsectionsize}{\large}
+
+\printglossary[title=Glosario, toctitle=Glosario]
+
+\printglossary[type=\acronymtype, title=Acrónimos, toctitle=Acrónimos]
+
+%\renewcommand{\subsubsectionsize}{\normal}
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ---------------------------------------------- %
 
 
 % ---------------- Cuarto anexo ---------------- %
-%%%%%%%%%%%%%%%%% - GLOSARIO - %%%%%%%%%%%%%%%%%%%
-
-\newpage
-\subsection{Anexo IV: Glosario} \label{sec:anexo4}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ---------------------------------------------- %
-
-
-% ---------------- Quinto anexo ---------------- %
 %%%%%%%%%%%%%%%%% - LICENCIAS - %%%%%%%%%%%%%%%%%%
 
 \newpage
-\subsection{Anexo V: Licencias} \label{sec:anexo5}
+\subsection{Anexo IV: Licencias} \label{sec:anexo4}
 
 \begin{wrapfigure}{L}{0.21\textwidth}
     \vspace{-\baselineskip}
@@ -659,6 +896,10 @@ Este documento constituye una guía (que sirve a su vez de plantilla) para la el
 
 \vspace*{\fill}
 ``Plantilla en LaTeX acorde con la Normativa para la elaboración de informes de TFT de la ETSII (UPM)" \ by Javier Soto Pérez-Olivares is licensed under a \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International License}.
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
 % ---------------------------------------------- % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ---------------------------------------------- %
