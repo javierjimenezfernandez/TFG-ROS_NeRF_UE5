@@ -370,10 +370,10 @@ Septiembre, 2024
 \begin{flushright} % Se alinea el texto en el lado derecho de la página.
 \vspace*{5cm} % Se añade un espacio vertical de 5cm para situar la cita en ~1/3 de la página.
 
-\textit{“La cita del trabajo iría aquí”} 
+\textit{“El éxito en la vida no se mide por lo que has logrado, sino por los obstáculos que has superado.”} 
 
 \medskip % Salto a la línea de tamaño medio (existen \smallskip, \medskip y \bigskip)
-- El autor de la cita 
+- Robert Baden-Powell 
 
 \end{flushright}
 
@@ -516,7 +516,15 @@ Fernando Rivas y Volinga
 \newpage
 \section{INTRODUCCIÓN} \label{sec:introduccion}
 
-Como todo en la vida existe un desencadenante, una chispa, un comienzo
+Siempre existe un desencadenante, una chispa, un comienzo. En este caso fue un vídeo de YouTube. En enero de 2022 el divulgador científico sobre \gls{inteligenciaartificial} \href{https://www.youtube.com/@DotCSV}{@DotCSV} habló del recién publicado paper de \gls{nvidia} Developers \gls{nvlabs} \textit{instant-ngp} (\cite{mueller2022instant}). El resultado me impresionó tanto que cuando el curso siguiente me acerqué al \acrfull{robcib} buscando un tutor para mi proyecto final de carrera y Christyan me habló sobre generación de entornos y realidad virtuales al instante supe que era lo que estaba buscando. Le propuse ser quien probase esta nueva tecnología. 
+
+Así comienza una larga historia pues ni fue mi último año de carrera ni esta nueva tecnología era fácil ni simple de implementar. 
+
+A final del curso 2022/2023 había conseguido probar la tecnología de NeRF, pero no había conseguido implementarla de manera satisfactoria con el control de los robots. No lo sabía, pero aún estaba a mitad de camino. Me quedaba madurar más mi investigación y formarme en el uso de nuevas herramientas para llegar al fin donde nos encontramos. 
+
+Hoy me siento orgulloso de lo que he logrado, la paciencia ha dado sus frutos y por fin he hecho el proyecto que quería.  
+
+Tras de mi queda el presente proyecto y toda la documentación para que los que vengan después de mi puedan continuar por este camino.  
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
@@ -569,7 +577,21 @@ El objeto de este trabajo es, por un lado, la creación de modelos \acrshort{3d}
 
 Para ello se hará uso de nuevas tecnologías en generación de entornos \acrshort{3d}, como \acrfull{nerf} o \acrfull{3dgs}.
 
-Por otro lado, también es objeto del presente trabajo ensayar su robustez y el tiempo de despliegue de la tecnología en situaciones de aplicación realistas así como la compatibilidad con las líneas de investigación actuales del laboratorio \acrshort{robcib} del \acrshort{car} \acrshort{upm}-\acrshort{csic}.
+Por otro lado, también es objeto del presente trabajo ensayar su robustez y el tiempo de despliegue de la tecnología en situaciones de aplicación realistas, así como la compatibilidad con las líneas de investigación actuales del laboratorio \acrshort{robcib} del \acrshort{car} \acrshort{upm}-\acrshort{csic}.
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%% - METODOLOGÍA - %%%%%%%%%%%%%%%%%
+
+\newpage
+\section{METODOLOGÍA} \label{sec:metodologia}
+
+% Contar bonito que llevo una bitacora y un excel de conteo de horas de trabajo y voy desarrollando manuales de configuración y puesta en marcha de todo lo que voy haciendo por el camino
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
@@ -583,8 +605,11 @@ Por otro lado, también es objeto del presente trabajo ensayar su robustez y el 
 \newpage
 \section{HERRAMIENTAS UTILIZADAS} \label{sec:herramientas}
 
+% aparte de las obvias (word, excel, ppt, latex, editor de video, etc.)
+
 % -------- Neural Radiance Fields (NeRF) ------- %
 \subsection{Neural Radiance Fields (NeRF)} \label{sec:herramientas:nerf}
+% https://www.matthewtancik.com/nerf
 % https://radiancefields.com/
 
 \subsubsection{instant-ngp} \label{sec:herramientas:nerf:instant-ngp}
@@ -628,6 +653,12 @@ Por otro lado, también es objeto del presente trabajo ensayar su robustez y el 
 % ---------------------------------------------- %
 
 
+% --------------- Rosbridge --------------- %
+\subsection{Rosbridge} 
+\label{sec:herramientas:rosbridge}
+% ---------------------------------------------- %
+
+
 % --------------- ROSIntegration --------------- %
 \subsection{ROSIntegration} \label{sec:herramientas:rosintegration}
 % ---------------------------------------------- %
@@ -650,63 +681,115 @@ Por otro lado, también es objeto del presente trabajo ensayar su robustez y el 
 \newpage
 \section{IMPLEMENTACIÓN} \label{sec:implementacion}
 
-% Hacer breve resumen de la implementacion
+\subsection{Líneas generales} 
 
-% crear subsecciones
+o
 
-% ir en orden de cómo fui haciendo las cosas y contar lo más importante de mi desarrollo
+\subsection{Breve resumen de la implementación} 
 
-% hacer referencia a los manuales (publicarlos en github?)
+En un primer momento se prueba \gls{instant-ngp} a partir del paper de dicha investigación. 
 
-Para empezar se probará la tecnología que hizo comenzar el presente trabajo: \gls{instant-ngp}.
+Una vez generado el modelo 3D como nube de puntos la exportación se hace perdiendo demasiada información (perdemos las mejoras que ganábamos con esta nueva tecnología), así que se descarta este camino y se buscan otras opciones. 
 
-\gls{instant-ngp} desarrollado por NVIDIA pero una vez generado el modelo 3D como nube de puntos la exportación a un entorno gráfico 3D como Unity o Unreal Engine se hace perdiendo demasiada información (perdemos las mejoras que ganábamos con esta nueva tecnología).
+Se prueba NerfStudio, que en conjunto con Volinga Suite permite generar una nube de puntos exportable a Unreal Engine 5 con resultado satisfactorio. Aunque tiene las siguientes desventajas: 
 
-Se prueba NerfStudio en conjunto con Volinga Suite para generar una nube de puntos exportable a Unreal Engine 5 con resultado satisfactorio. Aunque tiene las siguientes pegas:
+\begin{itemize} 
+\item La nube de puntos no interactúa físicamente con los \gls{actores} dentro de \gls{unrealengine} (por ejemplo, el robot). La sensación visual es como si fuera una bruma, se puede atravesar. 
 
-\begin{itemize}
-\item La nube de puntos no interactúa físicamente con los Actores del juego (por ejemplo, el robot), es como si fuera una bruma, se puede atravesar.
+\item La integración con la realidad virtual no está optimizada, al visualizarlo con las gafas de realidad virtual se ve doble. 
+\end{itemize} 
 
-\item La integración con la realidad virtual no está optimizada, se puede ver con gafas de realidad virtual, pero se ve doble.
-\end{itemize}
+Se decide seguir adelante con el desarrollo usando la segunda opción: NerfStudio+Volinga durante un tiempo. 
 
-Se decide seguir adelante con la segunda opción: NerfStudio+Volinga.
+Se consigue generar un \gls{modelo3d} básico del robot en \acrshort{ue} y controlar su movimiento mediante órdenes de tipo \gls{twist}. Estas órdenes se mandan mediante unas flechas flotantes dentro de la interfaz. 
 
-\subsection{Instant-ngp de NVIDIA}
+Se consigue el control del robot real mediante el uso de la herramienta \gls{rosintegration} para \arcshort{ue} en conjunto con \gls{rosbridge} para la conexión con la máquina virtual donde se alojan los nodos de \acrshort{ros}. 
 
-Requiere un entorno con paquete de desarrollo de motor gráfico Cuda 11.8 y toda la configuración que ello conlleva. Se decide crear el entorno en Ubuntu 18.04 por compatibilidad con ROS y lo ya desarrollado hasta el momento en el laboratorio.
+Más adelante Volinga lanza una versión alpha, a la cual esta investigación tiene acceso en exclusiva, en la que se integra la compatibilidad con la realidad virtual. Esta versión es compatible únicamente con \acrshort{3dgs}. 
 
-Se agregan todos los programas y librerías de dependencias para la instalación de Cuda así como todos los requisitos posteriores a la instalación como por ejemplo la prueba de los cuda-samples para verificar su correcto funcionamiento.
-
-Además, para la interpretación de la fotogrametría que incluye el flujo de trabajo de instant-ngp en su aplicación de Python es necesario un programa externo por ejemplo Colmap y ffmpeg. Se instalan y agregan sus dependencias.
-
-Por último, se descarga el código fuente de instant-ngp del GitHub de NVIDIA Labs que es open source. Una vez compilado e instaladas las dependencias ya está listo para usar.
-
-Para más detalle sobre la instalación ver anexos de configuración del entorno.
-
-Una vez configurado se puede lanzar el script de Python que transforma el vídeo directamente en su modelo 3D. Este hace uso de Colmap y ffmpeg para extraer fotogramas del vídeo formando un dataset y generar la fotogrametría de dicho dataset de imágenes. Esta información de fotogrametría junto con las imágenes es el input de la red neuronal que en segundos (entre 30 segundos y un minuto) es capaz de generar un modelo 3D de alta fidelidad del objeto o entorno de estudio.
-
-Por desgracia la generación de la fotogrametría es muy costosa y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar.
-
-La herramienta de instant-ngp de NVIDIA tiene un visor para observar los resultados de entrenamiento de la red en tiempo real y ver cómo la imagen 3D se va generando. Una vez obtenido un resultado aceptable el entrenamiento se puede detener y perfilar, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario.
-
-Moverse por dentro del entorno 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y no es muy cómodo debido a la lentitud de nuestro sistema. Aun así se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes.
-
-Una vez seleccionada un área de recorte (que puede incluir al modelo entero) se puede exportar el resultado en forma de objeto sólido o mesh interpretable por la mayoría de los motores gráficos del mercado.
-
-Este mesh está formado por vértices unidos mediante triángulos. Los dos principales problemas de este tipo de exportación de objeto sólido son:
+Se decide probar \acrshort{3dgs} observándose las siguientes diferencias operativas de esta tecnología frente a \acrshort{nerf}: 
 
 \begin{itemize}
-\item La resolución máxima a la que se puede exportar el objeto, es decir, el número máximo de vértices que contiene. Ésta viene limitada por la capacidad de procesamiento la unidad gráfica de nuestro ordenador.
+\item En la optimización de los splats de \acrshort{3dgs} a veces no se obtienen resultados tan satisfactorios como en \acrshort{nerf}, pero el \gls{modelo3d} generado es de una calidad altamente satisfactoria. 
 
-\item La pérdida de la propiedad del color. El estándar archivo generado de tipo .obj no contiene información de color sólo de la posición de los vértices. Aunque el archivo generado por instant-ngp sí contiene información sobre el color, ésta sólo es interpretada por algunos motores gráficos como MeshLab, pero no por la mayoría ni por los que se usan en el desarrollo de aplicaciones de robótica.
-\end{itemize}
+\item mientras que el tiempo de entrenamiento de la red neuronal de \acrshort{nerf} se cuenta en segundos (de 30 segundos a 2 minutos dependiendo del tamaño del modelo), para \acrshort{3dgs} el tiempo se cuenta en minutos (de 15 minutos a 1 hora). 
 
-Por tanto, cuando tratamos de exportar este mesh por ejemplo a Unity lo veremos blanco y en baja resolución. Para objetos individuales se puede alcanzar una resolución aceptable, pero para un entorno como una habitación o una zona exterior la pérdida de información se multiplica y se convierte en aceptable, generándose volúmenes que poco se parecen a la realidad.
+\item El rendimiento de los modelos generados por \acrshort{3dgs} es realmente superior a \gls{nerf}. La optimización está bien lograda consiguiendo una fluidez total en su utilización. 
+\end{itemize} 
 
-Se intenta la exportación de la nube de puntos de forma directa, pero genera incompatibilidad de interpretación con los motores gráficos conocidos y se deshecha la idea.
+Se decide que esta última es la opción, 3DGS + Volinga, es la más completa y se decide terminar la implementación con esta configuración. 
 
-Dado que en la exportación se pierde todo su potencial y en la práctica no supone una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como ayuda a la generación de entornos 3D para el entrenamiento de robots mediante la tecnología de Digital Twins.
+El conjunto de herramientas elegido finalmente es: 
+
+\begin{itemize} 
+\item 3DGS generado con NerfStudio aplicando la Suite de Volinga en su versión alpha compatible con VR para la generación del objeto 3D. 
+
+\item Unreal Engine con los plugin de Volinga y ROSIntegration para su compatibilidad con el objeto generado y con su comunicación con ROS. 
+
+\item La máquina virtual de ubuntu con Rosbridge para la comunicación con su host de Windows, que contiene los nodos necesarios para crear la conexión entre los topics de UE y el robot real, conectada en modo ROS slave al robot real mediante red Wi-Fi local. 
+\end{itemize} 
+
+En las siguientes subsecciones se explica el proceso de implementación con mayor nivel de detalle. 
+
+% listar subsecciones antes de empezar con ello? 
+
+% ir en orden de cómo fui haciendo las cosas y contar lo más importante de mi desarrollo 
+
+% hacer referencia a los manuales (publicarlos en github?) 
+
+% aquí empieza instant-ngp, ver como lo meto luego con lo que ya tengo 
+
+\subsection{Instant-ngp de NVIDIA} 
+
+En primer lugar, se prueba la tecnología que hizo comenzar la presente investigación: \gls{instant-ngp}. 
+
+Se usa como base el paper original y las instrucciones en el \href{https://github.com/NVlabs/instant-ngp}{repositorio oficial}.  
+
+La puesta en marcha de \gls{instant-ngp} desarrollado por \gls{nvidia} requiere de un entorno con paquete de desarrollo de motor gráfico CUDA 11.8 y toda la configuración que ello conlleva. Se decide crear el entorno en Ubuntu 18.04 por compatibilidad con ROS y las líneas de investigación actuales del laboratorio. 
+
+Se agregan todos los programas y librerías de dependencias para la instalación de CUDA así como todos los requisitos posteriores a la instalación como por ejemplo la prueba de los cuda-samples para verificar su correcto funcionamiento. 
+
+Además, para la interpretación de la fotogrametría de datasets propios que incluye el flujo de trabajo de instant-ngp en su aplicación de Python es necesario un programa externo. Los autores del paper recomiendan Colmap y ffmpeg. Se instalan y agregan sus dependencias. 
+
+Por último, se descarga el código fuente de instant-ngp del GitHub de NVIDIA NVlabs que es open source. Una vez compilado e instaladas las dependencias ya está listo para usar. 
+
+Para más detalle sobre la instalación ver anexos de configuración del entorno. 
+
+Una vez configurado se puede lanzar el script de Python proporcionado en el repositorio de instant-ngp que transforma el vídeo directamente en su modelo 3D. Este hace uso ffmpeg para extraer los fotogramas del vídeo formando un dataset de imágenes y de Colmap para obtener la fotogrametría de dicho dataset.  
+
+La fotogrametría junto con el dataset de imágenes es el input de la red neuronal que en segundos (entre 30 segundos y un minuto) es capaz de generar un modelo 3D de alta fidelidad del objeto o entorno de estudio. 
+
+% insertar tablas de velocidades de generación para distintos dataset?  
+
+Por desgracia la generación de la fotogrametría es muy costosa y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar. 
+
+La herramienta de instant-ngp de NVIDIA tiene un visor para observar los resultados del entrenamiento de la red en tiempo real y visualizar cómo la nube de puntos va convergiendo en la imagen de nuestro dataset. Una vez obtenido un resultado aceptable se puede detener el entrenamiento y perfilar el modelo generado, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario. 
+
+Moverse por dentro del entorno 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y no es muy cómodo debido a la lentitud de los sistemas disponibles en el laboratorio. Aun así, se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes. 
+
+%como generar el modelo 3D de algo 
+
+Una vez seleccionada un área de recorte (que puede incluir al modelo entero) se puede exportar la \gls{nubedepuntos} en forma de objeto sólido o \gls{vertexmesh} interpretable por la mayoría de los \gls{motoresgraficos3d} del mercado como \gls{unity} o \gls{unrealengine}. 
+
+Los dos principales problemas de este tipo de exportación de objeto sólido son: 
+
+\begin{itemize} 
+\item Para generar los planos que conforman las superficies de los objetos de tipo \gls{vertexmesh} a partir de la \gls{nubedepuntos}  se requiere una gran capacidad de computación. Esto limita la resolución máxima a la que se puede exportar el objeto, es decir, el número máximo de vértices que contiene, que depende de la capacidad de procesamiento la unidad gráfica de nuestro ordenador (VERIFICAR ESTA INFO). 
+
+\item La pérdida de la propiedad del color. El estándar del archivo tipo .obj que contiene el \gls{vertexmesh} incluye información de color, sólo de la posición de los vértices. Aunque el archivo generado por instant-ngp sí guarda información sobre el color, ésta sólo es interpretada por algunos motores gráficos como MeshLab, pero no por la mayoría ni por los que se usan en el desarrollo de aplicaciones de robótica. 
+\end{itemize} 
+
+Las limitaciones de los ordenadores convencionales impiden una exportación de mayor resolución que implicaría miles de millones de vértices. Para objetos individuales se puede alcanzar una resolución aceptable, pero para un entorno como una habitación o una zona exterior la pérdida de información se multiplica y se convierte en inaceptable, generándose volúmenes que poco se parecen a la realidad. 
+
+% insertar ejemplos de visualización de mesh en Unity en blanco y negro y en baja resolución 
+
+% añadir también algún ejemplo de visualización mejor por ejemplo del usb de la zapatilla 
+
+Se intenta también la exportación de la nube de puntos de forma directa, pero los motores gráficos compatibles con aplicaciones de robótica no interpretan ese tipo de archivos y se acaba deshechando la idea. 
+
+En vista de que durante la exportación se pierde todo el potencial de esta tecnología y en la práctica no supone una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como herramienta para la generación de entornos 3D para su uso en el control de robots mediante realidad virtual inmersiva. 
+
+ % mencionar comparativa con fotogrametría actual ?? Se ve similar en cuanto a pataterismo Ej: https://www.youtube.com/watch?v=-1Dz9Izq8Vs min 0:30  
 
 \subsection{NerfStudio + Volinga}
 
@@ -745,6 +828,8 @@ A continuación, hablar de ROSIntegration e incompatibilidad, cómo hacer los to
 Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero)
 
 Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica”
+
+\subsection{3DGS + Volinga}
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
