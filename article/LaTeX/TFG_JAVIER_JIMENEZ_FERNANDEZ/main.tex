@@ -417,6 +417,34 @@ Fernando Rivas y Volinga
 
 
 
+%%%%%%%%%% - CÓMO LEER ESTE DOCUMENTO - %%%%%%%%%%
+
+\section*{CÓMO LEER ESTE DOCUMENTO} % Se añade un asterisco a \section para que el título no esté numerado.
+\markright{CÓMO LEER ESTE DOCUMENTO} % Al utilizar \section* se ha de añadir manualmente el título del apartado al encabezado.
+\addcontentsline{toc}{section}{CÓMO LEER ESTE DOCUMENTO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
+
+En el presente artículo se hace referencia a multitud de términos y acrónimos técnicos específicos de la tecnología de la que es objeto. Se anima al lector a hacer uso de las secciones Glosario y Acrónimos durante su lectura.
+
+Por comodidad, se ha realizado una referencia cruzada de todas las menciones a términos y acrónimos definidos en los glosarios. Gracias a ello, en la versión en PDF, clicando sobre sus apariciones a lo largo del documento se redireccionará directamente a su definición. 
+
+Este documento consta de un Resumen Ejecutivo o abstract a continuación de esta sección que resume brevemente la investigación de este trabajo. 
+
+Después se encuentra el Índice o tabla general de contenidos y, justo a continuación, se incluyen los Índices de Tablas, Figuras y Códigos de este documento. 
+
+Para seguir el lector encontrará una Introducción sobre cómo dio comienzo este trabajo, un resumen del Estado del Arte en el campo de la presente investigación, los Objetivos planteados, la Metodología utilizada durante el desarrollo de este trabajo y las Herramientas Utilizadas. 
+
+El grueso del trabajo lo constituyen las secciones de Implementación, Resultados y Conclusiones. En Implementación se incluye todo el camino recorrido por esta investigación hasta llegar al resultado final.
+
+Por último, el lector podrá encontrar la Bibliografía y los Anexos. En los anexos se encuentran la Evaluación de Impactos, la cual incluye la contribución a los Objetivos de Desarrollo Sostenible (ODS), la Planificación temporal y presupuestos, el Glosario y Acrónimos y para terminar las Licencias de uso utilizadas durante esta investigación.
+
+% Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
+\clearpage
+\afterpage{\blankpage} % Se añade una página en blanco después de esta sección.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 %%%%%%%%%%%%%% - RESUMEN EJECUTIVO - %%%%%%%%%%%%%
 
 \newpage
@@ -516,7 +544,7 @@ Fernando Rivas y Volinga
 \newpage
 \section{INTRODUCCIÓN} \label{sec:introduccion}
 
-Siempre existe un desencadenante, una chispa, un comienzo. En este caso fue un vídeo de YouTube. En enero de 2022 el divulgador científico sobre \gls{inteligenciaartificial} \href{https://www.youtube.com/@DotCSV}{@DotCSV} habló del recién publicado paper de \gls{nvidia} Developers \gls{nvlabs} \textit{instant-ngp} (\cite{mueller2022instant}). El resultado me impresionó tanto que cuando el curso siguiente me acerqué al \acrfull{robcib} buscando un tutor para mi proyecto final de carrera y Christyan me habló sobre generación de entornos y realidad virtuales al instante supe que era lo que estaba buscando. Le propuse ser quien probase esta nueva tecnología. 
+Siempre existe un desencadenante, una chispa, un comienzo. En este caso fue un vídeo de YouTube. En enero de 2022 el divulgador científico sobre \gls{inteligenciaartificial} \href{https://www.youtube.com/@DotCSV}{@DotCSV} habló del recién publicado paper de \gls{nvidia} Developers \gls{nvlabs} \textit{\gls{instant-ngp}} (\cite{mueller2022instant}). El resultado me impresionó tanto que cuando el curso siguiente me acerqué al \acrfull{robcib} buscando un tutor para mi proyecto final de carrera y Christyan me habló sobre generación de entornos y realidad virtuales al instante supe que era lo que estaba buscando. Le propuse ser quien probase esta nueva tecnología. 
 
 Así comienza una larga historia pues ni fue mi último año de carrera ni esta nueva tecnología era fácil ni simple de implementar. 
 
@@ -703,7 +731,7 @@ Se decide seguir adelante con el desarrollo usando la segunda opción: NerfStudi
 
 Se consigue generar un \gls{modelo3d} básico del robot en \acrshort{ue} y controlar su movimiento mediante órdenes de tipo \gls{twist}. Estas órdenes se mandan mediante unas flechas flotantes dentro de la interfaz. 
 
-Se consigue el control del robot real mediante el uso de la herramienta \gls{rosintegration} para \arcshort{ue} en conjunto con \gls{rosbridge} para la conexión con la máquina virtual donde se alojan los nodos de \acrshort{ros}. 
+Se consigue el control del robot real mediante el uso de la herramienta \gls{rosintegration} para \acrshort{ue} en conjunto con \gls{rosbridge} para la conexión con la máquina virtual donde se alojan los nodos de \acrshort{ros}. 
 
 Más adelante Volinga lanza una versión alpha, a la cual esta investigación tiene acceso en exclusiva, en la que se integra la compatibilidad con la realidad virtual. Esta versión es compatible únicamente con \acrshort{3dgs}. 
 
@@ -721,6 +749,8 @@ Se decide que esta última es la opción, 3DGS + Volinga, es la más completa y 
 
 El conjunto de herramientas elegido finalmente es: 
 
+% Añadir diagrama de bloques de las herramientas para cada parte
+
 \begin{itemize} 
 \item 3DGS generado con NerfStudio aplicando la Suite de Volinga en su versión alpha compatible con VR para la generación del objeto 3D. 
 
@@ -728,6 +758,9 @@ El conjunto de herramientas elegido finalmente es:
 
 \item La máquina virtual de ubuntu con Rosbridge para la comunicación con su host de Windows, que contiene los nodos necesarios para crear la conexión entre los topics de UE y el robot real, conectada en modo ROS slave al robot real mediante red Wi-Fi local. 
 \end{itemize} 
+
+El diagrama de bloques del flujo de trabajo final es el siguiente
+% Añadir diagrama de bloques del flujo de trabajo
 
 En las siguientes subsecciones se explica el proceso de implementación con mayor nivel de detalle. 
 
@@ -757,15 +790,17 @@ Para más detalle sobre la instalación ver anexos de configuración del entorno
 
 Una vez configurado se puede lanzar el script de Python proporcionado en el repositorio de instant-ngp que transforma el vídeo directamente en su modelo 3D. Este hace uso ffmpeg para extraer los fotogramas del vídeo formando un dataset de imágenes y de Colmap para obtener la fotogrametría de dicho dataset.  
 
+% Añadir diagrama del proceso
+
 La fotogrametría junto con el dataset de imágenes es el input de la red neuronal que en segundos (entre 30 segundos y un minuto) es capaz de generar un modelo 3D de alta fidelidad del objeto o entorno de estudio. 
 
 % insertar tablas de velocidades de generación para distintos dataset?  
 
-Por desgracia la generación de la fotogrametría es muy costosa y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar. 
+Por desgracia la generación de la fotogrametría es muy costosa para la GPU y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar. El entrenamiento de la red neuronal también usa la GPU para sus cálculos.
 
-La herramienta de instant-ngp de NVIDIA tiene un visor para observar los resultados del entrenamiento de la red en tiempo real y visualizar cómo la nube de puntos va convergiendo en la imagen de nuestro dataset. Una vez obtenido un resultado aceptable se puede detener el entrenamiento y perfilar el modelo generado, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario. 
+Se procede a lanzar de nuevo la herramienta de instant-npg de NVIDIA. Esta tiene un visor gráfico 3D para observar los resultados del entrenamiento de la red en tiempo real y visualizar cómo la nube de puntos va convergiendo en la imagen de nuestro dataset. Una vez obtenido un resultado aceptable se puede detener el entrenamiento y perfilar el modelo generado, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario.
 
-Moverse por dentro del entorno 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y no es muy cómodo debido a la lentitud de los sistemas disponibles en el laboratorio. Aun así, se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes. 
+Moverse por dentro del visor 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y se experimenta una falta de fluidez debido a la capacidad limitada de los sistemas disponibles en el laboratorio. Aun así, se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes.
 
 %como generar el modelo 3D de algo 
 
@@ -785,33 +820,83 @@ Las limitaciones de los ordenadores convencionales impiden una exportación de m
 
 % añadir también algún ejemplo de visualización mejor por ejemplo del usb de la zapatilla 
 
-Se intenta también la exportación de la nube de puntos de forma directa, pero los motores gráficos compatibles con aplicaciones de robótica no interpretan ese tipo de archivos y se acaba deshechando la idea. 
+Se intenta también la exportación de la nube de puntos de forma directa, pero los motores gráficos compatibles con aplicaciones de robótica no interpretan ese tipo de archivos y se acaba desechando la idea.
 
-En vista de que durante la exportación se pierde todo el potencial de esta tecnología y en la práctica no supone una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como herramienta para la generación de entornos 3D para su uso en el control de robots mediante realidad virtual inmersiva. 
+Debido a la importancia que tiene la GPU en el desempeño de esta investigación, se decide reemplazar la tarjeta gráfica del ordenador por una NVIDIA GeForce RTX 2060 12GB más potente. También se decide añadir un disco duro SSD nuevo para tener más espacio para la partición de Ubuntu 18.04. Esto resulta en la reinstalación de todo el entorno desde cero.
+
+Las mejoras de hardware producen cambios sustanciales en la velocidad de cálculo de la fotogrametría de los dataset así como del entrenamiento de la red neuronal. También se experimenta una mejora de la fluidez en el visor 3D de la herramienta. Sin embargo, no se aprecian mejoras suficientes en la exportación del modelo.
+
+En vista de la pérdida de resolución y color que se produce durante la exportación y que el objeto vertex mesh obtenido no supone en la práctica una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como herramienta para la generación de entornos 3D para su uso en el control de robots mediante realidad virtual inmersiva.
 
  % mencionar comparativa con fotogrametría actual ?? Se ve similar en cuanto a pataterismo Ej: https://www.youtube.com/watch?v=-1Dz9Izq8Vs min 0:30  
 
 \subsection{NerfStudio + Volinga}
 
-Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para instant-nerfs en Ubuntu 18.04. Siguiendo la guía de NerfStudio se consigue generar un resultado similar al de instant-nerfs a partir del mismo input. Por ahora la gran diferencia está en el visualizador web de NerfStudio que es mucho más cómodo y amable con el usuario que el visualizador de instant-ngp.
+El propósito de NerfStudio es acercar la tecnología NeRF al público de la manera más sencilla posible. Se trata de una herramienta opensource que nos permite tener un marco de trabajo modular de fácil integración en cualquier flujo de trabajo relacionado con NeRF. \href{https://docs.nerf.studio/index.html}{Su completa y estructurada web} dispone de \href{https://docs.nerf.studio/quickstart/installation.html}{guía de instalación} así como \href{https://docs.nerf.studio/quickstart/custom_dataset.html}{instrucciones detalladas de como usar tus propios dataset}.  
 
-Para su exportación a Unreal Engine se pide una clave de acceso anticipada para investigación en Volinga Suite. A través de su aplicación web se genera el objeto de tipo .nvol compatible con Unreal Engine. Volinga Suite sólo es compatible con Unreal Engine a partir de la versión 5.0 (UE5), esto será problemático en ciertos momentos en la integración de Unreal Engine con ROS.
+Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para instant-ngp en Ubuntu 18.04. Siguiendo las guías mencionadas en el párrafo anterior se consigue generar un resultado similar al de instant-ngp a partir del mismo input.  
 
-Para la instalación de UE5 en Ubuntu es necesaria la descarga y compilación del código fuente de la aplicación. Se pide acceso al panel de desarrolladores de Unreal Engine en la zona de registro de
+El proceso desde el punto de vista del usuario es similar, primero se procesa el archivo de origen para generar un dataset de imágenes con ffmpeg. A continuación, se obtiene la fotogrametría de las imágenes con Colmap. Para terminar, esa información se usa para entrenar la red neuronal y generar el modelo 3D. 
 
-organizaciones de GitHub. Una vez concedido se descarga el código fuente y se genera el entorno de trabajo para UE5.
+%Añadir diagrama del proceso 
 
-El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que debemos generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg.
+ Por ahora se detectan dos grandes diferencias: 
 
-Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 se hará en la nueva partición que hemos creado para Ubuntu 20.04.
+\begin{itemize} 
 
-Es necesario instalar el plugin de Volinga en UE5 a fin de que éste interprete el objeto de tipo .nvol generado por la aplicación web de Volinga. Pero Volinga no soporta un entorno Linux, así que debemos instalar UE5 en Windows.
+\item La sencillez de las instrucciones, requisitos y pasos necesarios para la instalación de NerfStudio frente a instant-ngp. 
 
-Con el plugin de Volinga instalado en UE5 se puede arrastrar directamente el objeto y visualizar un modelo 3D muy similar al que se genera en la red neuronal original de NerfStudio previo al paso por la aplicación web de Volinga. Hay una cierta pérdida de resolución debida a la optimización del objeto para ser renderizado en un motor de videojuegos, pero la consideramos aceptable y supone igualmente una mejora enorme en cuanto a realismo con tecnologías previas.
+\item El visualizador de NerfStudio en el navegador web es mucho más cómodo y amable con el usuario que el visualizador de instant-ngp. Además, se detecta mayor fluidez a la hora de manejarlo. 
 
-El único problema es el consumo de recursos de UE5, hace que la simulación con el ordenador vaya lenta y no es cómodo.
+\end{itemize} 
 
-Una vez tenemos esto intentamos la conexión con ROS, que para Unreal Engine se lleva a cabo con una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
+Para la exportación a Unreal Engine es necesario entrenar la red neuronal con unos parámetros determinados, esto nos permitirá generar los archivos de tipo checkpoint de NerfStudio (.ckpt) en un formato compatible con la herramienta Volinga Suite. 
+
+Para ello es necesario instalar el modelo de Volinga (volinga-model) que usará NerfStudio para esta generación especial. Este modelo es también opensource y está disponible para descargar en el \href{https://github.com/Volinga/volinga-model}{repositorio de GitHub de volinga-model} puesto a disposición por la compañía. Volinga-model es compatible con todo el entorno usado hasta el momento en Ubuntu 18.04. 
+
+En el momento de realizar el siguiente paso por primera vez la herramienta de Volinga Suite que interpreta los archivos checkpoint de NerfStudio generados con los parámetros de volinga-model está en fase de desarrollo. Mediante el formulario en su página web se hace una petición de acceso anticipado para su uso en investigación uniersitaria.  
+
+Una vez concedido el acceso se puede usar la herramienta de Volinga Suite con su aplicación de escritorio o directamente a través de su aplicación web. Con ella se genera el objeto de tipo .nvol compatible con Unreal Engine. Para la interpretación del archivo .nvol UE necesita además el plugin de Volinga para UE, al cual se concede acceso junto a Volinga Suite. 
+
+Para la instalación de Unreal Engine en Ubuntu es necesaria la descarga y compilación del código fuente de la aplicación. Se pide acceso al panel de desarrolladores de Unreal Engine en la zona de registro de organizaciones de GitHub. Una vez concedido se descarga el código fuente y se genera el entorno de trabajo para UE. 
+
+La última versión compatible de UE con Ubuntu 18.04 (el entorno de NeRF) es la 4.27, pero el plugin de Volinga Suite sólo es compatible con Unreal Engine a partir de la versión 5.0 (UE5). 
+
+El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que debemos generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg. 
+
+Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 y la posterior integración con ROS se hará en la nueva partición que hemos creado para Ubuntu 20.04. 
+
+A la hora de instalar el plugin de Volinga en UE a fin de que éste interprete el objeto de tipo .nvol generado por la aplicación web de Volinga se descubre que éste no soporta un entorno Linux.  
+
+Por desgracia al estar la herramienta en desarrollo los requerimientos mínimos también lo están. Por suerte esto desencadena una conversación fluida y muy fructífera con los fundadores de la compañía. 
+
+Finalmente se instala UE5 en Windows y se mantiene el fljo de trabajo de NerfStudio en Ubuntu 18.04. 
+
+Con el plugin de Volinga instalado en UE5 se puede agregar directamente el objeto .nvol y visualizar un modelo 3D muy similar al que se genera en la red neuronal original de NerfStudio previo al paso por la aplicación web de Volinga. Dentro de UE se observa una cierta pérdida de resolución y pequeños fallos en la interpretación de la escena respecto del modelo generado por instant-ngp. Esto es debido a pequeñas optimizaciones llevadas a cabo por NerfStudio durante el entrenamiento de la red.  
+
+Además, surge un nuevo problema derivado de la intensidad en el consumo de recursos de computación de la CPU por parte de UE. UE usa la GPU para el renderizado de gráficos, pero para el cálculo de las sombras, las texturas y la interpretación de la nube de puntos UE usa la CPU. Esto hace que la simulación con el ordenador no sea fluida. 
+
+En cualquier caso, el resultado se considera válido ya que supone una mejora enorme en cuanto a realismo respecto a tecnologías previas. 
+
+%desarrollo del Digital Twin 
+
+Los gemelos digitales disponibles en el laboratorio Robcib están desarrollados en Unity. Así pues, llegado este punto, hace falta desarrollar un nuevo gemelo digital del robot cuadrúpedo \href{https://www.unitree.com/a1/}{Unitree A1} con el que se probará esta tecnología en Unreal Engine. 
+
+Para ello se usa la herramienta Blender y se utiliza el \herf{https://github.com/unitreerobotics/unitree_cad/tree/main/a1}{modelo CAD} proporcionado por la empresa fabricante del robot \href{https://www.unitree.com/}{Unitree Robotics}.  
+
+El modelo CAD contiene las piezas del robot por separado y con Blender se realiza la unión de éstas mediante un esqueleto o rig. El uso de un rig permite generar distintas poses para el robot y desarrollar, si se desea, animaciones para su movimiento dentro del motor gráfico 3D. 
+
+Una vez importado el modelo CAD con la pose deseada en Unreal Engine se crea un actor dentro del proyecto de UE al cual se asigna el mesh del modelo CAD.  
+
+El control de dicho actor se realiza programando con blueprints. Se crea un widget con botones de flechas cuyos eventos de en clicado desencadenan las funciones de los movimientos del robot. 
+
+Se demuestra que el robot se puede controlar dentro de la simulación en un proyecto de UE de simulación con blueprints. 
+
+%ROSIntegration 
+
+Una vez tenemos esto intentamos la conexión con ROS. Para Unreal Engine se hace uso de una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
+
+
 
 Para la comunicación con los robots se utiliza ROS, que es el estándar para aplicaciones de robótica. ROS está optimizado para funcionar en Ubuntu y su instalación en Windows es problemática, es por ello que para permitir la comunicación entre UE5 y ROS instalaremos Ubuntu 20.04. en una máquina vitual del VirtualBox 7 y realizaremos la conexión con el host de Windows mediante SSH. La conexión SSH se hace por defecto a través del puerto 22 de la máquina virtual, pero para no usar un puerto reservado la realizaremos a través de un puerto no reservado (entre el 1024 y el 65536) por ejemplo el puerto 2222.
 
@@ -828,6 +913,12 @@ A continuación, hablar de ROSIntegration e incompatibilidad, cómo hacer los to
 Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero)
 
 Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica”
+
+%Añadir esto como transición de nerf a 3dgs (?): 
+
+Esto ya se ha comentado antes pero hilarlo de alguna forma {Sin embargo, surge un nuevo problema derivado de la intensidad en el consumo de recursos de computación de la CPU por parte de UE. UE usa la GPU para el renderizado de gráficos, pero para el cálculo de las sombras, las texturas y la interpretación de la nube de puntos UE usa la CPU. Esto hace que la simulación con el ordenador no sea fluida,} impidiendo una evaluación correcta del uso conjunto del Digital Twin del robot con el modelo 3D generado por Volinga. 
+
+Para solucionarlo se aplicarán diversas optimizaciones en los gráficos de UE sugeridas en el foro de Discord de Volinga como eliminar el suelo, el Sol y todos los elementos que generan interacciones físicas y de sombras salvo lo estrictamente necesario: el gemelo digital del robot y la nube de puntos. 
 
 \subsection{3DGS + Volinga}
 
@@ -877,9 +968,6 @@ Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que
 %%%%%%%%%%%%%%%% - BIBLIOGRAFÍA - %%%%%%%%%%%%%%%%
 
 \newpage
-\section*{BIBLIOGRAFÍA}
-\addcontentsline{toc}{section}{BIBLIOGRAFÍA} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
-
 % Se genera la bibliografía mediante el comando \printbibliography (en ella aparecen únicamente las referencias citadas a lo largo del documento):
 \appto{\bibsetup}{\sloppy}
 \printbibliography[heading=bibintoc, title=BIBLIOGRAFÍA] % el argumento "title" puede modificarse indicando el título que convenga (bibliografía, referencias, etc.).
@@ -973,6 +1061,14 @@ Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que
 
 \newpage
 \subsection{Anexo IV: Licencias} \label{sec:anexo4}
+
+Licencia de instant-ngp: https://github.com/NVlabs/instant-ngp/blob/master/LICENSE.txt y al final de https://github.com/NVlabs/instant-ngp
+
+Licencia de NeRF: https://github.com/bmild/nerf/blob/master/LICENSE
+
+Licencia de NerfStudio: https://github.com/nerfstudio-project/nerfstudio/blob/main/LICENSE
+
+Licencia ROSIntegration: https://github.com/code-iai/ROSIntegration/blob/master/LICENSE
 
 \begin{wrapfigure}{L}{0.21\textwidth}
     \vspace{-\baselineskip}
