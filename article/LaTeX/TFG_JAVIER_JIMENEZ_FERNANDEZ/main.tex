@@ -621,6 +621,8 @@ Por otro lado, también es objeto del presente trabajo ensayar su robustez y el 
 
 % Contar bonito que llevo una bitacora y un excel de conteo de horas de trabajo y voy desarrollando manuales de configuración y puesta en marcha de todo lo que voy haciendo por el camino
 
+% Contar también que como es un proyecto de desarrollo de software e implementación de herramientas pues que se hace todo poco a poco y probando la compatibilidad de cada parte con las anteriores. También contar estilo de desarrollo de código y buenas prácticas de programación. 
+
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
 
@@ -894,33 +896,78 @@ Se demuestra que el robot se puede controlar dentro de la simulación en un proy
 
 %ROSIntegration 
 
-Una vez conseguido lo anterior se intenta la conexión con ROS. Para Unreal Engine se hace uso de una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
+Una vez conseguido lo anterior se intenta la conexión de UE con ROS.  
+
+ROS es el estándar para aplicaciones de robótica. Está optimizado para funcionar en Ubuntu y su instalación en Windows es problemática, es por ello que, para permitir la comunicación entre UE5 y ROS, se instalará ROS Noetic en Ubuntu 20.04. en una máquina virtual de VirtualBox 7 lanzada desde Windows, donde está UE.  
+
+La conexión con el host de Windows para la configuración de la máquina y lanzar los comandos de ROS se realizará mediante SSH.  
+
+Para ello se cambiará la configuración de puertos de la máquina virtual y de la herramienta SSH dentro de ésta. La conexión SSH se hace por defecto a través del puerto 22, pero es una buena práctica de seguridad no usar el puerto reservado por defecto para SSH. Por tanto, se configurará la conexión a través de un puerto no reservado cualquiera (entre el 1024 y el 65536), por ejemplo, el puerto 2222. 
+
+Para que funcione la conexión de ROS con el host de Windows es necesaria la instalación de Rosbridge en la máquina virtual. Rosbridge crea una interfaz de tipo JSON con ROS, de manera que cualquier cliente o host conectado con la máquina virtual se pueda suscribir a los topics o llamar a los services de ROS. Rosbridge soporta la comunicación usando una variedad de protocolos como WebSocket y TCP. Se decide utilizar el protocolo TCP a través del puerto por convenio para ROS, el 9090. 
+
+Para establecer la conexión de Unreal Engine con Rosbridge se hace uso de una herramienta desarrollada por el \href{https://ai.uni-bremen.de/}{Institute for Artificial Intelligence (IAI) de la Universidad de Bremen} llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de Unreal Engine 5 en C++ para que funcione correctamente en esta versión. 
+
+ROSIntegration puede utilizar los protocolos TCP y WebSocket para la comunicación con la máquina virtual. Se usará el protocolo TCP por compatibilidad con la configuración elegida para Rosbridge. ROSIntegration conecta UE con Rosbridge transmitiendo la información de los topics y services a la interfaz JSON por el protocolo TCP y viceversa. 
+
+El soporte para los principales tipos de mensaje de ROS está completamente implementado en el plugin de ROSIntegration. El código para recibir los mensajes de ROS en UE está completamente desarrollado para su compatibilidad con los blueprints de UE. Sin embargo, para el envío desde UE a ROS sólo está desarrollado el código para mensajes de tipo String.  
+
+Por lo tanto, se desarrolla el código en C++ para su cómoda implementación con blueprints dentro de UE. 
+
+Cuando ya se han configurado todas las herramientas se procede a establecer la conexión entre UE y ROS en la máquina virtual. Para ello se requiere lanzar Rosbridge con los parámetros específicos de la conexión con ROSIntegration.  
+
+Una vez establecida la conexión se podrá realizar la subscripción y publicación de los topics o services de ROS que se deseen a ambos lados de la conexión. 
+
+Se comprueba que la subscripción y publicación de topics básicos entre ROS y UE5 a través de ROSBridge y ROSIntegration funciona correctamente. 
+
+% Control del Digital Twin desde fuera de UE y transmisión de sus datos 
+
+El ordenador montado en el propio robot que corre en ubuntu transmite a través de ROS en red LAN Wi-Fi y en tiempo real el valor de su twist así como la información de su posición respecto del entorno gracias al LiDAR que incopora. 
+
+Es por ello que se elige que la manera de transmitir los cambios de posición entre el robot real y su gemelo digital en UE sea a través del valor de su twist. 
+
+Cada vez que se presiona una de las flechas dentro de UE el gemelo digital se mueve o rota en la dirección indicada durante 1 tick de UE a una velocidad de 1m/s. Para equiparar estos valores con los de la realidad se decide que para cada movimiento ordenado al gemelo digital dentro de UE se enviará de manera secuencial el valor de su twist a la máquina virtual en ROS. Ésta a su vez transmitirá al robot real el twist con un valor 10 veces inferior para la velocidad linear y 5 veces inferior para la angular. Estos valores se transmitirán durante 1,5 segundos a una frecuencia de 100Hz, es decir, cada 10ms. (REVISAR ESTOS VALORES DESPUÉS DE LA NUEVA CALIBRACIÓN) 
+
+Cuando el robot se mueve en la realidad ordenado por un mando de control remoto u otro medio ajeno al gemelo digital en UE, el gemelo digital recibirá el valor del twist con un escalado x (POR CALIBRAR) para la velocidad lineal y un escalado y (POR CALIBRAR) para la velocidad angular. 
+
+Estos valores se han calculado de manera empírica para el robot objeto de estudio y su gemelo digital en Unreal Engine. 
+
+%Integración del modelo 3D generado por Volinga con el Digital Twin 
+
+Para el correcto control del robot en el entorno es necesario el escalado preciso del modelo 3D generado con Volinga. Para ello se usa el método del cubo recomendado por los trabajadores de Volinga. 
+
+La simulación dentro de UE está milimetrada y sigue una escala del SI en m. El Digital Twin del robot está en escala 1:1 dentro de la simuación respecto de la realidad.  
+
+Para escalar el modelo 3D de Volinga se usan las mediciones del LiDAR del robot desplegado en combinación con las imágenes que proporciona su cámara. Gracias a estos se buscan dos puntos de referencia tanto en el modelo 3D y en la realidad, y gracias a la medida precisa del LiDAR se genera un cubo dentro de UE que permitirá el escalado preciso. Se procede de la manera siguiente: 
+
+\begin{enumerate} 
+
+\item Se genera un cubo dentro de UE. 
+
+\item Se mueve y escala ubicando uno de los dos puntos de referencia sobre una de sus caras y el otro punto sobre la cara opuesta. 
+
+\item Se cambia el tamaño del cubo haciendo coincidir el valor del lado con la medición del LiDAR 
+
+\item Se ajusta el valor de la escala del modelo 3D de Volinga para que los puntos de referencia vuelvan a estar ubicados ambos en las dos caras opuestas del cubo seleccionadas anteriormente. 
+
+\end{enumerate} 
+
+Una vez completado el escalado se simula todo el conjunto para probar su correcto funcionamiento. 
+
+Sin embargo, como ya se comentó anteriormente en la sección (referencia), existe un problema derivado de la intensidad en el consumo de recursos de computación por parte de UE cuando se visualiza el modelo 3D generado por Volinga. Esto hace que la simulación con el ordenador no sea fluida, impidiendo una evaluación correcta del uso conjunto del Digital Twin del robot con el modelo 3D generado por Volinga. 
+
+Para solucionarlo se aplicarán diversas optimizaciones en los gráficos de UE sugeridas en el foro de Discord de Volinga como eliminar el suelo (en su forma gráfica), el Sol y todos los elementos que generan interacciones físicas y de sombras salvo lo estrictamente necesario: el gemelo digital del robot, la nube de puntos y un suelo transparente que se hace coincidir con la cota del suelo de la nube de puntos. 
+
+\subsection{3DGS + Volinga} 
 
 
 
-Para la comunicación con los robots se utiliza ROS, que es el estándar para aplicaciones de robótica. ROS está optimizado para funcionar en Ubuntu y su instalación en Windows es problemática, es por ello que para permitir la comunicación entre UE5 y ROS instalaremos Ubuntu 20.04. en una máquina vitual del VirtualBox 7 y realizaremos la conexión con el host de Windows mediante SSH. La conexión SSH se hace por defecto a través del puerto 22 de la máquina virtual, pero para no usar un puerto reservado la realizaremos a través de un puerto no reservado (entre el 1024 y el 65536) por ejemplo el puerto 2222.
 
-Para que funcione la conexión con ROS debemos instalar ROSBridge en nuestra máquina virtual y habilitar otro puerto para la conexión con el host de Windows. Se usa por convenio el puerto 9090. Debe lanzarse ROSBridge con una configuración específica para funcionar con ROSIntegration. Una vez establecida la conexión podemos publicar y suscribirnos a los topics o services de ROS que queramos a ambos lados de la conexión.
+TBD: 
 
-Comprobamos que la comunicación entre ROS y UE5 a través de ROSBridge y ROSIntegration funciona correctamente.
+Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero) 
 
-Por desgracia ROSIntegration sólo tiene implementada la suscripción a los mensajes estándar de ROS,
-
-TBD:
-
-A continuación, hablar de ROSIntegration e incompatibilidad, cómo hacer los topic y si se pueden modificar
-
-Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero)
-
-Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica”
-
-%Añadir esto como transición de nerf a 3dgs (?): 
-
-Esto ya se ha comentado antes pero hilarlo de alguna forma {Sin embargo, surge un nuevo problema derivado de la intensidad en el consumo de recursos de computación de la CPU por parte de UE. UE usa la GPU para el renderizado de gráficos, pero para el cálculo de las sombras, las texturas y la interpretación de la nube de puntos UE usa la CPU. Esto hace que la simulación con el ordenador no sea fluida,} impidiendo una evaluación correcta del uso conjunto del Digital Twin del robot con el modelo 3D generado por Volinga. 
-
-Para solucionarlo se aplicarán diversas optimizaciones en los gráficos de UE sugeridas en el foro de Discord de Volinga como eliminar el suelo, el Sol y todos los elementos que generan interacciones físicas y de sombras salvo lo estrictamente necesario: el gemelo digital del robot y la nube de puntos. 
-
-\subsection{3DGS + Volinga}
+Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica” 
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
