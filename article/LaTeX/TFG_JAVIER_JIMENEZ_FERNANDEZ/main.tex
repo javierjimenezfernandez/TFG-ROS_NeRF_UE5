@@ -568,7 +568,7 @@ Tras de mi queda el presente proyecto y toda la documentación para que los que 
 
 La tecnología de \gls{renderizado} de \glspl{radiancefield} en tiempo real ha dado un salto importante en los últimos 2 años generando multitud de áreas de investigación e implementaciones que sorprenden por el realismo de los objetos y entornos generados.
 
-Según las publicaciones en papers como \acrfull{nerf} o \acrfull{3dgs} a partir de vídeo o imágenes tomadas por un dispositivo cualquiera, una \gls{redneuronal} es capaz de generar un modelo \acrshort{3d} realista del objeto o entorno filmado o fotografiado en un tiempo reducido de segundos. La inmediatez mencionada no siempre es operativamente cierta como veremos más adelante.
+Según las publicaciones en papers como \acrfull{nerf} o \acrfull{3dgs} a partir de vídeo o imágenes tomadas por un dispositivo cualquiera, una \gls{redneuronal} es capaz de generar un modelo \acrshort{3d} realista del objeto o entorno filmado o fotografiado en un tiempo reducido de segundos. La inmediatez mencionada no siempre es operativamente cierta como se verá más adelante.
 
 %hablar de la historia de neural radiante fields (NeRF) y como era un concepto teórico que no había sido posible implementar en todo su potencial.
 
@@ -717,7 +717,7 @@ o
 
 En un primer momento se prueba \gls{instant-ngp} a partir del paper de dicha investigación. 
 
-Una vez generado el modelo 3D como nube de puntos la exportación se hace perdiendo demasiada información (perdemos las mejoras que ganábamos con esta nueva tecnología), así que se descarta este camino y se buscan otras opciones. 
+Una vez generado el modelo 3D como nube de puntos la exportación se hace perdiendo demasiada información, se pierden las ventajas de esta nueva tecnología, así que se descarta este camino y se buscan otras opciones. 
 
 Se prueba NerfStudio, que en conjunto con Volinga Suite permite generar una nube de puntos exportable a Unreal Engine 5 con resultado satisfactorio. Aunque tiene las siguientes desventajas: 
 
@@ -832,7 +832,7 @@ En vista de la pérdida de resolución y color que se produce durante la exporta
 
 \subsection{NerfStudio + Volinga}
 
-El propósito de NerfStudio es acercar la tecnología NeRF al público de la manera más sencilla posible. Se trata de una herramienta opensource que nos permite tener un marco de trabajo modular de fácil integración en cualquier flujo de trabajo relacionado con NeRF. \href{https://docs.nerf.studio/index.html}{Su completa y estructurada web} dispone de \href{https://docs.nerf.studio/quickstart/installation.html}{guía de instalación} así como \href{https://docs.nerf.studio/quickstart/custom_dataset.html}{instrucciones detalladas de como usar tus propios dataset}.  
+El propósito de NerfStudio es acercar la tecnología NeRF al público de la manera más sencilla posible. Se trata de una herramienta opensource que crea un marco de trabajo modular de fácil integración de forma que simplifica el proceso de crear, entrenar y testear NeRFs (\cite{nerfstudio}). \href{https://docs.nerf.studio/index.html}{Su completa y estructurada web} dispone de \href{https://docs.nerf.studio/quickstart/installation.html}{guía de instalación} así como \href{https://docs.nerf.studio/quickstart/custom_dataset.html}{instrucciones detalladas de cómo usar dataset propios}.   
 
 Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para instant-ngp en Ubuntu 18.04. Siguiendo las guías mencionadas en el párrafo anterior se consigue generar un resultado similar al de instant-ngp a partir del mismo input.  
 
@@ -862,9 +862,9 @@ Para la instalación de Unreal Engine en Ubuntu es necesaria la descarga y compi
 
 La última versión compatible de UE con Ubuntu 18.04 (el entorno de NeRF) es la 4.27, pero el plugin de Volinga Suite sólo es compatible con Unreal Engine a partir de la versión 5.0 (UE5). 
 
-El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que debemos generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg. 
+El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que se debe generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg. 
 
-Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 y la posterior integración con ROS se hará en la nueva partición que hemos creado para Ubuntu 20.04. 
+Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 y la posterior integración con ROS se hará en la nueva partición que se ha creado para Ubuntu 20.04. 
 
 A la hora de instalar el plugin de Volinga en UE a fin de que éste interprete el objeto de tipo .nvol generado por la aplicación web de Volinga se descubre que éste no soporta un entorno Linux.  
 
@@ -894,7 +894,7 @@ Se demuestra que el robot se puede controlar dentro de la simulación en un proy
 
 %ROSIntegration 
 
-Una vez tenemos esto intentamos la conexión con ROS. Para Unreal Engine se hace uso de una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
+Una vez conseguido lo anterior se intenta la conexión con ROS. Para Unreal Engine se hace uso de una herramienta desarrollada por el Institute for Artificial Intelligence de la University of Bremen llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de UE5 en C++ para que funcione correctamente en éste.
 
 
 
