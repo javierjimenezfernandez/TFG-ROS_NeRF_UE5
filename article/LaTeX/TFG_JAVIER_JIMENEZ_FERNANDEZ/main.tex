@@ -743,263 +743,484 @@ Por otro lado, también es objeto del presente trabajo ensayar la robustez y el 
 \newpage
 \section{IMPLEMENTACIÓN} \label{sec:implementacion}
 
-\subsection{Líneas generales} 
+\subsection{Breve resumen de la implementacion} \label{sec:implementacion:resumen}
 
-o
+En un primer momento se prueba \gls{instant-ngp} a partir del paper de dicha investigación. Se descarta probar el paper original de \acrshort{nerf} pues \gls{instant-ngp} supone tal mejora respecto a tiempos de entrenamiento que no tiene sentido. 
 
-\subsection{Breve resumen de la implementación} 
+-- comparativa tiempos nerf (12h) vs instant-ngp (max 5min) 
 
-En un primer momento se prueba \gls{instant-ngp} a partir del paper de dicha investigación. 
+Una vez generado el \gls{modelo3d} como nube de puntos usando \gls{instant-ngp} la exportación fracasa. Se pierde demasiada información en el proceso, no se pueden exportar las ventajas de esta nueva tecnología, así que se descarta este camino y se buscan otras opciones. 
 
-Una vez generado el modelo 3D como nube de puntos la exportación se hace perdiendo demasiada información, se pierden las ventajas de esta nueva tecnología, así que se descarta este camino y se buscan otras opciones. 
+-- imagen del churro mal representado de instant-ngp al exportarlo como mesh visto dentro de Unity 
 
-Se prueba NerfStudio, que en conjunto con Volinga Suite permite generar una nube de puntos exportable a Unreal Engine 5 con resultado satisfactorio. Aunque tiene las siguientes desventajas: 
+Se prueba a continuación \gls{nerfstudio}, que usado junto a \gls{volinga} permite generar una nube de puntos exportable a \acrfull{ue} con resultado satisfactorio.  
+
+-- imagen de la nube de puntos dentro de unreal 
+
+A pesar de los buenos resultados esta combinación tiene las siguientes desventajas: 
 
 \begin{itemize} 
+
 \item La nube de puntos no interactúa físicamente con los \gls{actores} dentro de \gls{unrealengine} (por ejemplo, el robot). La sensación visual es como si fuera una bruma, se puede atravesar. 
 
 \item La integración con la realidad virtual no está optimizada, al visualizarlo con las gafas de realidad virtual se ve doble. 
+
 \end{itemize} 
 
-Se decide seguir adelante con el desarrollo usando la segunda opción: NerfStudio+Volinga durante un tiempo. 
+A pesar de ello, se decide seguir adelante con el desarrollo usando esta segunda opción: \gls{nerfstudio}  + \gls{volinga}. 
 
 Se consigue generar un \gls{modelo3d} básico del robot en \acrshort{ue} y controlar su movimiento mediante órdenes de tipo \gls{twist}. Estas órdenes se mandan mediante unas flechas flotantes dentro de la interfaz. 
 
-Se consigue el control del robot real mediante el uso de la herramienta \gls{rosintegration} para \acrshort{ue} en conjunto con \gls{rosbridge} para la conexión con la máquina virtual donde se alojan los nodos de \acrshort{ros}. 
+-- imagen del digital twin y las flechas flotantes 
 
-Más adelante Volinga lanza una versión alpha, a la cual esta investigación tiene acceso en exclusiva, en la que se integra la compatibilidad con la realidad virtual. Esta versión es compatible únicamente con \acrshort{3dgs}. 
+Se consigue el control del robot real mediante el uso de la herramienta \gls{rosintegration} para \acrshort{ue} en conjunto con \gls{rosbridge} para la conexión con la \gls{maquinavirtual} donde se alojan los nodos de \acrshort{ros}. 
 
-Se decide probar \acrshort{3dgs} observándose las siguientes diferencias operativas de esta tecnología frente a \acrshort{nerf}: 
+-- imagen del robot real y quizas captura de la máquina virtual 
 
-\begin{itemize}
-\item En la optimización de los splats de \acrshort{3dgs} a veces no se obtienen resultados tan satisfactorios como en \acrshort{nerf}, pero el \gls{modelo3d} generado es de una calidad altamente satisfactoria. 
+Más adelante \gls{volinga} lanza una \gls{versionalpha} de su modelo, a la cual esta investigación tiene acceso en exclusiva, en la que se integra la compatibilidad con la realidad virtual. Esta versión es compatible únicamente con \acrshort{3dgs}. 
 
-\item mientras que el tiempo de entrenamiento de la red neuronal de \acrshort{nerf} se cuenta en segundos (de 30 segundos a 2 minutos dependiendo del tamaño del modelo), para \acrshort{3dgs} el tiempo se cuenta en minutos (de 15 minutos a 1 hora). 
+Se decide probar \acrshort{3dgs} observándose las siguientes diferencias operativas de esta tecnología frente a \gls{instant-ngp}: 
+
+\begin{itemize} 
+
+\item La optimización de la nube de puntos en \glspl{splat} por parte de \acrshort{3dgs} no resulta en modelos tan perfectos como los de \acrshort{nerf}, pues es más sensible a la calidad del \gls{dataset}. Aun así, el \gls{modelo3d} generado es de una calidad satisfactoria. 
+
+-- imagen del entorno generado por 3dgs vs nerfstudio dentro de unreal para el mismo dataset 
+
+\item mientras que el tiempo de entrenamiento de la red neuronal de \gls{instant-ngp} se cuenta en segundos (de 30 segundos a 2 minutos dependiendo del tamaño del modelo), para \acrshort{3dgs} el tiempo se cuenta en minutos (de 15 minutos a 1 hora). 
+
+-- tabla comaparativa de tiempos de entrenamiento de instant-ngp vs nerfstudio vs 3dgs 
 
 \item El rendimiento de los modelos generados por \acrshort{3dgs} es realmente superior a \gls{nerf}. La optimización está bien lograda consiguiendo una fluidez total en su utilización. 
+
+-- tabla o gráficas de fps 3dgs vs otros modelos 
+
 \end{itemize} 
 
-Se decide que esta última es la opción, 3DGS + Volinga, es la más completa y se decide terminar la implementación con esta configuración. 
+Se decide que esta última es la opción, \acrshort{3dgs} + \gls{volinga}, es la más completa y se decide terminar la implementación con esta configuración. 
+
+ 
 
 El conjunto de herramientas elegido finalmente es: 
 
-% Añadir diagrama de bloques de las herramientas para cada parte
+-- diagrama de bloques del flujo de trabajo final 
 
 \begin{itemize} 
-\item 3DGS generado con NerfStudio aplicando la Suite de Volinga en su versión alpha compatible con VR para la generación del objeto 3D. 
 
-\item Unreal Engine con los plugin de Volinga y ROSIntegration para su compatibilidad con el objeto generado y con su comunicación con ROS. 
+\item \acrshort{3dgs} generado con \gls{nerfstudio} aplicando \gls{volinga-model} en su \gls{versionalpha} compatible con \acrshort{vr} para la generación de la escena 3D. 
 
-\item La máquina virtual de ubuntu con Rosbridge para la comunicación con su host de Windows, que contiene los nodos necesarios para crear la conexión entre los topics de UE y el robot real, conectada en modo ROS slave al robot real mediante red Wi-Fi local. 
+-- diagrama detalle de generacion del modelo 3D 
+
+\item \acrlong{ue} con los \gls{plugin} de \gls{volinga} y \gls{rosintegration} para su compatibilidad con la escena generada y con su comunicación con \acrshort{ros}. 
+
+-- diagrama detalle de unreal y rosintegration 
+
+\item La \gls{maquinavirtual} de \gls{ubuntu} con \gls{rosbridge} para la comunicación con su \gls{host} de \gls{windows}, que contiene los nodos necesarios para crear la conexión entre los \glspl{topic} de \acrshort{ue} y el robot real, conectada en modo \acrshort{ros} slave al robot real mediante red Wi-Fi local. 
+
+-- diagrama detalle VM – Wi-Fi – robot  
+
 \end{itemize} 
-
-El diagrama de bloques del flujo de trabajo final es el siguiente
-% Añadir diagrama de bloques del flujo de trabajo
 
 En las siguientes subsecciones se explica el proceso de implementación con mayor nivel de detalle. 
 
-% listar subsecciones antes de empezar con ello? 
+-- listar subsecciones antes de empezar con ello? 
 
-% ir en orden de cómo fui haciendo las cosas y contar lo más importante de mi desarrollo 
+-- hacer referencia a los manuales (publicarlos en github?) 
 
-% hacer referencia a los manuales (publicarlos en github?) 
+\subsection{Instant-ngp de NVIDIA} \label{sec:implementacion:instant-ngp}
 
-% aquí empieza instant-ngp, ver como lo meto luego con lo que ya tengo 
+\subsubsection{Obtención del modelo 3D de la escena} \label{sec:implementacion:instant-ngp:obtencion}
 
-\subsection{Instant-ngp de NVIDIA} 
+En primer lugar, se prueba la tecnología que hizo comenzar la presente investigación: \gls{instant-ngp}. Se descarta probar \acrshort{nerf} pues \gls{instant-ngp} supone tal mejora respecto a tiempos de entrenamiento que no tiene sentido.  
 
-En primer lugar, se prueba la tecnología que hizo comenzar la presente investigación: \gls{instant-ngp}. 
+-- comparativa tiempos nerf (12h) vs instant-ngp (max 5min) 
 
-Se usa como base el paper original y las instrucciones en el \href{https://github.com/NVlabs/instant-ngp}{repositorio oficial}.  
+Se usa como base el paper original de \gls{instant-ngp} y las instrucciones en el \href{https://github.com/NVlabs/instant-ngp}{repositorio oficial}.  
 
-La puesta en marcha de \gls{instant-ngp} desarrollado por \gls{nvidia} requiere de un entorno con paquete de desarrollo de motor gráfico CUDA 11.8 y toda la configuración que ello conlleva. Se decide crear el entorno en Ubuntu 18.04 por compatibilidad con ROS y las líneas de investigación actuales del laboratorio. 
+La puesta en marcha de \gls{instant-ngp} desarrollado por \gls{nvidia} requiere de un entorno con paquete de desarrollo de motor gráfico \acrshort{cuda} 11.8 y toda la configuración que ello conlleva. Se decide crear el entorno en \gls{ubuntu} 18.04 por compatibilidad con \acrshort{ros} y las líneas de investigación actuales del laboratorio. 
 
-Se agregan todos los programas y librerías de dependencias para la instalación de CUDA así como todos los requisitos posteriores a la instalación como por ejemplo la prueba de los cuda-samples para verificar su correcto funcionamiento. 
+Se agregan todos los programas y librerías de dependencias para la instalación de \acrshort{cuda} así como todos los requisitos posteriores a la instalación como por ejemplo la prueba de los \gls{cuda-samples} para verificar su correcto funcionamiento. 
 
-Además, para la interpretación de la fotogrametría de datasets propios que incluye el flujo de trabajo de instant-ngp en su aplicación de Python es necesario un programa externo. Los autores del paper recomiendan Colmap y ffmpeg. Se instalan y agregan sus dependencias. 
+Además, para la obtención de la \gls{fotogrametria} de \glspl{dataset} propios incluida en el flujo de trabajo de \gls{instant-ngp} en su aplicación de Python es necesario un programa externo. Los autores del paper recomiendan la combinación de \gls{ffmpeg}, para la obtención de las vistas a partir de los fotogramas del vídeo, y \gls{colmap}, para calcular para cada vista las poses de la cámara con respecto de la escena. Se instalan y agregan sus dependencias. 
 
-Por último, se descarga el código fuente de instant-ngp del GitHub de NVIDIA NVlabs que es open source. Una vez compilado e instaladas las dependencias ya está listo para usar. 
+Por último, se descarga el código fuente de \gls{instant-ngp} del \gls{github} de \gls{nvidia} \gls{nvlabs} que es \gls{opensource}. Una vez compilado e instaladas las dependencias ya está listo para usar. 
 
-Para más detalle sobre la instalación ver anexos de configuración del entorno. 
+Para más detalle sobre la instalación ver manual x (-- insertar la referencia). 
 
-Una vez configurado se puede lanzar el script de Python proporcionado en el repositorio de instant-ngp que transforma el vídeo directamente en su modelo 3D. Este hace uso ffmpeg para extraer los fotogramas del vídeo formando un dataset de imágenes y de Colmap para obtener la fotogrametría de dicho dataset.  
+Una vez configurado se puede lanzar el script de \Gls{python} proporcionado en el repositorio de \gls{instant-ngp} que transforma el vídeo directamente en su \gls{modelo3d}. El script lanza en primer lugar \gls{ffmpeg} sobre el vídeo para extraer fotogramas formando un \gls{dataset} de imágenes. Una vez extraídas usa \gls{colmap} para obtener la \gls{fotogrametria} de dicho \gls{dataset}.  
 
-% Añadir diagrama del proceso
+-- añadir diagrama del proceso 
 
-La fotogrametría junto con el dataset de imágenes es el input de la red neuronal que en segundos (entre 30 segundos y un minuto) es capaz de generar un modelo 3D de alta fidelidad del objeto o entorno de estudio. 
+La \gls{fotogrametria} junto con el \gls{dataset} de imágenes es el input de la red neuronal de \gls{instant-ngp} que en segundos (entre 30 segundos y un minuto) será capaz de generar un \gls{modelo3d} fotorrealista del objeto o entorno de estudio. 
 
-% insertar tablas de velocidades de generación para distintos dataset?  
+Por desgracia la generación de la fotogrametría es muy costosa computacionalmente para la \acrshort{gpu} y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar. El entrenamiento de la red neuronal a partir de la \gls{fotogrametria} y las imágenes también usa la \acrshort{gpu} para sus cálculos, pero es más eficiente generando el \gls{modelo3d}.  
 
-Por desgracia la generación de la fotogrametría es muy costosa para la GPU y requiere de largos tiempos dependiendo de la cantidad de imágenes a tratar. El entrenamiento de la red neuronal también usa la GPU para sus cálculos.
+-- tabla comparativa de tiempos de obtención de la fotogrametría para distintos tamaños de dataset 
 
-Se procede a lanzar de nuevo la herramienta de instant-npg de NVIDIA. Esta tiene un visor gráfico 3D para observar los resultados del entrenamiento de la red en tiempo real y visualizar cómo la nube de puntos va convergiendo en la imagen de nuestro dataset. Una vez obtenido un resultado aceptable se puede detener el entrenamiento y perfilar el modelo generado, recortando la parte deseada, por ejemplo. Además, se puede usar el visualizador para comprobar la calidad del dataset y generar uno nuevo si fuera necesario.
+\textbf{Nota:} los tiempos mostrados son para \gls{dataset} de una calidad suficiente, es decir, que producen un 100\% de match en la herramienta \gls{colmap}. 
 
-Moverse por dentro del visor 3D para observar el objeto desde diferentes ángulos requiere mucha potencia de computación y se experimenta una falta de fluidez debido a la capacidad limitada de los sistemas disponibles en el laboratorio. Aun así, se comprueba que el modelo generado es de gran calidad y extremadamente realista. Tampoco tiene problemas para representar superficies reflectantes o transparentes.
+Una vez ejecutado el script de \gls{python} para la obtención de la fotogrametría se procede a lanzar la herramienta de \gls{instant-ngp} de \gls{nvidia}. Esta tiene un visor gráfico \acrshort{3d} para observar los resultados del entrenamiento de la red en tiempo real y visualizar cómo en segundos la \gls{nubedepuntos} va convergiendo en el \gls{modelo3d} de nuestro \gls{dataset}.  
 
-%como generar el modelo 3D de algo 
+-- sucesión de imágenes de cómo se va generando la escena 
 
-Una vez seleccionada un área de recorte (que puede incluir al modelo entero) se puede exportar la \gls{nubedepuntos} en forma de objeto sólido o \gls{vertexmesh} interpretable por la mayoría de los \gls{motoresgraficos3d} del mercado como \gls{unity} o \gls{unrealengine}. 
+-- insertar tablas de velocidades de generación para distintos dataset (tarjeta gráfica vieja) 
 
-Los dos principales problemas de este tipo de exportación de objeto sólido son: 
+Una vez obtenido un resultado aceptable se puede detener el entrenamiento y perfilar el modelo generado, recortando, por ejemplo, la parte deseada del resto de la escena. Además, se puede usar el visualizador para explorar la escena en detalle haciendo zoom sobre las zonas deseadas y así comprobar la calidad del \gls{dataset} y generar uno nuevo si fuera necesario. 
 
-\begin{itemize} 
-\item Para generar los planos que conforman las superficies de los objetos de tipo \gls{vertexmesh} a partir de la \gls{nubedepuntos}  se requiere una gran capacidad de computación. Esto limita la resolución máxima a la que se puede exportar el objeto, es decir, el número máximo de vértices que contiene, que depende de la capacidad de procesamiento la unidad gráfica de nuestro ordenador (VERIFICAR ESTA INFO). 
+Se debe tener en cuenta que la herramienta \gls{colmap} requiere de una muestra de imágenes nítidas, sin zonas borrosas provocadas por movimientos bruscos durante la toma. Se debe realizar la grabación barriendo la escena lentamente y con una configuración de la cámara adecuada a la iluminación de la escena. 
 
-\item La pérdida de la propiedad del color. El estándar del archivo tipo .obj que contiene el \gls{vertexmesh} incluye información de color, sólo de la posición de los vértices. Aunque el archivo generado por instant-ngp sí guarda información sobre el color, ésta sólo es interpretada por algunos motores gráficos como MeshLab, pero no por la mayoría ni por los que se usan en el desarrollo de aplicaciones de robótica. 
-\end{itemize} 
+-- imagen bien tomada vs imagen mal tomada 
 
-Las limitaciones de los ordenadores convencionales impiden una exportación de mayor resolución que implicaría miles de millones de vértices. Para objetos individuales se puede alcanzar una resolución aceptable, pero para un entorno como una habitación o una zona exterior la pérdida de información se multiplica y se convierte en inaceptable, generándose volúmenes que poco se parecen a la realidad. 
+Una vez obtenido el \gls{modelo3d}, moverse por dentro del visor 3D para observar la escena desde diferentes ángulos requiere mucha potencia de computación y se experimenta una prácticamente nula fluidez debido a la capacidad de los sistemas disponibles en el laboratorio. Aun así, se comprueba que el modelo generado es de gran calidad y extremadamente fotorrealista. Cabe destacar su capacidad para representar superficies reflectantes o transparentes. 
 
-% insertar ejemplos de visualización de mesh en Unity en blanco y negro y en baja resolución 
+-- imagen de la representación de una superficie reflectante 
 
-% añadir también algún ejemplo de visualización mejor por ejemplo del usb de la zapatilla 
+\subsubsection{Exportar el modelo 3D de la escena} \label{sec:implementacion:instant-ngp:exportar}
 
-Se intenta también la exportación de la nube de puntos de forma directa, pero los motores gráficos compatibles con aplicaciones de robótica no interpretan ese tipo de archivos y se acaba desechando la idea.
+Una vez seleccionada un área de recorte (que puede incluir la escena entera) se puede exportar la \gls{nubedepuntos} en forma de objeto sólido o \gls{vertexmesh} interpretable por la mayoría de los \gls{motoresgraficos3d} del mercado como \gls{unity} o \gls{unrealengine}. 
 
-Debido a la importancia que tiene la GPU en el desempeño de esta investigación, se decide reemplazar la tarjeta gráfica del ordenador por una NVIDIA GeForce RTX 2060 12GB más potente. También se decide añadir un disco duro SSD nuevo para tener más espacio para la partición de Ubuntu 18.04. Esto resulta en la reinstalación de todo el entorno desde cero.
+La exportación se realiza usando el algoritmo de \gls{marchingcubes} (\cite{lorensen-cline:marchingcubes}), que divide la escena en cubos llamados \glspl{voxel} cuyo tamaño depende de la densidad elegida y para cada \gls{voxel} genera entre 0 y 5 polígonos triangulares que pueden o no compartir aristas. El algoritmo genera los polígonos que mejor se adaptan a la superficie exterior de la nube de puntos. 
 
-Las mejoras de hardware producen cambios sustanciales en la velocidad de cálculo de la fotogrametría de los dataset así como del entrenamiento de la red neuronal. También se experimenta una mejora de la fluidez en el visor 3D de la herramienta. Sin embargo, no se aprecian mejoras suficientes en la exportación del modelo.
+-- imagen de los casos fundamentales del algoritmo marching cubes 
 
-En vista de la pérdida de resolución y color que se produce durante la exportación y que el objeto vertex mesh obtenido no supone en la práctica una mejora real con respecto a otros modelos que usaban fotogrametría anteriormente se descarta el uso de instant-ngp como herramienta para la generación de entornos 3D para su uso en el control de robots mediante realidad virtual inmersiva.
-
- % mencionar comparativa con fotogrametría actual ?? Se ve similar en cuanto a pataterismo Ej: https://www.youtube.com/watch?v=-1Dz9Izq8Vs min 0:30  
-
-\subsection{NerfStudio + Volinga}
-
-El propósito de NerfStudio es acercar la tecnología NeRF al público de la manera más sencilla posible. Se trata de una herramienta opensource que crea un marco de trabajo modular de fácil integración de forma que simplifica el proceso de crear, entrenar y testear NeRFs (\cite{nerfstudio}). \href{https://docs.nerf.studio/index.html}{Su completa y estructurada web} dispone de \href{https://docs.nerf.studio/quickstart/installation.html}{guía de instalación} así como \href{https://docs.nerf.studio/quickstart/custom_dataset.html}{instrucciones detalladas de cómo usar dataset propios}.   
-
-Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para instant-ngp en Ubuntu 18.04. Siguiendo las guías mencionadas en el párrafo anterior se consigue generar un resultado similar al de instant-ngp a partir del mismo input.  
-
-El proceso desde el punto de vista del usuario es similar, primero se procesa el archivo de origen para generar un dataset de imágenes con ffmpeg. A continuación, se obtiene la fotogrametría de las imágenes con Colmap. Para terminar, esa información se usa para entrenar la red neuronal y generar el modelo 3D. 
-
-%Añadir diagrama del proceso 
-
- Por ahora se detectan dos grandes diferencias: 
+Los dos principales problemas de este tipo de exportación de en formato de objeto sólido 3D (.obj) son: 
 
 \begin{itemize} 
 
-\item La sencillez de las instrucciones, requisitos y pasos necesarios para la instalación de NerfStudio frente a instant-ngp. 
-
-\item El visualizador de NerfStudio en el navegador web es mucho más cómodo y amable con el usuario que el visualizador de instant-ngp. Además, se detecta mayor fluidez a la hora de manejarlo. 
+\item Para generar los polígonos que conforman las superficies de los objetos de tipo \gls{vertexmesh} a partir de la \gls{nubedepuntos} se requiere una gran capacidad de computación. El \gls{hardware} disponible limita la resolución máxima a la que se puede exportar el objeto, es decir, el número máximo de \glspl{voxel} que contiene, que depende de la capacidad de la \acrshort{gpu}. 
+\item La pérdida de la propiedad del color. El estándar del archivo tipo .obj que contiene un \gls{vertexmesh} no incluye información de color, sólo de la posición de los vértices de los polígonos en el interior de cada \glspl{voxel}. Aunque el archivo generado por \gls{instant-ngp} sí guarda información sobre el color, ésta sólo es interpretada por algunos motores gráficos como \gls{meshlab}, pero no por los que se usan en el desarrollo de aplicaciones de robótica. 
 
 \end{itemize} 
 
-Para la exportación a Unreal Engine es necesario entrenar la red neuronal con unos parámetros determinados, esto nos permitirá generar los archivos de tipo checkpoint de NerfStudio (.ckpt) en un formato compatible con la herramienta Volinga Suite. 
+Las limitaciones de los ordenadores convencionales impiden una exportación de mayor resolución que implicaría miles de millones de vértices. Para objetos individuales se puede alcanzar una resolución aceptable, pero para una escena como una habitación o una zona exterior la pérdida de información se multiplica, generándose volúmenes que poco se parecen a la realidad. 
 
-Para ello es necesario instalar el modelo de Volinga (volinga-model) que usará NerfStudio para esta generación especial. Este modelo es también opensource y está disponible para descargar en el \href{https://github.com/Volinga/volinga-model}{repositorio de GitHub de volinga-model} puesto a disposición por la compañía. Volinga-model es compatible con todo el entorno usado hasta el momento en Ubuntu 18.04. 
+-- imagen del churro mal representado de instant-ngp al exportarlo como mesh visto dentro de Unity  
 
-En el momento de realizar el siguiente paso por primera vez la herramienta de Volinga Suite que interpreta los archivos checkpoint de NerfStudio generados con los parámetros de volinga-model está en fase de desarrollo. Mediante el formulario en su página web se hace una petición de acceso anticipado para su uso en investigación uniersitaria.  
+-- añadir también algún ejemplo de visualización mejor por ejemplo del usb de la zapatilla 
 
-Una vez concedido el acceso se puede usar la herramienta de Volinga Suite con su aplicación de escritorio o directamente a través de su aplicación web. Con ella se genera el objeto de tipo .nvol compatible con Unreal Engine. Para la interpretación del archivo .nvol UE necesita además el plugin de Volinga para UE, al cual se concede acceso junto a Volinga Suite. 
+Por otro lado, se intenta también la exportación de la nube de puntos de forma directa, sin ningún tipo de tratamiento, pero los motores gráficos compatibles con aplicaciones de robótica no interpretan ese tipo de archivos y se acaba desechando la idea. 
 
-Para la instalación de Unreal Engine en Ubuntu es necesaria la descarga y compilación del código fuente de la aplicación. Se pide acceso al panel de desarrolladores de Unreal Engine en la zona de registro de organizaciones de GitHub. Una vez concedido se descarga el código fuente y se genera el entorno de trabajo para UE. 
+\subsubsection{Mejoras} \label{sec:implementacion:instant-ngp:mejoras}
 
-La última versión compatible de UE con Ubuntu 18.04 (el entorno de NeRF) es la 4.27, pero el plugin de Volinga Suite sólo es compatible con Unreal Engine a partir de la versión 5.0 (UE5). 
+Debido a la importancia de la potencia de la \acrshort{gpu} en el desempeño de esta investigación, se decide actualizar la tarjeta gráfica del ordenador a una \href{https://es.msi.com/Graphics-Card/GeForce-RTX-2060-VENTUS-12G-OC}{\gls{nvidia} GeForce RTX 2060 VENTUS 12GB OC} del fabricante MSI. También se decide añadir un disco duro \href{https://www.silicon-power.com/web/es/product-Ace_A55}{SP \acrshort{ssd} Ace A55 de 1\acrshort{tb}} para dedicar más espacio a la partición de \gls{ubuntu} 18.04 donde se lleva a cabo todo el flujo de trabajo comentado hasta ahora. Estas modificaciones requieren de la reinstalación de todo el entorno desde cero. 
 
-El motor de UE5 requiere de una versión mínima de Ubuntu 20.04. por lo que se debe generar de nuevo todo el entorno con la instalación de Cuda 11.8 y las herramientas necesarias para que funcione NerfStudio como Colmap y ffmpeg. 
+Las mejoras de hardware producen cambios sustanciales en la velocidad de cálculo de la \gls{fotogrametria} de los \gls{dataset} así como del entrenamiento de la red neuronal para generar el \gls{modelo3d} de la escena. También se experimenta una mejora de la fluidez en el visor 3D de la herramienta pasando de una visualización en 2 \acrshort{fps} al entorno de 5-7 \acrshort{fps}. Sin embargo, no se aprecian mejoras suficientes en la exportación del modelo. 
 
-Lamentablemente Cuda 11.8 ya no es compatible con con Ubuntu 20.04. La versión mínima compatible de los drivers de NVIDIA con Ubuntu 20.04. es la 525, y Cuda 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con NerfStudio se haga en Ubuntu 18.04., mientras que la instalación de UE5 y la posterior integración con ROS se hará en la nueva partición que se ha creado para Ubuntu 20.04. 
+-- tabla de tiempos de generación del modelo 3d para distintos dataset 
 
-A la hora de instalar el plugin de Volinga en UE a fin de que éste interprete el objeto de tipo .nvol generado por la aplicación web de Volinga se descubre que éste no soporta un entorno Linux.  
+\subsubsection{Evaluación} \label{sec:implementacion:instant-ngp:evaluacion}
 
-Por desgracia al estar la herramienta en desarrollo los requerimientos mínimos también lo están. Por suerte esto desencadena una conversación fluida y muy fructífera con los fundadores de la compañía. 
+La pérdida de resolución y color que se produce durante la exportación hace que el objeto \gls{vertexmesh} obtenido no suponga en la práctica una mejora real con respecto a otros modelos fotogrametría usados anteriormente. Se descarta el uso de \gls{instant-ngp} como herramienta para la generación de entornos 3D para su uso en el control de robots mediante realidad virtual inmersiva. 
 
-Finalmente se instala UE5 en Windows y se mantiene el fljo de trabajo de NerfStudio en Ubuntu 18.04. 
+-- insertar comparativa fotogrametría antigua vs resultado de exportar instant-ngp. Por ejemplo, se ve similar en cuanto a pataterismo aquí: https://www.youtube.com/watch?v=-1Dz9Izq8Vs min 0:30  
 
-Con el plugin de Volinga instalado en UE5 se puede agregar directamente el objeto .nvol y visualizar un modelo 3D muy similar al que se genera en la red neuronal original de NerfStudio previo al paso por la aplicación web de Volinga. Dentro de UE se observa una cierta pérdida de resolución y pequeños fallos en la interpretación de la escena respecto del modelo generado por instant-ngp. Esto es debido a pequeñas optimizaciones llevadas a cabo por NerfStudio durante el entrenamiento de la red.  
+\subsection{NerfStudio + Volinga} \label{sec:implementacion:nerfstudio-volinga}
 
-Además, surge un nuevo problema derivado de la intensidad en el consumo de recursos de computación de la CPU por parte de UE. UE usa la GPU para el renderizado de gráficos, pero para el cálculo de las sombras, las texturas y la interpretación de la nube de puntos UE usa la CPU. Esto hace que la simulación con el ordenador no sea fluida. 
+\subsubsection{Obtención del modelo 3D de la escena} \label{sec:implementacion:nerfstudio-volinga:obtencion}
+
+El propósito de \gls{nerfstudio} es acercar la tecnología \acrshort{nerf} al público general de una manera amable con el usuario. Se trata de una herramienta \gls{opensource} que crea un marco de trabajo modular de fácil integración. Esto simplifica el proceso de crear, entrenar y testear \acrshort{nerf}s (\cite{nerfstudio}). \href{https://docs.nerf.studio/index.html}{Su completa y estructurada web} dispone de \href{https://docs.nerf.studio/quickstart/installation.html}{guía de instalación} así como \href{https://docs.nerf.studio/quickstart/custom_dataset.html}{instrucciones detalladas de cómo usar \glspl{dataset} propios}.  
+
+Para integrar esta opción se elige en un primer momento aprovechar el entorno ya configurado para \gls{instant-ngp} en \gls{ubuntu} 18.04. Siguiendo las guías mencionadas en el párrafo anterior se consigue generar un resultado similar al de \gls{instant-ngp} a partir del mismo \gls{dataset}. 
+
+-- imagenes comparando la misma escena generada por ambos modelos 
+
+El proceso desde el punto de vista del usuario es similar. Se lanza un \gls{script} que primero procesa el archivo de origen para generar un \gls{dataset} de vitas de la escena usando \gls{ffmpeg}. A continuación, el mismo \gls{script} obtiene la fotogrametría de las imágenes con \gls{colmap}. Para terminar, otro \gls{script} usa esa información se para entrenar la \gls{redneuronal} y generar el \gls{modelo3d}.  
+
+-- diagrama del proceso 
+
+La configuración por defecto para el entrenamiento y generación del \gls{modelo3d} de \gls{nerfstudio} se llama \gls{nerfacto} e incluye una combinación de métodos derivados de \acrshort{nerf} de manera que el resultado obtenido es más robusto para toda clase de escenas. 
+
+-- diagrama de nerfacto 
+
+Por ahora se detectan dos grandes diferencias entre \gls{nerfstudio} e \gls{instant-ngp}: 
+
+\begin{itemize} 
+\item La sencillez de las instrucciones, requisitos y pasos necesarios para la instalación de \gls{nerfstudio} frente a \gls{instant-ngp}, así como las opciones de personalización del proceso de generación del \gls{modelo3d} haciendo uso de diferentes comandos al lanzar los \glspl{script}. 
+\item El visualizador de \gls{nerfstudio} en el navegador web tiene una interfaz mucho más cómoda y amable con el usuario que el visualizador de \gls{instant-ngp}. Además, se visualiza con una fluidez cercana al vídeo convencional a la hora de manejarlo (en torno a 20-24 \acrshort{fps}). 
+\end{itemize} 
+
+\subsubsection{Exportar el modelo 3D de la escena} \label{sec:implementacion:nerfstudio-volinga:exportar}
+
+Para poder importar el \gls{modelo3d} a \gls{unrealengine} es necesario entrenar la \gls{redneuronal} con unos parámetros determinados, esto nos permitirá generar los archivos de tipo checkpoint de \gls{nerfstudio} (.ckpt) en un formato compatible con la herramienta \gls{volingasuite}. 
+
+Para ello es necesario instalar el modelo de \gls{volinga} (\gls{volinga-model}) que usará el \gls{script} de \gls{nerfstudio}  durante el entrenamiento para que luego el archivo sea interpretable por el \gls{plugin} de \gls{volinga} dentro de \gls{unrealengine}. En este caso ya no se usará el script de \gls{nerfacto} sino uno específico del modelo de \gls{volinga}. 
+
+-- diagrama del nuevo proceso incluyendo el script de volinga en nerfstudio 
+
+\Gls{volinga-model} es también \gls{opensource} y está disponible para descargar en el \href{https://github.com/Volinga/volinga-model}{repositorio de GitHub de \gls{volinga-model}} puesto a disposición por la compañía. \Gls{volinga-model} es compatible con todo el entorno usado hasta el momento en \gls{ubuntu} 18.04. Se instala para integrarlo en el flujo de trabajo de \gls{nerfstudio}. 
+
+Como ya se ha comentado, \gls{volingasuite} es una aplicación que interpreta los archivos checkpoint de \gls{nerfstudio} (.ckpt) generados mediante el script de \gls{volinga-model} y devuelve un archivo de tipo \gls{nvol} que el \gls{plugin} de \gls{volinga} es capaz de interpretar dentro de \acrshort{ue} para la visualización de la escena generada por \gls{nerfstudio}. 
+
+En el momento de realizar este paso por primera vez (septiembre de 2023) la herramienta de \gls{volingasuite} está en fase de desarrollo y sólo está disponible mediante una \gls{versionbeta} cerrada. Mediante el formulario en su página web se hace una petición de acceso anticipado para su uso en investigación uniersitaria.  
+
+Una vez concedido el acceso se puede usar la herramienta de \gls{volingasuite} tanto en su aplicación de escritorio o directamente a través de su aplicación web. Después de entrenar el \gls{modelo3d} con el script de \gls{volinga-model} se sube el archivo checkpoint de \gls{nerfstudio} (.ckpt) a la aplicación web de \gls{volingasuite}. Ésta genera a su vez el archivo de tipo \gls{nvol} compatible con \gls{unrealengine}. Para la interpretación del archivo \gls{nvol} se requiere la instalación del \gls{plugin} de \gls{volinga} en \acrshort{ue}. 
+
+-- captura de la aplicacion web de volinga con la interfaz de carga de archivos  
+
+Para la instalación de \gls{unrealengine} en \gls{ubuntu} es necesaria la descarga y compilación del código fuente de la aplicación. Para ello se pide acceso al panel de desarrolladores de \gls{unrealengine} en la zona de registro de organizaciones de \gls{github}. Una vez concedido se descarga el código fuente y se genera el entorno de trabajo para \acrshort{ue}. 
+
+La última versión compatible de \acrshort{ue} con \gls{ubuntu} 18.04 (el entorno de \acrshort{nerf}) es la 4.27, pero el \gls{plugin} de \gls{volinga} sólo es compatible con \gls{unrealengine} a partir de la versión 5.0 (\acrshort{ue}5). 
+
+El motor de \acrshort{ue}5 requiere de una versión mínima de \gls{ubuntu} 20.04. por lo que se debe generar de nuevo todo el entorno con la instalación de \acrshort{cuda} 11.8 y las herramientas necesarias para que funcione \gls{nerfstudio} como \gls{colmap} y \gls{ffmpeg}. 
+
+Lamentablemente \acrshort{cuda} 11.8 ya no es compatible con con \gls{ubuntu} 20.04. La versión mínima compatible de los drivers de \gls{nvidia} con \gls{ubuntu} 20.04. es la 525, y \acrshort{cuda} 11.8 requiere de los drivers 520. Por tanto, se decide que, por el momento, el entrenamiento de la red con \gls{nerfstudio} se haga en \gls{ubuntu} 18.04., mientras que la instalación de \acrshort{ue}5 y la posterior integración con \acrshort{ros} se hará en la nueva partición que se ha creado para \gls{ubuntu} 20.04. 
+
+Igualmente surgen problemas al instalar el \gls{plugin} de \gls{volinga} en \acrshort{ue}. Se descubre que éste no soporta un entorno \gls{linux}. 
+
+Por desgracia, al estar la herramienta en desarrollo, la lista de requerimientos mínimos también lo está. Sin embargo, todo tiene su lado positivo y es que esto desencadena una conversación fluida y muy fructífera con los fundadores de la compañía. 
+
+Finalmente se instala \acrshort{ue}5 en \gls{windows} y se mantiene el flujo de trabajo de \gls{nerfstudio} en \gls{ubuntu} 18.04. 
+
+-- diagrama de los dos flujos independientes cada uno en su SO y cómo conecta uno con otro 
+
+Con el \gls{plugin} de \gls{volinga} instalado en \acrshort{ue}5 se puede agregar directamente el objeto \gls{nvol} y visualizar un \gls{modelo3d} muy similar al que se genera en la red neuronal original de \gls{nerfstudio}. Dentro de \acrshort{ue} es necesario el acople de los ángulos de los ejes del \gls{modelo3d} con los del simulador y aplicar el factor de escala necesario.  
+
+Se observa una cierta pérdida de resolución y pequeños fallos en la interpretación de la escena respecto del modelo generado por \gls{instant-ngp}. Esto es debido a pequeñas optimizaciones llevadas a cabo por el script de \gls{volinga} en \gls{nerfstudio} durante el entrenamiento de la red.  
+
+Además, surge un nuevo problema de \gls{hardware}. Se debe al consumo de recursos de computación de la \acrshort{cpu} por parte de \acrshort{ue}. \acrshort{ue} usa la \acrshort{gpu} para el renderizado de gráficos, pero para el cálculo de las sombras, las texturas y la interpretación de la nube de puntos \acrshort{ue} usa la \acrshort{cpu}. Esto hace que la simulación con el ordenador no sea fluida. 
 
 En cualquier caso, el resultado se considera válido ya que supone una mejora enorme en cuanto a realismo respecto a tecnologías previas. 
 
-%desarrollo del Digital Twin 
+\subsubsection{Desarrollo del Digital Twin} \label{sec:implementacion:nerfstudio-volinga:desarrollo}
 
-Los gemelos digitales disponibles en el laboratorio Robcib están desarrollados en Unity. Así pues, llegado este punto, hace falta desarrollar un nuevo gemelo digital del robot cuadrúpedo \href{https://www.unitree.com/a1/}{Unitree A1} con el que se probará esta tecnología en Unreal Engine. 
+Los \glspl{digitaltwin} disponibles en el laboratorio \acrshort{robcib} están desarrollados en \gls{unity}. Así pues, llegado este punto, hace falta desarrollar un nuevo \gls{gemelodigital} del robot cuadrúpedo \href{https://www.unitree.com/a1/}{Unitree A1} con el que se probará esta tecnología en \gls{unrealengine}. 
 
-Para ello se usa la herramienta Blender y se utiliza el \herf{https://github.com/unitreerobotics/unitree_cad/tree/main/a1}{modelo CAD} proporcionado por la empresa fabricante del robot \href{https://www.unitree.com/}{Unitree Robotics}.  
+Para ello se usa la herramienta \gls{blender} y se utiliza el \href{https://github.com/unitreerobotics/unitree_cad/tree/main/a1}{modelo CAD} proporcionado por la empresa fabricante del robot \href{https://www.unitree.com/}{Unitree Robotics}.  
 
-El modelo CAD contiene las piezas del robot por separado y con Blender se realiza la unión de éstas mediante un esqueleto o rig. El uso de un rig permite generar distintas poses para el robot y desarrollar, si se desea, animaciones para su movimiento dentro del motor gráfico 3D. 
+El \gls{modelocad} contiene las piezas del robot por separado y con \gls{blender} se realiza la unión de éstas mediante un esqueleto o \gls{rig}. El uso de un \gls{rig} permite generar distintas poses para el robot y desarrollar, si se desea, animaciones para su movimiento dentro del \gls{motorgrafico3d}. 
 
-Una vez importado el modelo CAD con la pose deseada en Unreal Engine se crea un actor dentro del proyecto de UE al cual se asigna el mesh del modelo CAD.  
+-- imagen del modelo cad en blender con el rig 
 
-El control de dicho actor se realiza programando con blueprints. Se crea un widget con botones de flechas cuyos eventos de en clicado desencadenan las funciones de los movimientos del robot. 
+Una vez importado el \gls{modelocad} con la pose deseada en \gls{unrealengine} se crea un \gls{actor} dentro del proyecto de \acrshort{ue} al cual se asigna el \gls{mesh} del \gls{modelocad}.  
 
-Se demuestra que el robot se puede controlar dentro de la simulación en un proyecto de UE de simulación con blueprints. 
+-- imagen del actor de arturito dentro ue 
 
-%ROSIntegration 
+El control de dicho \gls{actor} se realiza programando con \glspl{blueprint}. Se crea un \gls{widget} con botones de flechas cuyos eventos de en clicado desencadenan las funciones de los movimientos del robot.  
 
-Una vez conseguido lo anterior se intenta la conexión de UE con ROS.  
+-- imagen del widget y los blueprint que contiene 
 
-ROS es el estándar para aplicaciones de robótica. Está optimizado para funcionar en Ubuntu y su instalación en Windows es problemática, es por ello que, para permitir la comunicación entre UE5 y ROS, se instalará ROS Noetic en Ubuntu 20.04. en una máquina virtual de VirtualBox 7 lanzada desde Windows, donde está UE.  
+Se demuestra que el robot se puede controlar dentro de la simulación en un proyecto de \acrshort{ue} de simulación con \glspl{blueprint}. 
 
-La conexión con el host de Windows para la configuración de la máquina y lanzar los comandos de ROS se realizará mediante SSH.  
+\subsubsection{ROSIntegration} \label{sec:implementacion:nerfstudio-volinga:rosintegration}
 
-Para ello se cambiará la configuración de puertos de la máquina virtual y de la herramienta SSH dentro de ésta. La conexión SSH se hace por defecto a través del puerto 22, pero es una buena práctica de seguridad no usar el puerto reservado por defecto para SSH. Por tanto, se configurará la conexión a través de un puerto no reservado cualquiera (entre el 1024 y el 65536), por ejemplo, el puerto 2222. 
+Una vez conseguido lo anterior se intenta la conexión de \acrshort{ue} con \acrshort{ros}.  
 
-Para que funcione la conexión de ROS con el host de Windows es necesaria la instalación de Rosbridge en la máquina virtual. Rosbridge crea una interfaz de tipo JSON con ROS, de manera que cualquier cliente o host conectado con la máquina virtual se pueda suscribir a los topics o llamar a los services de ROS. Rosbridge soporta la comunicación usando una variedad de protocolos como WebSocket y TCP. Se decide utilizar el protocolo TCP a través del puerto por convenio para ROS, el 9090. 
+\acrshort{ros} es el estándar para aplicaciones de robótica. Está optimizado para funcionar en \gls{ubuntu} y su instalación en \gls{windows} es problemática, es por ello que, para permitir la comunicación entre \acrshort{ue}5 y \acrshort{ros}, se instalará \acrshort{ros} Noetic en \gls{ubuntu} 20.04. en una \gls{maquinavirtual} de \gls{virtualbox} 7 lanzada desde \gls{windows}, donde está \acrshort{ue}.  
 
-Para establecer la conexión de Unreal Engine con Rosbridge se hace uso de una herramienta desarrollada por el \href{https://ai.uni-bremen.de/}{Institute for Artificial Intelligence (IAI) de la Universidad de Bremen} llamada ROSIntegration. Esta herramienta está diseñada en forma de plugin para Unreal Engine 4, pero dicho plugin se puede recompilar en un proyecto de Unreal Engine 5 en C++ para que funcione correctamente en esta versión. 
+-- diagrama 1 comunicación UE con ROS dentro de la máquina virtual (incluir com ssh) 
 
-ROSIntegration puede utilizar los protocolos TCP y WebSocket para la comunicación con la máquina virtual. Se usará el protocolo TCP por compatibilidad con la configuración elegida para Rosbridge. ROSIntegration conecta UE con Rosbridge transmitiendo la información de los topics y services a la interfaz JSON por el protocolo TCP y viceversa. 
+La conexión con el \gls{host} de \gls{windows} para la configuración de la máquina y lanzar los comandos de \acrshort{ros} se realizará mediante \acrshort{ssh}.  
 
-El soporte para los principales tipos de mensaje de ROS está completamente implementado en el plugin de ROSIntegration. El código para recibir los mensajes de ROS en UE está completamente desarrollado para su compatibilidad con los blueprints de UE. Sin embargo, para el envío desde UE a ROS sólo está desarrollado el código para mensajes de tipo String.  
+Para ello se cambiará la configuración de los \glspl{puerto} de la \gls{maquinavirtual} y de la herramienta \acrshort{ssh} dentro de ésta. La conexión \acrshort{ssh} se hace por defecto a través del \gls{puerto} 22, pero es una buena práctica de seguridad no usar el \gls{puerto} reservado por defecto para \acrshort{ssh}. Por tanto, se configurará la conexión a través de un \gls{puerto} no reservado cualquiera (entre el 1024 y el 65536), por ejemplo, el \gls{puerto} 2222. 
 
-Por lo tanto, se desarrolla el código en C++ para su cómoda implementación con blueprints dentro de UE. 
+-- captura de la conf de puertos de la máquina y del archivo de ssh 
 
-Cuando ya se han configurado todas las herramientas se procede a establecer la conexión entre UE y ROS en la máquina virtual. Para ello se requiere lanzar Rosbridge con los parámetros específicos de la conexión con ROSIntegration.  
+Para que funcione la conexión de \acrshort{ros} con el \gls{host} de \gls{windows} es necesaria la instalación de \gls{rosbridge} en la \gls{maquinavirtual}. \gls{rosbridge} crea una interfaz de tipo \acrshort{json} con \acrshort{ros}, de manera que cualquier \gls{cliente} o \gls{host} conectado con la \gls{maquinavirtual} se pueda suscribir a los \glspl{topic} o llamar a los \glspl{service} de \acrshort{ros}. \gls{rosbridge} soporta la comunicación usando una variedad de protocolos como \gls{websocket} y \acrshort{tcp}. Se decide utilizar el protocolo \acrshort{tcp} a través del \gls{puerto} por convenio para \acrshort{ros}, el 9090. 
 
-Una vez establecida la conexión se podrá realizar la subscripción y publicación de los topics o services de ROS que se deseen a ambos lados de la conexión. 
+-- diagrama detalle comunicación VM con rosbridge 
 
-Se comprueba que la subscripción y publicación de topics básicos entre ROS y UE5 a través de ROSBridge y ROSIntegration funciona correctamente. 
+Para establecer la conexión de \gls{unrealengine} con \gls{rosbridge} se hace uso de una herramienta desarrollada por el \href{https://ai.uni-bremen.de/}{Institute for Artificial Intelligence (IAI) de la Universidad de Bremen} llamada \gls{rosintegration} (\cite{mania19scenarios}). Esta herramienta está diseñada en forma de \gls{plugin} para \gls{unrealengine} 4, pero dicho \gls{plugin} se puede recompilar en un proyecto de \gls{unrealengine} 5 en \gls{cpp} para que funcione correctamente en esta versión. 
 
-% Control del Digital Twin desde fuera de UE y transmisión de sus datos 
+\gls{rosintegration} puede utilizar los protocolos \acrshort{tcp} y \gls{websocket} para la comunicación con la \gls{maquinavirtual}. Se usará el protocolo \acrshort{tcp} por compatibilidad con la configuración elegida para \gls{rosbridge}. \gls{rosintegration} conecta \acrshort{ue} con \gls{rosbridge} transmitiendo la información de los \glspl{topic} y \glspl{service} a la interfaz \acrshort{json} por el protocolo \acrshort{tcp} y viceversa. 
 
-El ordenador montado en el propio robot que corre en ubuntu transmite a través de ROS en red LAN Wi-Fi y en tiempo real el valor de su twist así como la información de su posición respecto del entorno gracias al LiDAR que incopora. 
+-- diagrama completo de la comunicación UE-VM incluyendo rosbridge (interfaz JSON), rosintegration, etc 
 
-Es por ello que se elige que la manera de transmitir los cambios de posición entre el robot real y su gemelo digital en UE sea a través del valor de su twist. 
+El soporte para los principales tipos de mensaje de \acrshort{ros} está completamente implementado en el \gls{plugin} de \gls{rosintegration}. El código para recibir los mensajes de \acrshort{ros} en \acrshort{ue} está completamente desarrollado para su implementación con \glspl{blueprint}. Sin embargo, para el envío desde \acrshort{ue} a \acrshort{ros} sólo está desarrollado el código para mensajes de tipo \Gls{string}.  
 
-Cada vez que se presiona una de las flechas dentro de UE el gemelo digital se mueve o rota en la dirección indicada durante 1 tick de UE a una velocidad de 1m/s. Para equiparar estos valores con los de la realidad se decide que para cada movimiento ordenado al gemelo digital dentro de UE se enviará de manera secuencial el valor de su twist a la máquina virtual en ROS. Ésta a su vez transmitirá al robot real el twist con un valor 10 veces inferior para la velocidad linear y 5 veces inferior para la angular. Estos valores se transmitirán durante 1,5 segundos a una frecuencia de 100Hz, es decir, cada 10ms. (REVISAR ESTOS VALORES DESPUÉS DE LA NUEVA CALIBRACIÓN) 
+Por lo tanto, se desarrolla el código en \gls{cpp} para su cómoda implementación con \glspl{blueprint} dentro de \acrshort{ue}. Este código se compila junto al código fuente del \gls{plugin} de \gls{rosintegration}. 
 
-Cuando el robot se mueve en la realidad ordenado por un mando de control remoto u otro medio ajeno al gemelo digital en UE, el gemelo digital recibirá el valor del twist con un escalado x (POR CALIBRAR) para la velocidad lineal y un escalado y (POR CALIBRAR) para la velocidad angular. 
+-- código añadido al plugin de ROSIntegration 
 
-Estos valores se han calculado de manera empírica para el robot objeto de estudio y su gemelo digital en Unreal Engine. 
+Cuando ya se han configurado todas las herramientas se procede a establecer la conexión entre \acrshort{ue} y \acrshort{ros} en la \gls{maquinavirtual}. Para ello se requiere lanzar \gls{rosbridge} con los parámetros específicos de la conexión con \gls{rosintegration}.  
 
-%Integración del modelo 3D generado por Volinga con el Digital Twin 
+-- comando específico para dicha conexión 
 
-Para el correcto control del robot en el entorno es necesario el escalado preciso del modelo 3D generado con Volinga. Para ello se usa el método del cubo recomendado por los trabajadores de Volinga. 
+Una vez establecida la conexión se podrá realizar la subscripción y publicación de los \glspl{topic} o \glspl{service} de \acrshort{ros} que se deseen a ambos lados de la conexión. 
 
-La simulación dentro de UE está milimetrada y sigue una escala del SI en m. El Digital Twin del robot está en escala 1:1 dentro de la simuación respecto de la realidad.  
+Se comprueba que la subscripción y publicación de \glspl{topic} básicos entre \acrshort{ros} y \acrshort{ue}5 a través de \gls{rosbridge} y \gls{rosintegration} funciona correctamente. 
 
-Para escalar el modelo 3D de Volinga se usan las mediciones del LiDAR del robot desplegado en combinación con las imágenes que proporciona su cámara. Gracias a estos se buscan dos puntos de referencia tanto en el modelo 3D y en la realidad, y gracias a la medida precisa del LiDAR se genera un cubo dentro de UE que permitirá el escalado preciso. Se procede de la manera siguiente: 
+-- para más info ver el manual en el github 
+
+\subsubsection{Control del Digital Twin desde fuera de UE y transmisión de sus datos} \label{sec:implementacion:nerfstudio-volinga:control}
+
+El ordenador que incorpora el propio robot con sistema operativo \gls{ubuntu} transmite a través de red \acrshort{lan} Wi-Fi y en tiempo real el valor de su \gls{twist} así como la información de su posición respecto del entorno gracias al \acrshort{lidar} que incopora. Todo ello se hace en forma de \glspl{topic} de \acrshort{ros} 
+
+Por ello se elige que la manera de transmitir los cambios de posición entre el robot real y su \gls{gemelodigital} en \acrshort{ue} sea a través del valor de su \gls{twist}. 
+
+Cada vez que se presiona una de las flechas dentro de \acrshort{ue} el \gls{gemelodigital} se mueve o rota en la dirección indicada durante 1 \gls{tick} de \acrshort{ue} a una velocidad de 1m/s. Para equiparar estos valores con los de la realidad se decide que para cada movimiento ordenado al \gls{gemelodigital} dentro del simulador de \acrshort{ue} se enviará durante un tiempo determinado el valor ponderado de su \gls{twist} a la \gls{maquinavirtual} en \acrshort{ros}. Ésta a su vez transmitirá al robot real el \gls{twist} con un valor 10 veces inferior para la velocidad linear y 5 veces inferior para la angular. Estos valores se transmitirán durante 1,5 segundos a una frecuencia de 100Hz, es decir, cada 10ms. Cada movimiento dentro del simulador de \acrshort{ue} se transmitirá de manera secuencial (REVISAR ESTOS VALORES DESPUÉS DE LA NUEVA CALIBRACIÓN) 
+
+-- diagrama de tratamiento de los mensajes de movimiento de UE al robot real 
+
+Cuando el robot se mueve en la realidad ordenado por un mando de control remoto u otro medio ajeno a la simulación en \acrshort{ue}, el \gls{gemelodigital} recibirá el valor del \gls{twist} con un escalado x (POR CALIBRAR) para la velocidad lineal y un escalado y (POR CALIBRAR) para la velocidad angular. 
+
+-- diagrama de tratamiento de los mensajes de movimiento de la realidad a UE 
+
+Estos valores se han calculado de manera empírica para el robot objeto de estudio y su \gls{gemelodigital} en \gls{unrealengine}. 
+
+\subsubsection{Integración del modelo 3D generado por Volinga con el Digital Twin} \label{sec:implementacion:nerfstudio-volinga:integracion}
+
+Para el correcto control del robot en el entorno es necesario el escalado preciso del \gls{modelo3d} generado con \gls{volinga}. Para ello se usa el método del cubo. Este es el método recomendado por los trabajadores de \gls{volinga}. 
+
+La simulación dentro de \acrshort{ue} está milimetrada y sigue una escala del \acrshort{si} en \acrshort{m}. El \gls{digitaltwin} del robot está en escala 1:1 dentro de la simuación respecto de la realidad.  
+
+-- captura del digital twin en modo medicion de distancias de UE 
+
+Para aplicar el método del cubo al \gls{modelo3d} de \gls{volinga} se usan las mediciones del \acrshort{lidar} del robot desplegado en combinación con las imágenes que proporciona su cámara. El \acrshort{lidar} proporciona información de los obstáculos en el plano horizontal a la altura a la que se ubica sobre el robot. Por su parte la cámara del robot toma imágenes desde la parte frontal. 
+
+-- imágenes de dónde se ubican la cámara y el LiDAR en el robot 
+
+-- imágenes de la visión a través del LiDAR y de la cámara. 
+
+Gracias a estos datos el operador localiza dos puntos de referencia de su elección. Estos han de ser visibles tanto en el \gls{modelo3d} como en la realidad, y gracias a la medida precisa del \acrshort{lidar} se genera un cubo dentro de \acrshort{ue} que permitirá el escalado preciso. 
+
+Se procede de la manera siguiente: 
 
 \begin{enumerate} 
 
-\item Se genera un cubo dentro de UE. 
+\item Se genera un cubo dentro de \acrshort{ue} con una de sus caras paralela al suelo de la escena. 
 
-\item Se mueve y escala ubicando uno de los dos puntos de referencia sobre una de sus caras y el otro punto sobre la cara opuesta. 
+-- imagen de cubo paralelo al suelo 
 
-\item Se cambia el tamaño del cubo haciendo coincidir el valor del lado con la medición del LiDAR 
+\item Se mueve y escala ubicando uno de los dos puntos de referencia sobre una de sus caras y el otro punto sobre la cara opuesta. Estas caras deben elegirse entre las perpendiculares al suelo. 
 
-\item Se ajusta el valor de la escala del modelo 3D de Volinga para que los puntos de referencia vuelvan a estar ubicados ambos en las dos caras opuestas del cubo seleccionadas anteriormente. 
+-- Imagen cubo redimensionado y movido haciendo coincidir los puntos de referencia con dos caras paralelas 
+
+\item Se cambia el tamaño del cubo haciendo coincidir el valor del lado en \acrshort{m} con la medición del \acrshort{lidar}. 
+
+--- imagen redimensionado del cubo con su valor en m 
+
+\item Se ajusta el valor de la escala del \gls{modelo3d} de \gls{volinga} para que los puntos de referencia vuelvan a estar ubicados ambos en las dos caras opuestas del cubo seleccionadas anteriormente. 
+
+-- imagen de la escena redimensionada para coincidir de nuevo con el cubo y la escala aplicada 
 
 \end{enumerate} 
 
 Una vez completado el escalado se simula todo el conjunto para probar su correcto funcionamiento. 
 
-Sin embargo, como ya se comentó anteriormente en la sección (referencia), existe un problema derivado de la intensidad en el consumo de recursos de computación por parte de UE cuando se visualiza el modelo 3D generado por Volinga. Esto hace que la simulación con el ordenador no sea fluida, impidiendo una evaluación correcta del uso conjunto del Digital Twin del robot con el modelo 3D generado por Volinga. 
+Sin embargo, como ya se comentó al final de la sección (referencia a subsubseccion Exportar el modelo 3D de la escena de esta seccion), existe un problema de consumo de recursos de computación por parte de \acrshort{ue} cuando se visualiza el \gls{modelo3d} generado por \gls{volinga}. Esto hace que la simulación con el ordenador no sea fluida, impidiendo una evaluación correcta del uso conjunto del \gls{digitaltwin} del robot con el \gls{modelo3d} generado por \gls{volinga}. 
 
-Para solucionarlo se aplicarán diversas optimizaciones en los gráficos de UE sugeridas en el foro de Discord de Volinga como eliminar el suelo (en su forma gráfica), el Sol y todos los elementos que generan interacciones físicas y de sombras salvo lo estrictamente necesario: el gemelo digital del robot, la nube de puntos y un suelo transparente que se hace coincidir con la cota del suelo de la nube de puntos. 
+\subsubsection{Mejoras} \label{sec:implementacion:nerfstudio-volinga:mejoras}
 
-\subsection{3DGS + Volinga} 
+Para solucionarlo se aplicarán diversas optimizaciones en los gráficos de \acrshort{ue} sugeridas en el foro de Discord de \gls{volinga} como eliminar la parte gráfica del suelo, el Sol y todos los elementos que generan interacciones físicas y de sombras salvo los elementos estrictamente necesarios. Estos son: el \gls{gemelodigital} del robot, la nube de puntos del \gls{modelo3d} generado por \gls{volinga} y un suelo transparente que se hace coincidir con la cota del suelo de la nube de puntos. 
 
+\subsubsection{Evaluación} \label{sec:implementacion:nerfstudio-volinga:evaluacion}
 
+A pesar de las optimizaciones aplicadas no se consigue una simulación suficientemente fluida como para evaluar correctamente el conjunto de tecnologías en estudio. 
 
+\subsection{3DGS + Volinga} \label{sec:implementacion:3dgs-volinga}
+
+\subsubsection{Comparación con NerfStudio + Volinga} \label{sec:implementacion:3dgs-volinga:comparacion}
+
+\acrfull{3dgs} es una tecnología posterior a \gls{instant-ngp} que también usa \glspl{radiancefield} para generar un \gls{modelo3d} de la realidad. Sin embargo, \acrshort{3dgs} se enfoca en mejorar el rendimiento de la visualización de los renderizados respecto a las tecnologías anteriores. \acrshort{3dgs} optimiza los puntos del espacio representados en la nube de puntos en unas figuras gaussianas 3D denominados \glspl{splat} que agrupan zonas enteras de puntos representables con un único objeto y permiten reducir el número de cálculos llevados a cabo para visualizar el modelo. El paper de \acrshort{3dgs} describe cómo la optimización requiere un mayor tiempo de cálculo para generar el \gls{modelo3d}, pero multiplica por 10 la fluidez en la visualización. (\cite{kerbl3Dgaussians}) 
+
+-- gráfico de la web de gaussian splatting comparando el rendimiento de instant-ngp con 3DGS 
+
+El canal de Discord de \gls{volinga} es un foro muy interesante que ha ayudado en el avance de esta investigación en determinados momentos. Llegados a este punto se compartió con el equipo de \gls{volinga} el interés por la realidad virtual y gracias al entendimiento entre ambos equipos se permitió el acceso a una \gls{versionalpha} anticipada del \gls{plugin} de \gls{volinga} optimizado para realidad virtual. 
+
+La \gls{versionalpha} del \gls{plugin} de \gls{volinga} viene con un proyecto de \acrshort{ue} de demostración para poder realizar las pruebas que se deseen sobre él. Se decide comprobar la compatibilidad del \gls{plugin} y la realidad virtual con la implementación del \gls{digitaltwin} llevada a cabo hasta el momento. 
+
+La fluidez de la representación del modelo generado por \acrshort{3dgs} y el \gls{digitaltwin} queda demostrada, así como su control a través de comandos provenientes de \acrshort{ros}. Sin embargo, la interfaz de flechas para el control por parte del operador dentro de \acrshort{ue} no es compatible con la realidad virtual. 
+
+-- imagen de arturito en uno de los dataset de prueba 
+
+Se decide probar a generar un \gls{modelo3d} propio en esta nueva \gls{versionalpha} a partir de los mismos \gls{dataset} usados anteriormente y una vez verificado esto proceder al desarrollo de una nueva interfaz de control para la realidad virtual dentro de \acrshort{ue}. 
+
+La \gls{versionalpha} del \gls{plugin} de \gls{volinga} compatible con \acrshort{vr} sólo acepta como input modelos 3D generados a partir de \gls{3dgaussiansplatting}. Por ello se explora la opción de probar también esta nueva tecnología de generación de modelos 3D a partir de imágenes. 
+
+Los requisitos para el uso de \acrshort{3dgs} son muy similares a los de \acrshort{nerf}. Se estudia si usar el entorno propuesto en el paper original o su implementación en el marco de \gls{nerfstudio} con el método de \gls{splatfacto}. Se elige usar \gls{nerfstudio} por facilidad de integración en el flujo de trabajo actual. 
+
+-- diagrama del flujo de trabajo sustituyendo nerfacto por splatfacto 
+
+Una vez instalado el paquete de \gls{splatfacto} de \gls{nerfstudio} sólo hay que sustituir los comandos de entrenamiento de la red neuronal de \gls{nerfacto} a \gls{splatfacto}. El formato de archivo obtenido ahora es de tipo .ply y es el único input que después de ser procesado por \gls{volingasuite} es compatible con la \gls{versionalpha} del \gls{plugin} de \gls{volinga}. Una vez obtenido el archivo \gls{nvol} por este método, el \gls{plugin} de \gls{volinga} dentro de \acrshort{ue} es capaz de interpretarlo de forma que sea representable en realidad virtual. 
+
+-- nuevo diagrama de obtención del nvol 
+
+Sin embargo, se detecta una precisión inferior a \gls{instant-ngp} a la hora de representar la escena. Debido a las optimizaciones llevadas a cabo por el modelo éste es más sensible a la calidad del \gls{dataset}. Así pues, zonas que \gls{instant-ngp} logra resolver satisfactoriamente \acrshort{3dgs} representa de manera errónea. 
+
+-- mostrar zona superior de la puerta de las calderas instant-ngp vs 3dgs 
+
+A fin de compensar estas carencias existe una serie de herramientas compatibles con el proceso como \acrshort{hloc}. Estas herramientas permiten obtener una fotogrametría más detallada para evitar que las optimizaciones produzcan representaciones erróneas de la realidad. En cualquier caso, la calidad del \gls{dataset} de partida es el factor más relevante a la hora de producir una fotogrametría exacta que resulte en la generación de un \gls{modelo3d} preciso.  
+
+Por tanto, la mejor manera de evitar estas imprecisiones en el modelo es que las imágenes de partida no presenten desperfectos como zonas borrosas o movidas debidas a una mala configuración de la cámara para las condiciones de la escena o un movimiento excesivamente rápido. 
+
+Se compara la obtención de un \gls{modelo3d} usando \acrshort{hloc} en la obtención de la fotogrametría y se compara con el obtenido con el flujo normal de \gls{splatfacto} para el mismo \gls{dataset}. A pesar del uso de \acrshort{hloc} se siguen produciendo interpretaciones erróneas de algunos volúmenes que no ocurrían con \gls{nerfacto}.  
+
+-- imagen de uso de hloc, apenas se aprecia la diferencia 
+
+Aun así, la compatibilidad con la realidad virtual es más relevante que las imprecisiones y se decide trabajar en la interfaz para la realidad virtual. 
+
+\subsubsection{Adaptación de la interfaz para realidad virtual} \label{sec:implementacion:3dgs-volinga:adaptacion}
+
+Para ello se debe modificar la configuración de los \acrfull{imc} de \gls{unrealengine}, así como la configuración para la interacción del \gls{widget} de la interfaz. Para esta configuración resulta imprescindible la colaboración de la comunidad de creadores de videojuegos en YouTube (en especial el siguiente \href{https://www.youtube.com/watch?v=kM27HYbpvc0&lc=Ugw7MlymoPWPie05Jx54AaABAg}{comentario destacado}) ya que se trata de una configuración desactivada recientemente de \gls{unrealengine} sin ninguna información disponible los foros de su extensa comunidad web. 
+
+-- imagen de la configuración de los IMC y del widget para que se pueda interactuar con él  
+
+-- para más detalle ir a mi tutorial en github 
+
+Por comodidad se activa el modo \gls{debug} de manera que se muestren los punteros de los mandos y así facilitar la interacción con la interfaz. 
+
+-- imagen de los punteros 
+
+\subsubsection{Evaluación} \label{sec:implementacion:3dgs-volinga:evaluacion}
+
+Se verifica el funcionamiento de manera fluida de todo el conjunto: 
+
+\begin{itemize} 
+\item La implementación y control del \gls{digitaltwin} en \acrshort{ue} 
+\item La comunicación con \acrshort{ros} y el robot real 
+\item El uso del \gls{modelo3d} generado por \gls{volinga} a partir de Gaussian Splatting 
+\item La compatibilidad de todo lo anterior con el entorno de realidad virtual 
+\end{itemize} 
+
+\subsection{Buscando los límites de la tecnología 3DGS} \label{sec:implementacion:limites-3dgs}
+
+Debido a la potencia de esta tecnología se desea poner a prueba la capacidad de generación de entornos de la opción \acrshort{3dgs} a partir de \gls{dataset} de imágenes de diferente tipo. 
+
+\subsubsection {Grabaciones con cámara térmica} \label{sec:implementacion:limites-3dgs:termica}
+
+Se comprueba la robustez de la tecnología para generar una escena a partir de imágenes de cámara térmica. 
+
+-- capturas de la escena generada con cámara térmica 
+
+-- enlace al canal de youtube donde se sube el video de la escena 
+
+\subsubsection {Entornos con elementos repetitivos} \label{sec:implementacion:limites-3dgs:repetitivos}
+
+Se comprueba la obtención de escenas en entornos con elementos repetitivos. En este caso la obtención correcta de la escena tiene una mayor dependencia de la calidad del dataset. 
+
+-- capturas de la escena generada por un dataset malo 
+
+-- capturas de la escena generada del car arena 
+
+-- enlace al canal de youtube donde se suben los vídeos de las escenas 
+
+\subsubsection {Elementos de tamaño reducido} \label{sec:implementacion:limites-3dgs:reducido}
+
+Se comprueba la caracterización de objetos pequeños 
+
+-- capturas de la escena generada para el usb de la zapatilla converse 
+
+-- enlace al canal de youtube donde se sube el video de la escena 
+
+\subsubsection {Elementos con geometrías complejas} \label{sec:implementacion:limites-3dgs:complejas}
+
+Se comprueba la caracterización de una rama de diente de león en medio de un entorno lleno de hierba alta. 
+
+-- capturas de la escena generada de la rama 
+
+-- enlace al canal de youtube donde se sube el video de la escena 
+
+\subsubsection {Escenas con reflejos y refracción} \label{sec:implementacion:limites-3dgs:reflejos}
+
+Se comprueba la correcta caracterización de una escena que incluye un acuario y un espejo. 
+
+-- capturas de la escena generada del acuario 
+
+-- enlace al canal de youtube donde se sube el video de la escena 
 
 TBD: 
 
-Hablar de los problemas generando la fotogrametría con colmap (es muuy puñetero) 
-
-Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que la fotogrametría venga hecha de “fábrica” 
+Ver si se puede probar a usar algo de luma labs (polycam) o Scaniverse (mejor porque está comprobado que usa información del \acrshort{lidar}) en el iPhone Pro de alguien para que la fotogrametría y el escalado se hagan en combinación con el vídeo.  
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
