@@ -1302,7 +1302,83 @@ Ver si se puede probar a usar algo de luma labs (polycam) o Scaniverse (mejor po
 %%%%%%%%%%% - RESULTADOS Y DISCUSIÓN - %%%%%%%%%%%
 
 \newpage
-\section{RESULTADOS Y DISCUSIÓN} \label{sec:resultados_y_discusion}
+\section{RESULTADOS Y DISCUSIÓN} \label{sec:resultados-y-discusion}
+
+\subsection{Flujo de trabajo completo} \label{sec:resultados-y-discusion:flujo-completo}
+
+-- Diagrama del flujo de trabajo completo desde que se toma el vídeo hasta que se “realiza el rescate” 
+
+-- Dividirlo como en partes y hacer los diagramitas de cada parte 
+
+\subsection{Demostración del flujo de trabajo completo} \label{sec:resultados-y-discusion:demo}
+
+-- A ver si podemos hacer la demo completa al final 
+
+-- Si no, aquí irían capturas de la demo que hicimos en la parte de atrás del laboratorio 
+
+-- tabla de tiempo de despliegue 
+
+\subsection{Discusión de los resultados obtenidos} \label{sec:resultados-y-discusion:discusion}
+
+-- Son aceptables o no, tienen esta pega y esta ventaja, etc. 
+
+\subsubsection{Valoración cualitativa} \label{sec:resultados-y-discusion:discusion:cualitativa}
+
+Llegado este punto es importante recordar la metodología empleada en el presente trabajo. Se regresa a la sección sección \ref{sec:metodologia:clasico} para recuperar la pregunta formulada en aquel momento: ¿se pueden conseguir representaciones hiperrealistas del entorno de trabajo de los robots a partir de vídeos y que estas sean funcionales para poder realizar un entrenamiento más preciso, así como un control telemático realmente inmersivo? 
+
+Evaluando la respuesta se puede valorar cualitativamente si el resultado de la investigación ha sido satisfactorio. En global la respuesta es afirmativa, pero siempre hay que ser crítico con los resultados obtenidos. 
+
+Se ha logrado la representación hiperrealista buscada a partir de vídeos del entorno de trabajo de los robots. Gracias a ello se ha conseguido un control telemático muy inmersivo. La representación de la escena es funcional en el sentido visual, pero no interactúa físicamente con el resto de la simulación. Por lo tanto, De modo que se depende de la interpretación de la imagen para evaluar la escena dentro de la simulación. Esto limita el uso que se pueda dar a la escena para un entrenamiento más preciso y automatizado de los robots u operarios. 
+
+\subsubsection{Valoración cuantitativa} \label{sec:resultados-y-discusion:discusion:cuantitativa}
+
+Echando un vistazo a los objetivos se puede valorar cuantitativamente. Como mejoras que aporta esta investigación se puede destacar lo siguiente:  
+
+\begin{itemize} 
+
+\item Se obtiene una mejora enorme de la resolución y el fotorrealismo de la escena es total.  
+
+-- imagen comparativa proyectos anteriores vs actual 
+
+\item Las superficies reflectantes y transparentes quedan caracterizadas correctamente. 
+
+-- imagen comparativa proyectos anteriores vs actual 
+
+\item La flexibilidad y robustez de la tecnología usada en diversidad de entornos queda probada siendo esta tecnología personalizable a las particularidades de cada caso. 
+
+-- imagenes de los dataset “difíciles” 
+
+\item El tiempo de despliegue permite su utilización en una situación cercana a la real. 
+
+-- tabla de tiempos de despliegue 
+
+\item Queda demostrada la compatibilidad con los desarrollos anteriores. 
+
+-- imágenes de la comunicación del UE con el robot real y viceversa 
+
+\item Queda probado el control inmersivo en el entorno de trabajo del robot por parte del operario. 
+
+-- imagen de mí mismo con las gafas controlando el robot 
+
+\end{itemize} 
+
+Sin embargo, también se deben mencionar los aspectos en los que no se ha obtenido un resultado tan satisfactorio. Serán además los principales puntos de partida de las líneas futuras de investigación que se propongan en su correspondiente sección. 
+
+\begin{itemize} 
+
+\item La \gls{nubedepuntos} que conforma los \gls{modelos3d} no interactúa con las físicas del simulador. Dentro de la simualción se depende únicamente de la correcta gestión de la visión para un uso seguro. Esto se puede complementar con el uso de reglas basadas en los diferentes sensores que tiene el robot real.  
+
+-- imagen del robot atravesando una pared dentro de la simulación  
+
+-- imágenes de la representación del entorno del robot con el LiDAR 
+
+\item El flujo de trabajo es muy complejo y requiere de numerosas herramientas, algunas incompatibles entre sí, que implican el uso de diferentes sistemas operativos para completar el despliegue de la tecnología. 
+
+-- diagrama completo del flujo de trabajo para el despliegue 
+
+\item La automatización de los procesos no es trivial. 
+
+\end{itemize} 
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
