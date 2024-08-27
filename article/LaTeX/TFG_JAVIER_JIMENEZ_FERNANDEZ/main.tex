@@ -423,19 +423,19 @@ Fernando Rivas y Volinga
 \markright{CÓMO LEER ESTE DOCUMENTO} % Al utilizar \section* se ha de añadir manualmente el título del apartado al encabezado.
 \addcontentsline{toc}{section}{CÓMO LEER ESTE DOCUMENTO} % Al utilizar \section* se ha de añadir manualmente el apartado al índice (Table Of Contents, TOC).
 
-En el presente artículo se hace referencia a multitud de términos y acrónimos técnicos específicos de la tecnología de la que es objeto. Se anima al lector a hacer uso de las secciones Glosario y Acrónimos durante su lectura.
+En el presente artículo se hace referencia a multitud de términos y acrónimos técnicos específicos. Se anima al lector a hacer uso de las secciones Glosario y Acrónimos durante su lectura.
 
 Por comodidad, se ha realizado una referencia cruzada de todas las menciones a términos y acrónimos definidos en los glosarios. Gracias a ello, en la versión en PDF, clicando sobre sus apariciones a lo largo del documento se redireccionará directamente a su definición. 
 
-Este documento consta de un Resumen Ejecutivo o abstract a continuación de esta sección que resume brevemente la investigación de este trabajo. 
+Este documento consta de un Resumen Ejecutivo o \textit{abstract} a continuación de esta sección que resume brevemente la investigación de este trabajo. 
 
 Después se encuentra el Índice o tabla general de contenidos y, justo a continuación, se incluyen los Índices de Tablas, Figuras y Códigos de este documento. 
 
-Para seguir el lector encontrará una Introducción sobre cómo dio comienzo este trabajo, un resumen del Estado del Arte en el campo de la presente investigación, los Objetivos planteados, la Metodología utilizada durante el desarrollo de este trabajo y las Herramientas Utilizadas. 
+Para seguir, el lector encontrará una Introducción sobre cómo dio comienzo este trabajo, un resumen del Estado del Arte en el campo de la presente investigación, los Objetivos planteados, la Metodología utilizada durante el desarrollo de este trabajo y las Herramientas Utilizadas. 
 
 El grueso del trabajo lo constituyen las secciones de Implementación, Resultados y Conclusiones. En Implementación se incluye todo el camino recorrido por esta investigación hasta llegar al resultado final.
 
-Por último, el lector podrá encontrar la Bibliografía y los Anexos. En los anexos se encuentran la Evaluación de Impactos, la cual incluye la contribución a los Objetivos de Desarrollo Sostenible (ODS), la Planificación temporal y presupuestos, el Glosario y Acrónimos y para terminar las Licencias de uso utilizadas durante esta investigación.
+Por último, el lector podrá encontrar la Bibliografía y los Anexos. En los anexos se encuentran la Evaluación de Impactos, la cual incluye la contribución a los Objetivos de Desarrollo Sostenible (ODS), la Planificación temporal y presupuestos, el Glosario y Acrónimos y para terminar las Licencias y términos de uso de las herramientas utilizadas durante esta investigación.
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
@@ -544,15 +544,15 @@ Por último, el lector podrá encontrar la Bibliografía y los Anexos. En los an
 \newpage
 \section{INTRODUCCIÓN} \label{sec:introduccion}
 
-Siempre existe un desencadenante, una chispa, un comienzo. En este caso fue un vídeo de YouTube. En enero de 2022 el divulgador científico sobre \gls{inteligenciaartificial} \href{https://www.youtube.com/@DotCSV}{@DotCSV} habló del recién publicado paper de \gls{nvidia} Developers \gls{nvlabs} \textit{\gls{instant-ngp}} (\cite{mueller2022instant}). El resultado me impresionó tanto que cuando el curso siguiente me acerqué al \acrfull{robcib} buscando un tutor para mi proyecto final de carrera y Christyan me habló sobre generación de entornos y realidad virtuales al instante supe que era lo que estaba buscando. Le propuse ser quien probase esta nueva tecnología. 
+Siempre existe un desencadenante, una chispa, un comienzo. En este caso fue un vídeo de YouTube. En enero de 2022 el divulgador científico sobre \gls{inteligenciaartificial} \href{https://www.youtube.com/@DotCSV}{@DotCSV} habló del recién publicado paper de \gls{nvidia} Developers \gls{nvlabs} \textit{\gls{instant-ngp}} (\cite{mueller2022instant}). El resultado me impresionó tanto que cuando el curso siguiente me acerqué al \acrfull{robcib} buscando un tutor para mi proyecto final de carrera y Christyan me habló sobre generación de entornos 3D para simulación de robots y control telemático con realidad virtual al instante supe que era lo que estaba buscando. Le propuse ser quien probase esta nueva tecnología. 
 
 Así comienza una larga historia pues ni fue mi último año de carrera ni esta nueva tecnología era fácil ni simple de implementar. 
 
-A final del curso 2022/2023 había conseguido probar la tecnología de NeRF, pero no había conseguido implementarla de manera satisfactoria con el control de los robots. No lo sabía, pero aún estaba a mitad de camino. Me quedaba madurar más mi investigación y formarme en el uso de nuevas herramientas para llegar al fin donde nos encontramos. 
+A final del curso 2022/2023 había conseguido probar la tecnología de \gls{instant-ngp}, pero no había conseguido integrarla  de manera satisfactoria con el control de los robots. No lo sabía, pero aún estaba a mitad de camino. Me quedaba madurar más mi investigación y formarme en el uso de nuevas herramientas para llegar al fin donde nos encontramos. 
 
 Hoy me siento orgulloso de lo que he logrado, la paciencia ha dado sus frutos y por fin he hecho el proyecto que quería.  
 
-Tras de mi queda el presente proyecto y toda la documentación para que los que vengan después de mi puedan continuar por este camino.  
+Tras de mi queda el presente proyecto y toda la documentación para que los que vengan después puedan continuar por este camino.  
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
@@ -599,13 +599,11 @@ En enero de 2022 se publica un artículo
 \newpage
 \section{OBJETIVOS} \label{sec:objetivos}
 
-Los modelos \acrshort{3d} de la realidad en los que se simulan los \glspl{digitaltwin} deben ser copias lo más fiables posibles del entorno en el que trabajan los robots. 
+Los modelos \acrshort{3d} de la realidad en los que se simulan los \glspl{digitaltwin} deben aspirar a ser copias lo más fiables posibles del entorno en el que trabajan los robots.  
 
-El objeto de este trabajo es, por un lado, la creación de modelos \acrshort{3d} más realistas que los generados por \gls{fotogrametria} actualmente, especialmente mejorando la resolución y la interpretación de superficies transparentes o reflectantes. 
+El objeto de este trabajo es, por un lado, la creación de modelos \acrshort{3d} más realistas que los generados por las herramientas de \gls{fotogrametria} usadas actualmente, especialmente mejorando la resolución y la interpretación de superficies transparentes o reflectantes. Para ello se hará uso de nuevas tecnologías en generación de entornos \acrshort{3d}, como \acrfull{nerf}, \gls{instant-ngp}, \gls{nerfstudio} o \acrfull{3dgs}. 
 
-Para ello se hará uso de nuevas tecnologías en generación de entornos \acrshort{3d}, como \acrfull{nerf} o \acrfull{3dgs}.
-
-Por otro lado, también es objeto del presente trabajo ensayar su robustez y el tiempo de despliegue de la tecnología en situaciones de aplicación realistas, así como la compatibilidad con las líneas de investigación actuales del laboratorio \acrshort{robcib} del \acrshort{car} \acrshort{upm}-\acrshort{csic}.
+Por otro lado, también es objeto del presente trabajo ensayar la robustez y el tiempo de despliegue de la tecnología en situaciones de aplicación realistas, así como la compatibilidad con las líneas de investigación actuales del laboratorio \acrfull{robcib} del \acrshort{car} \acrshort{etsii} \acrshort{upm}-\acrshort{csic} en particular la simulación y el control telématico de robots mediante el uso de la \gls{realidadvirtual}. 
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
