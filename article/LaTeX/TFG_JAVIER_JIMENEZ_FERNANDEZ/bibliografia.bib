@@ -1,3 +1,87 @@
+
+%%%%%%%%%%%%%% - ESTADO DEL ARTE - %%%%%%%%%%%%%%%
+
+% web Robcib
+@Webpage{robcib,
+        url = {https://www.car.upm-csic.es/groups/robotics-cybernetics/},
+        author = {Volinga development team},
+        title = {ROBOTICS and CYBERNETICS GROUP - Centre For Automation and Robotics},
+        lastchecked = {23 August 2024},
+        }
+
+% Función plenóptica
+@incollection{adelson:plenoptic,
+    author = {Adelson, Edward H. and Bergen, James R.},
+    isbn = {9780262290890},
+    title = "{The Plenoptic Function and the Elements of Early Vision}",
+    booktitle = "{Computational Models of Visual Processing}",
+    publisher = {The MIT Press},
+    year = {1991},
+    month = {10},
+    doi = {10.7551/mitpress/2002.003.0004},
+    url = {https://doi.org/10.7551/mitpress/2002.003.0004},
+    eprint = {https://direct.mit.edu/book/chapter-pdf/2318278/9780262290890\_caa.pdf},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%% - HERRAMIENTAS - %%%%%%%%%%%%%%%%
+
+% 3D Gaussian Splatting
+@Article{kerbl3Dgaussians,
+      author       = {Kerbl, Bernhard and Kopanas, Georgios and Leimk{\"u}hler, Thomas and Drettakis, George},
+      title        = {3D Gaussian Splatting for Real-Time Radiance Field Rendering},
+      journal      = {ACM Transactions on Graphics},
+      number       = {4},
+      volume       = {42},
+      month        = {July},
+      year         = {2023},
+      url          = {https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/}
+}
+
+% Blender
+
+% COLMAP 1 de 2
+@inproceedings{schoenberger2016sfm,
+    author={Sch\"{o}nberger, Johannes Lutz and Frahm, Jan-Michael},
+    title={Structure-from-Motion Revisited},
+    booktitle={Conference on Computer Vision and Pattern Recognition (CVPR)},
+    year={2016},
+}
+
+% COLMAP 2 de 2
+@inproceedings{schoenberger2016mvs,
+    author={Sch\"{o}nberger, Johannes Lutz and Zheng, Enliang and Pollefeys, Marc and Frahm, Jan-Michael},
+    title={Pixelwise View Selection for Unstructured Multi-View Stereo},
+    booktitle={European Conference on Computer Vision (ECCV)},
+    year={2016},
+}
+
+% FFmpeg
+@article{tomar2006converting,
+  title={Converting video formats with FFmpeg},
+  author={Tomar, Suramya},
+  journal={Linux Journal},
+  volume={2006},
+  number={146},
+  pages={10},
+  year={2006},
+  publisher={Belltown Media}
+}
+
+% hloc
+@inproceedings{sarlin2019coarse,
+  title     = {From Coarse to Fine: Robust Hierarchical Localization at Large Scale},
+  author    = {Paul-Edouard Sarlin and
+               Cesar Cadena and
+               Roland Siegwart and
+               Marcin Dymczyk},
+  booktitle = {CVPR},
+  year      = {2019}
+}
+
 % instant-ngp
 @article{mueller2022instant,
     author = {Thomas M\"uller and Alex Evans and Christoph Schied and Alexander Keller},
@@ -25,6 +109,25 @@
  booktitle={ECCV},
 }
 
+@article{10.1145/3503250,
+author = {Mildenhall, Ben and Srinivasan, Pratul P. and Tancik, Matthew and Barron, Jonathan T. and Ramamoorthi, Ravi and Ng, Ren},
+title = {NeRF: representing scenes as neural radiance fields for view synthesis},
+year = {2021},
+issue_date = {January 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {65},
+number = {1},
+issn = {0001-0782},
+url = {https://doi.org/10.1145/3503250},
+doi = {10.1145/3503250},
+abstract = {We present a method that achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views. Our algorithm represents a scene using a fully connected (nonconvolutional) deep network, whose input is a single continuous 5D coordinate (spatial location (x, y, z) and viewing direction (θ, ϕ)) and whose output is the volume density and view-dependent emitted radiance at that spatial location. We synthesize views by querying 5D coordinates along camera rays and use classic volume rendering techniques to project the output colors and densities into an image. Because volume rendering is naturally differentiable, the only input required to optimize our representation is a set of images with known camera poses. We describe how to effectively optimize neural radiance fields to render photorealistic novel views of scenes with complicated geometry and appearance, and demonstrate results that outperform prior work on neural rendering and view synthesis.},
+journal = {Commun. ACM},
+month = {dec},
+pages = {99–106},
+numpages = {8}
+}
+
 % NerfStudio
 @inproceedings{nerfstudio,
 	title        = {Nerfstudio: A Modular Framework for Neural Radiance Field Development},
@@ -39,6 +142,8 @@
 	series       = {SIGGRAPH '23}
 }
 
+% ROS
+
 % ROSIntegration
 @inproceedings{mania19scenarios,
   title = {A Framework for Self-Training Perceptual Agents in Simulated Photorealistic Environments},
@@ -48,7 +153,97 @@
   address = {Montreal, Canada}
 }
 
-% añadir los papers de gaussian splatting ¿así como los github con el software de Volinga?
+% Unity
+
+% Unreal Engine
+
+% VirtualBox
+
+% Volinga
+@Webpage{volinga,
+        url = {https://volinga.ai/},
+        author = {Volinga development team},
+        title = {Volinga Suite},
+        year = 2023,
+        lastchecked = {23 August 2024},
+        }
+
+% Volinga model
+@Webpage{volinga-model,
+        url = {https://github.com/Volinga/volinga-model},
+        author = {Volinga development team},
+        title = {Volinga Model},
+        year = 2023,
+        lastchecked = {23 August 2024},
+        }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%% - IMPLEMENTACIÓN - %%%%%%%%%%%%%%%
+
+% Marching Cubes
+@inproceedings{lorensen-cline:marchingcubes,
+author = {Lorensen, William E. and Cline, Harvey E.},
+title = {Marching cubes: A high resolution 3D surface construction algorithm},
+year = {1987},
+isbn = {0897912276},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/37401.37422},
+doi = {10.1145/37401.37422},
+abstract = {We present a new algorithm, called marching cubes, that creates triangle models of constant density surfaces from 3D medical data. Using a divide-and-conquer approach to generate inter-slice connectivity, we create a case table that defines triangle topology. The algorithm processes the 3D medical data in scan-line order and calculates triangle vertices using linear interpolation. We find the gradient of the original data, normalize it, and use it as a basis for shading the models. The detail in images produced from the generated surface models is the result of maintaining the inter-slice connectivity, surface data, and gradient information present in the original 3D data. Results from computed tomography (CT), magnetic resonance (MR), and single-photon emission computed tomography (SPECT) illustrate the quality and functionality of marching cubes. We also discuss improvements that decrease processing time and add solid modeling capabilities.},
+booktitle = {Proceedings of the 14th Annual Conference on Computer Graphics and Interactive Techniques},
+pages = {163–169},
+numpages = {7},
+series = {SIGGRAPH '87}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%% - IMPACTOS - %%%%%%%%%%%%%%%%%%
+
+% Impacto ambiental IA
+@article{LLB+1,
+    title = { Unraveling the hidden environmental impacts of {AI} solutions for environment },
+    author = {Ligozat, Anne{-}Laure and Lef{\`{e}}vre, Julien and Bugeau, Aur{\'{e}}lie and Combaz, Jacques},
+    year = {2021},
+    eprint = {2110.11822},
+    journal = {CoRR},
+    volume = {abs/2110.11822},
+    team = {axe_Etics, RSD},
+    eprinttype = {arXiv}, timestamp = {Thu, 28 Oct 2021 15:25:31 +0200}, biburl = {https://dblp.org/rec/journals/corr/abs-2110-11822.bib}, bibsource = {dblp computer science bibliography, https://dblp.org},
+}
+
+% ODS (ONU)
+@misc{Agenda2030,
+author = {United Nations, Department of Economic {and} Social Affairs, Sustainable Development},
+title = {Transforming our world: the 2030 Agenda for Sustainable Development},
+pages = {16301},
+ISBN = {A/RES/70/1},
+URL = {https://sdgs.un.org/2030agenda},
+year = {2015},
+type = {General Assembly}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%% - GLOSARIO - %%%%%%%%%%%%%%%%%%
+
+@misc{eswiki:161631161,
+       author = "Wikipedia",
+       title = "Puerto (informática) --- Wikipedia{,} La enciclopedia libre",
+       year = "2024",
+       url = "https://es.wikipedia.org/w/index.php?title=Puerto_(inform%C3%A1tica)&oldid=161631161",
+       note = "[Internet; descargado 1-agosto-2024]"
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % si al final hay muchas entradas en la bibliografía ver si añado keywords para dividir la bibliorafía por temáticas. Ej: https://es.overleaf.com/learn/latex/Bibliography_management_in_LaTeX
 
