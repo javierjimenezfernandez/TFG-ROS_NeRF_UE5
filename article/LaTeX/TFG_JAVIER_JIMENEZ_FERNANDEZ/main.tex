@@ -566,26 +566,70 @@ Tras de mi queda el presente proyecto y toda la documentación para que los que 
 \newpage
 \section{ESTADO DEL ARTE} \label{sec:estado_del_arte}
 
-La tecnología de \gls{renderizado} de \glspl{radiancefield} en tiempo real ha dado un salto importante en los últimos 2 años generando multitud de áreas de investigación e implementaciones que sorprenden por el realismo de los objetos y entornos generados.
+El grupo de investigación del \acrfull{robcib} del \acrshort{car} \acrshort{etsii} - \acrshort{upm} lleva a cabo “investigación centrada en el desarrollo de los robots y sus aplicaciones, en particular robots de servicio en exteriores (seguridad, rescate, inspección, agricultura, construcción, etc.). \acrshort{robcib} utiliza tanto robots terrestres como aéreos y aborda técnicas como el GNC (Guiado, Navegación y Control), la inteligencia artificial, la teledetección y las interfaces hombre-máquina aplicadas a sistemas mono y multirobots.” (\cite{robcib}).  
 
-Según las publicaciones en papers como \acrfull{nerf} o \acrfull{3dgs} a partir de vídeo o imágenes tomadas por un dispositivo cualquiera, una \gls{redneuronal} es capaz de generar un modelo \acrshort{3d} realista del objeto o entorno filmado o fotografiado en un tiempo reducido de segundos. La inmediatez mencionada no siempre es operativamente cierta como se verá más adelante.
+En estos momentos existen diversas líneas de investigación. El presente trabajo se enmarca en el ámbito de las nuevas interfaces hombre-máquina que permiten una colaboración más estrecha y segura entre operadores y robots. 
 
-%hablar de la historia de neural radiante fields (NeRF) y como era un concepto teórico que no había sido posible implementar en todo su potencial.
+El punto de partida de esta investigación es, por un lado, tratar de mejorar la interfaz en realidad virtual de los proyectos de control telemático actuales mejorando la sensación de inmersión, y, por otro lado, generar un entorno 3D fotorrealista para la simulación. 
 
-%Contar un poco también de las movidas que conté en mi presentación del año pasado
+-- capturas de pantalla de la interfaz RV actual y otra de los entornos de simulación actuales 
 
-En enero de 2022 se publica un artículo
-%hablar de NVIDIA instant-ngp
+Es aquí donde entran en juego las tecnologías mencionadas en la introducción y que son objeto de esta investigación. \acrfull{nerf} es una tecnología de \gls{renderizado} de \glspl{radiancefield} en desarrollada en 2020 que pretende resolver el problema de la \gls{funcionplenoptica} en el campo de la visión por computador. 
 
-%hablar de como se ve su potencial en audiovisuales pero en realidad surge de un entorno cientifico
+Desde entonces ha habido una explosión enorme de investigación sobre \acrshort{nerf}. Especialmente destacable en los últimos 2 años ha sido la aparición de \gls{instant-ngp} (\cite{mueller2022instant}), \gls{nerfstudio} (\cite{nerfstudio}) y \acrfull{3dgs} (\cite{kerbl3Dgaussians}). Estas tecnologías han permitido implementar \acrshort{nerf} en gran variedad de sectores generando nuevas áreas de investigación e implementaciones en campos tan diversos como la arquitectura, la robótica, la creación cinematográfica, el diseño de productos o la conducción autónoma. 
 
-%casos en los que se usa, hablar del congreso de NVIDIA y de las últimas tendencias
+-- línea del tiempo con las tecnologías más relevantes relacionadas con NeRF desarrolladas desde 2020 
 
-%acercamiento a esta tecnología para digital twins
+Según los papers de estas publicaciones, a partir de un conjunto de vistas de una escena en formato de imagen o vídeo (del cual se extraen luego las imágenes) tomadas por un dispositivo cualquiera, una \gls{redneuronal} es capaz de sintetizar nuevas vistas generando un modelo \acrshort{3d} fotorrealista de la escena en un tiempo reducido de segundos. La inmediatez mencionada no siempre es operativamente cierta como se verá más adelante. 
 
-%hablar de gaussian splatting
+El paper de \acrshort{nerf} fue publicado por primera vez en las \href{https://www.ecva.net/papers.php}{actas de la Conferencia Europea para la Visión por Computador de 2020 (ECCV 2020)}. Como ya se ha comentado, \acrshort{nerf} trata de solucionar el problema de la \gls{funcionplenoptica} en el campo de la visión por computador.  
 
+La pregunta que lleva a la formulación de la \gls{funcionplenoptica} es la siguiente: “¿cuál es el conjunto de todas las cosas que se pueden observar?”. Se trata de una función que busca modelar toda la realidad visual del universo. El campo vectorial de la \gls{funcionplenoptica} permite la “reconstrucción de todas las vistas posibles, en cada momento, desde cada posición, en cada longitud de onda, dentro de los límites de la región espacio-tiempo-longitud de onda considerada” (\cite{adelson:plenoptic}). Así pues, dicha función deberá tener 7 dimensiones:  
 
+\begin{itemize} 
+\item 3 coordenadas espaciales $(V_x,V_y,V_z)$ correspondientes al punto desde donde se realiza la observación. 
+\item 2 coordenadas angulares $(\theta,\phi)$ correspondientes a la dirección de observación. 
+\item 1 coordenada $\lambda$ de longitud de onda. 
+\item 1 coordenada temporal $t$.  
+\end{itemize} 
+
+Para resolverlo \acrshort{nerf} toma un “campo continuo de 5 dimensiones (localización espacial $(x, y, z)$ y dirección de observación $(\theta, \phi)$)” y representa la escena usando una “red profunda totalmente conectada (no convolucional)” que genera como resultado “la densidad de volumen y la radiancia emitida en función de la dirección de observación para cada localización espacial” (\cite{mildenhall2020nerf}). 
+
+-- imagen funcion de transformación de NeRF 
+
+Es decir, \acrshort{nerf} toma las vistas de la escena junto con la información de las poses de la cámara obtenidas, por ejemplo, mediante fotogrametría y a partir de esta información usa su red neuronal para proyectar los colores y densidades de los puntos en el volumen 3D. De esta forma reconstruye la escena permitiendo observarla desde nuevos puntos de vista. 
+
+-- imagen nerf-pipeline 
+
+\acrshort{nerf} no resuelve la \gls{funcionplenoptica} en sus 7 dimensiones puesto que reduce el problema a un mundo estático. \acrshort{nerf} no incorpora ni la longitud de onda ni la variable temporal. Tampoco calcula todo lo que se podría observar desde cada punto del espacio. Haciendo esto se podría representar cualquier vista desde cualquier parte. En vez de eso, \acrshort{nerf} obtiene el mismo resultado, pero lo hace modelando partículas en cada punto del espacio, su color y radiancia (representada en forma de densidad) que depende del punto y ángulo del observador. 
+
+-- imagen plenoptic vs nerf 
+
+El resultado obtenido se trata de una escena estática compuesta de los valores RGB y densidad ($\sigma$) de las partículas que ocupan puntos concretos del espacio y tiene una representación tridimensional en forma de \gls{nubedepuntos}. Esta \gls{nubedepuntos} es la que compone el \gls{modelo3d} generado por \acrshort{nerf}. 
+
+-- imagen de escenas generadas con NeRF 
+
+La potencia de esta tecnología radica en la capacidad de representar de forma fotorrealista escenas de apariencia y geometría complejas. Es mucho más óptima que la representación de todas las vistas posibles del universo observable que plantea la \gls{funcionplenoptica}, pues obtiene directamente el modelo de la realidad y permite posicionarse en cualquier punto para obtener dichas vistas. Sin embargo, depende del cálculo preciso de las poses de la cámara para las vistas originales. El cálculo de esta fotogrametría es muy costoso computacionalmente y requiere de tiempos desde 30 minutos hasta 2 horas en un ordenador convencional, muy elevados en comparación con el tiempo de generación del\gls{modelo3d}. Este sigue siendo el verdadero cuello de botella de la tecnología \acrshort{nerf} y es la razón por la cual en el transcurso de esta investigación no se ha conseguido operativamente la inmediatez prometida en los papers. 
+
+-- diagrama flujo de trabajo global a grandes rasgos 
+
+A partir de la publicación de \acrshort{nerf} se han conseguido mejoras sustanciales en cuanto a velocidad de entrenamiento y obtención del \gls{modelo3d} con, por ejemplo, \gls{instant-ngp} y de fluidez en la visualización con, por ejemplo, \acrshort{3dgs}. 
+
+\Gls{instant-ngp} es una tecnología desarrollada por \gls{nvidia} Developers \gls{nvlabs} en enero de 2022 y presentada en julio del mismo año. Menos de un año después, en el \gls{nvidia} \acrshort{gtc} de marzo de 2023 se presentaba \gls{nerfstudio}. En las conferencias anuales \gls{nvidia} \acrshort{gtc} se presentan en forma de charlas, sesiones interactivas y \glspl{webinar} las últimas novedades en \acrshort{ia}, cuidados médicos, digitalización industrial y robótica entre otros. Allí no sólo se presentan mejoras de la tecnología como \gls{instant-ngp}, sino también flujos de trabajo, aplicaciones y entornos que ayudan a aplicarlas. Es en la edición de marzo de 2023 cuando Angjoo Kanazawa de la Universidad de Berkeley presentó la herramienta \gls{nerfstudio} que usa el paper de \gls{instant-ngp} (\cite{nerfstudio}) integrado junto con otros métodos bajo el nombre \gls{nerfacto} en un entorno de desarrollo más amable con el usuario. Esta herramienta será de gran utilidad en el presente trabajo. 
+
+-- imagen del diagrama del modelo de Nerfacto 
+
+En julio de 2023 se presenta \acrshort{3dgs}. Una optimización de la nube de puntos obtenida por \gls{instant-ngp} en forma de elementos denominados 3D Gaussians que permite agrupar puntos de representación de la escena evitando cálculos innecesarios en el renderizado en tiempo real durante la visualización de la escena. Se consigue así una gran fluidez en la simulación obteniendo ratios de \acrfull{fps} superiores a 120 \acrshort{fps} para resolución de vídeo de 1080p.  
+
+Recientemente \gls{nerfstudio} también integra la tecnología \acrshort{3dgs} a través de su método \gls{splatfacto} y en colaboración con \gls{volinga} permite su exportación como nube de puntos de alta resolución al motor de gráficos 3D \acrfull{ue}. 
+
+En esta constante ebullición de cambios se mueve la presente investigación. Esto obliga a estar siempre alerta para no dejar de aprovechar las oportunidades que brindan los diferentes enfoques y visiones que proporciona cada nuevo desarrollo. 
+
+% hablar de como se ve esto en la industria audiovisual pero que en realidad surge de un entorno cientifico ? 
+
+% estado del arte de los digital twins ? 
+
+% hablar del estado del arte del control de los robots en el laboratorio? 
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
 \clearpage
