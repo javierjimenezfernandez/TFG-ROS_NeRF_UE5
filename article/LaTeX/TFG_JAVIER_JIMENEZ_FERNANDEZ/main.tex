@@ -637,66 +637,100 @@ Por otro lado, también es objeto del presente trabajo ensayar su robustez y el 
 
 % aparte de las obvias (word, excel, ppt, latex, editor de video, etc.)
 
+% Listado de herramientas con su descripción proveniente de la página oficial o paper de turno (va a ser casi todo citar a los autores) 
+
+% ______________ Radiance Fields _______________ %
+\subsection{Radiance Fields} \label{sec:herramientas:radfi}
+
+% --------------- Fotogrametría ---------------- %
+\subsubsection{Fotogrametría} \label{sec:herramientas:radfi:fotogram}
+
+\paragraph{FFmpeg} \label{sec:herramientas:radfi:fotogram:ffmpeg}
+% https://www.ffmpeg.org/
+
+\paragraph{COLMAP} \label{sec:herramientas:radfi:fotogram:colmap}
+% https://colmap.github.io/
+
+\paragraph{hloc} \label{sec:herramientas:radfi:fotogram:hloc}
+% ---------------------------------------------- %
+
 % -------- Neural Radiance Fields (NeRF) ------- %
-\subsection{Neural Radiance Fields (NeRF)} \label{sec:herramientas:nerf}
+\subsubsection{Neural Radiance Fields (NeRF)} \label{sec:herramientas:radfi:nerf}
 % https://www.matthewtancik.com/nerf
 % https://radiancefields.com/
 
-\subsubsection{instant-ngp} \label{sec:herramientas:nerf:instant-ngp}
+\paragraph{instant-ngp} \label{sec:herramientas:radfi:nerf:instant-ngp}
 % https://nvlabs.github.io/instant-ngp/
 % https://github.com/NVlabs/instant-ngp
 % https://developer.nvidia.com/blog/getting-started-with-nvidia-instant-nerfs/
 
-\subsubsection{nerfstudio} \label{sec:herramientas:nerf:nerfstudio}
+\paragraph{NerfStudio} \label{sec:herramientas:radfi:nerf:nerfstudio}
 % https://docs.nerf.studio/
 % ---------------------------------------------- %
 
 
 % -------- 3D Gaussian Splatting (3DGS) -------- %
-\subsection{3D Gaussian Splatting (3DGS)} \label{sec:herramientas:3dgs}
+\subsubsection{3D Gaussian Splatting (3DGS)} \label{sec:herramientas:radfi:3dgs}
 % https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
 
-\subsubsection{nerfstudio} \label{sec:herramientas:3dgs:nerfstudio}
+\paragraph{3DGS (Inria)} \label{sec:herramientas:radfi:3dgs:inria}
+
+\paragraph{NerfStudio} \label{sec:herramientas:radfi:3dgs:nerfstudio}
+% ---------------------------------------------- %
+% ______________________________________________ %
+
+
+
+% ____________ Motores Gráficos 3D _____________ %
+\subsection{Motores Gráficos 3D} \label{sec:herramientas:motoresgraficos3d}
+
+% ------------------- Unity -------------------- %
+\subsubsection{Unity} \label{sec:herramientas:motoresgraficos3d:unity}
 % ---------------------------------------------- %
 
 
 % ------------- Unreal Engine (UE) ------------- %
-\subsection{Unreal Engine (UE)} \label{sec:herramientas:ue}
-% ---------------------------------------------- %
-
-
-% ------------------ Volinga ------------------- %
-\subsection{Volinga} \label{sec:herramientas:volinga}
-% https://docs.nerf.studio/extensions/unreal_engine.html
-% https://volinga.ai/
-% https://github.com/Volinga/volinga-model
-% ---------------------------------------------- %
-
-
-% ----------------- VirtualBox ----------------- %
-\subsection{VirtualBox} \label{sec:herramientas:virtualbox}
-% ---------------------------------------------- %
-
-
-% -------- Robot Operating System (ROS) -------- %
-\subsection{Robot Operating System (ROS)} \label{sec:herramientas:ros}
-% ---------------------------------------------- %
-
-
-% --------------- Rosbridge --------------- %
-\subsection{Rosbridge} 
-\label{sec:herramientas:rosbridge}
-% ---------------------------------------------- %
-
-
-% --------------- ROSIntegration --------------- %
-\subsection{ROSIntegration} \label{sec:herramientas:rosintegration}
+\subsubsection{Unreal Engine (UE)} \label{sec:herramientas:motoresgraficos3d:ue}
 % ---------------------------------------------- %
 
 
 % ------------------ Blender ------------------- %
-\subsection{Blender} \label{sec:herramientas:blender}
+\subsubsection{Blender} \label{sec:herramientas:motoresgraficos3d:blender}
 % ---------------------------------------------- %
+
+
+% ------------------ Volinga ------------------- %
+\subsubsection{Volinga} \label{sec:herramientas:motoresgraficos3d:volinga}
+% https://docs.nerf.studio/extensions/unreal_engine.html
+% https://volinga.ai/
+% https://github.com/Volinga/volinga-model
+% ---------------------------------------------- %
+% ______________________________________________ %
+
+
+
+% ______________ Entorno de ROS ________________ %
+\subsection{Entorno de ROS} \label{sec:herramientas:entornoros}
+
+% ----------------- VirtualBox ----------------- %
+\subsubsection{VirtualBox} \label{sec:herramientas:entornoros:virtualbox}
+% ---------------------------------------------- %
+
+
+% -------- Robot Operating System (ROS) -------- %
+\subsubsection{Robot Operating System (ROS)} \label{sec:herramientas:entornoros:ros}
+% ---------------------------------------------- %
+
+
+% --------------- Rosbridge --------------- %
+\subsubsection{Rosbridge} \label{sec:herramientas:entornoros:rosbridge}
+% ---------------------------------------------- %
+
+
+% --------------- ROSIntegration --------------- %
+\subsubsection{ROSIntegration} \label{sec:herramientas:entornoros:rosintegration}
+% ---------------------------------------------- %
+% ______________________________________________ %
 
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
@@ -1109,20 +1143,54 @@ Ver si se puede probar a usar algo de luma labs en el iphone de alguien para que
 \newpage
 \subsection{Anexo IV: Licencias} \label{sec:anexo4}
 
+Toda la presente investigación ha sido llevada a cabo de acuerdo con las siguientes licencias y términos de uso.
+
+Licencia de 3DGS: https://github.com/graphdeco-inria/gaussian-splatting/blob/main/LICENSE.md
+
+Licencia de Blender: 
+
+Licencia de COLMAP: https://colmap.github.io/license.html
+
+Licencia de FFmpeg: https://www.ffmpeg.org/legal.html
+
+Licencia de GitHub: 
+
+Licencia de GitKraken: 
+
+Licencia de hloc: https://github.com/cvg/Hierarchical-Localization/blob/master/LICENSE
+
 Licencia de instant-ngp: https://github.com/NVlabs/instant-ngp/blob/master/LICENSE.txt y al final de https://github.com/NVlabs/instant-ngp
 
 Licencia de NeRF: https://github.com/bmild/nerf/blob/master/LICENSE
 
 Licencia de NerfStudio: https://github.com/nerfstudio-project/nerfstudio/blob/main/LICENSE
 
-Licencia ROSIntegration: https://github.com/code-iai/ROSIntegration/blob/master/LICENSE
+Licencia ODS (ONU): https://www.un.org/es/about-us/terms-of-use
 
-\begin{wrapfigure}{L}{0.21\textwidth}
+Licencia de ROS: 
+
+Licencia de ROSIntegration: https://github.com/code-iai/ROSIntegration/blob/master/LICENSE
+
+Licencia de Ubuntu: 
+
+Licencia de Unity: 
+
+Licencia de Unreal Engine: 
+
+Licencia de VirtualBox: 
+
+Licencia de Volinga: https://volinga.ai/ (see "Terms of use" at the bottom of the webpage)
+
+Licencia de VSCode: 
+
+Licencia de Windows: 
+
+\begin{wrapfigure}{L}{0.23\textwidth}
     \vspace{-\baselineskip}
     \href{http://creativecommons.org/licenses/by/4.0/}{\includegraphics[width=0.22\textwidth]{licencias/cc-by.png}}
 \end{wrapfigure} 
 
-\vspace*{\fill}
+%\vspace*{\fill}
 ``Plantilla en LaTeX acorde con la Normativa para la elaboración de informes de TFT de la ETSII (UPM)" \ by Javier Soto Pérez-Olivares is licensed under a \href{http://creativecommons.org/licenses/by/4.0/}{Creative Commons Attribution 4.0 International License}.
 
 % Termina la página actual y hace que se impriman todas las figuras y tablas que han aparecido hasta ahora en la entrada:
