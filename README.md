@@ -130,12 +130,9 @@ Digital Twin, control telemático, simulación inmersiva, NeRF, Gaussian Splatti
 [^4]: Cruz Ulloa, C. (mar. de 2024). _Quadrupedal Robots in Search and Rescue: Perception and Teleoperation_. doi: 10.20868/UPM.thesis.81769. url: [https://oa.upm.es/81769/](https://oa.upm.es/81769/).
 [^5]: Müller, T., Evans, A., Schied, C. y Keller, A. (jul. de 2022). _Instant Neural Graphics Primitives with a Multiresolution Hash Encoding_. En: _ACM Trans. Graph. 41.4_, 102:1-102:15. doi: 10.1145/3528223.3530127. url: [https://doi.org/10.1145/3528223.3530127](https://doi.org/10.1145/3528223.3530127) y [https://nvlabs.github.io/instant-ngp/](https://nvlabs.github.io/instant-ngp/).
 [^6]: Tomar, S. (2006). _Converting video formats with FFmpeg_. En: _Linux Journal 2006.146, pág. 10_. url: [https://www.ffmpeg.org/](https://www.ffmpeg.org/)
-_FFmpeg_
 [^7]: Schönberger, J. L., Zheng, E., Pollefeys, M. y Frahm, J.-M. (2016). _Pixelwise View Selection for Unstructured Multi-View Stereo_. En: _European Conference on Computer Vision (ECCV)_. url: [https://colmap.github.io/](https://colmap.github.io/)
 [^8]: Sarlin, P.-E., Cadena, C., Siegwart, R. y Dymczyk, M. (2019). _From Coarse to Fine: Robust Hierarchical Localization at Large Scale_. En: _CVPR_. url: [https://github.com/cvg/Hierarchical-Localization](https://github.com/cvg/Hierarchical-Localization)
 [^9]: Tancik, M. et al. (2023). _Nerfstudio: A Modular Framework for Neural Radiance Field Development_. En: _ACM SIGGRAPH 2023 Conference Proceedings. SIGGRAPH ’23_. url: [https://docs.nerf.studio/](https://docs.nerf.studio/)
 [^10]: Volinga development team (2023). _Volinga Suite, volinga-model and Volinga plugin_. url: [https://volinga.ai/](https://volinga.ai/) y [https://github.com/Volinga/volinga-model](https://github.com/Volinga/volinga-model)
-_Volinga_
 [^11]: Crick, C., Jay, G., Osentoski, S., Pitzer, B. y Jenkins, O. C. (2011). _ROSbridge: ROS for Non-ROS Users_. En: _Proceedings of the Robotics Systems Science and Systems Conference (RSS)_. url: [http://rosbridge.org](http://rosbridge.org).
 [^12]: Schmeisser, M. y Suero, M. (2018). _ROSIntegration: Connecting Unreal Engine with ROS for Realistic Simulations_. En: _Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)_. url: [https://github.com/code-iai/ROSIntegration](https://github.com/code-iai/ROSIntegration).
-_ROSIntegration_
