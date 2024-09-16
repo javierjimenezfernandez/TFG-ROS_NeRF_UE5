@@ -1,0 +1,257 @@
+
+xTerminal (linux)
+-----------------------------------------------------------------------
+Shift+Ctrl+O 			to split the window horizontally
+Shift+Ctrl+E 			to split the window vertically
+Alt+arroy_keys 			to navigate between different terminals
+
+
+catkin
+-----------------------------------------------------------------------
+catkin_make			to create the workspace if it doesn't
+				exist and to compile it. It will compile
+				every package code included in its src
+				folder which is listed in its CMakeLists.txt
+
+catkin_create_pkg [pkg_name]	to create a pkg. Typical dependencies are:
+ [dependencies]			roscpp rospy and std_msgs
+
+
+ROS
+-----------------------------------------------------------------------
+roscore				to initilize ROS
+
+[ros_command] -h		to see a list of all the options available
+				for [ros_command] and some useful information
+				about the [ros_command]
+
+rosnode list			to show currenntly initilized nodes
+				/rosout will allways be running while
+				roscore is active 
+
+rosrun [package] [executable]	to run any node from anywhere (please
+				make sure you roscore before). Once you
+				write package name press TAB for 
+				autocompletion features
+
+rosnode info [node_name]	to see information about the node: topics
+				to where the node is publishing or subscribed,
+				services and connections
+
+rosnode kill [node_name]	to kill a node (same as Ctrl+C in the
+				window where the node is being executed)
+
+rosnode ping [node_name]	to ping the node like a server to check
+				is that node is in the graph and connected
+
+rosrun rqt_graph rqt_graph	to show all the active nodes in a graph
+ (also just rqt_graph)		and information about their interactions,
+				where are they publishing... etc.
+
+rosrun turtlesim [turlte_nodes]	testing package with nodes to test some
+				ROS functionalities
+
+rostopic list			shows all rostopics that are currently
+				being published
+
+rostopic echo [rostopic_name]	to listen to any rostopic from the command
+				window
+
+rostopic info [rostopic_name]	to show the type, the Publishers and
+				Subscribers of the topic
+
+rostopic pub -r [rate]		to publish a message with rate Hz (use TAB
+ [rostopic_name] [data_type]	for autocompletion for data type and subtype)
+ "[subtype]: '[message]'"
+
+rosservice list			gives a list of current active services
+
+rosservice call [service_name]	to directly call a service from the terminal,
+ "[arg_1]: [value] ..."		press TAB for argument autocompletion
+
+rosservice info [service_name]	it will give you which nodes are using the
+				service, what is the type of the service file
+				with the request and the response, and then the
+				args, so basically the request you need to send
+				to the service.
+
+rosmsg [params]			command to work with message definition, to 
+				interact with messages from the command line please 
+				use rostopic.
+
+rosmsg list			lists all messages available in the current
+				ROS installation. To search for a specific one
+				it is very useful to use the grep pipe.
+
+rosmsg show [msg_name]		shows the defintion of the msg.
+
+rossrv [params]			command to work with service definition, to
+				interact with services from the command line please 
+				use rosservice.
+
+rossrv list			lists all services available in the current
+				ROS installation. To search for a specific one
+				it is very useful to use the grep pipe.
+
+rossrv show [srv_name]		shows the definition of the service including
+				request and response messages.
+
+rosparam list			lists all parameters present in current ROS master.
+
+rosparam set [param_name]	to create a new parameter and its content or to 
+ [param_content]		modify an existing parameter with a new content.
+
+rosparam get [param_name]	to get the content of the parameter.
+
+roslaunch [pkg_name]		to launch a Launch File that will bring up all the
+ [launch_file]			Parameters and Nodes needed for the robot.
+				roslaunch will first check if there is a ROS Master
+				running in your environment. If there is not, it will
+				automatically create one. So you can run roslaunch
+				without running roscore before.
+
+rosbag record [topic_name]	to record a topic in a bag file.
+
+rosbag info [bag_file]		shows duration, size, topic, types and number of 
+				messages recorded in the bag file.
+
+rosbag play [bag_file]		replays the messages stored. So it looks like if 
+				the real topic is being published.
+
+
+Notes about nodes
+------------------------------------------------------------------------
+Definition: a node is a process that performs computation. It is an 
+executable program inside your robot application. Your application will 
+contain many nodes, which will be organized into packages. Nodes can 
+communicate with each other and run independently. Many nodes can run
+at the same time in parallel doing different tasks.
+
+when you create a python node it has to be stored in the scripts folder
+of your package and execution pemissions have to be enabled with:
+chmod +x [file_name]
+when you create a cpp node it has to be stored in the src folder inside
+the package directory and added to the CMakeLists.txt to be compiled with:
+catkin_make
+catkin_make has to be performed in the father catkin_ws directory
+
+Nodes in src and scripts folder will then be accesible through rosrun
+command from anywhere in your computer.
+
+
+Notes about Topics and Messages
+------------------------------------------------------------------------
+Definition: a topic is defined by two things: a name, which is the
+interface to reach, and a message definition which is the data structure
+of the information you send.
+
+Custom messages can be created from scratch or using some already existing
+primitive definitions in the ROS Wiki.
+
+An interesting recommendation is that all message definitions are contained
+in a message definition package, so when that message is needed you just
+need to add a dependency to that package and you won't have a dependency mess.
+A common name convention is to call that package [my_robot]_msgs
+
+ATTENTION: after compiling a new message package you will have to refresh
+the cmd window (type: source .bashrc) or open a new one in order to use a 
+node that have a dependency on the brand new message package.
+
+
+Notes about services
+------------------------------------------------------------------------
+Definition: a service is also defined by two things: a name, which is the
+interface to reach, and a service definiton. This service definition 
+contains one message definition for the request and one message definition 
+for the response.
+
+Only one server can exist for every service, if you need multiple one you
+will have to use prefixes like /turtle1/teleport, /turtle2/teleport etc.
+You may have multiple clients for the same service.
+
+When searching in ROS Wiki doc about service types you may find that there
+are some arguments (or types) above three dashes and some below, like this:
+
+int64 a
+int64 b
+---
+int64 sum
+
+So you have two message definitions separated by three dashes. The above are 
+the types from the request message definition and the below ones the types 
+from the response message definition.
+
+It is recommended to have all the service definitions in a separate package
+that can be the same package of message definitions [my_robot]_msgs.
+
+
+Notes about Parameters
+------------------------------------------------------------------------
+Definition: after launching the ROS master (roscore) the Parameter server is 
+automatically created inside the ROS master. The Parameter server is basically 
+a dictionary inside ROS master containing global variables which are accessible 
+globally, that means from anywhere in the current ROS environment. Those global 
+variables are called ROS Parameters. A ROS Parameter is one shared variable
+stored inside the parameter server. A ROS Parameter has a name and a data type.
+
+At any time a node can read a Parameter, modify a Parameter and create new 
+Parameters.
+
+If you modify a parameter and you want the new value to be used make sure
+that your node reads the parameter, because if it only reads it during its
+initialization then it will not be updated during runtime. Remember that
+ROS Parameters are stored in variables that live inside each node.
+
+Parameters are created everytime a ROS master is launched. If parameter
+definitions are not atuomatically set they will not be available after ROS
+master is killed. Here is where Launch Files come to save the day.
+
+
+Notes about Launch Files
+------------------------------------------------------------------------
+Definition: it is a file that will allow to start everything you need 
+from just one file. You can create parameters, start nodes, create groups 
+of parameters and nodes with a prefix. You can even use some conditional 
+statement and combine multiple launch files inside one launch file.
+
+That way you will be able to quickly launch your application and to create
+different launch files for different startup modes of your robot.
+
+It is recommended to have a separated package for launch files. A common
+naming convention is to call that package [my_robot]_bringup.
+
+Launch Files are written in xml. 
+
+Don't forget to make roslaunch after roscore!
+
+
+Notes about ROS Bags
+------------------------------------------------------------------------
+Definition: ROS Bag enables you to record and store some messages and replay
+them later, so you can reproduce some conditions again. For example, you can 
+run your robot when it's raining, record all the data and then replay the data.
+
+
+Notes about catkin workspace
+------------------------------------------------------------------------
+Every time you create a new catkin workspace you have to add it to the 
+.bashrc file with the following line:
+source [path_to_the_catkin_ws]/[catkin_ws_folder_name]/devel/setup.bah
+
+for example:
+source ~/catkin_ws/devel/setup.bash
+
+But everytime that you open a new terminal it will only source the last
+one, because the last setup.bash path definition overrides previous ones.
+So the best way you have everytime you want to use a node in a different
+catkin workspace is to comment the line/s you don't need (with a #). Then
+you will always need to reload the command window.
+
+
+Useful resources
+------------------------------------------------------------------------
+- ROS Wiki: official ROS documentation
+- ROS answers: Q&A ROS website to get help with any issue
+- ROS discourse: a site where developers share ideas, new releases, new
+  packages.
+
