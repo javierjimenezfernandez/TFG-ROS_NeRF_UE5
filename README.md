@@ -31,6 +31,7 @@ In the digital era, Digital Twins have emerged as key tools for real-time simula
 
 ## About this repository
 <div align="justify">
+  
 In this repository you can find:
 - The source code of the nodes and the launcher with the ROS parameters necessary for the communication between the robot and Unreal Engine.
 - The complete Unreal Engine 5.2. project used for the development of the investigatin including the plugins with the modifications indicated in the memory.
@@ -93,6 +94,7 @@ En la era digital, los gemelos digitales (Digital Twins) han surgido como herram
 
 ## Acerca de este repositorio
 <div align="justify">
+  
 En este repositorio podrán encontrar:
 - El código fuente de los nodos y el launcher con los parámetros de ROS necesarios para la comunicación entre el robot y Unreal Engine.
 - El proyecto completo de Unreal Engine 5.2. utilizado para el desarrollo del trabajo incluyendo los plugins con las modificaciones indicadas en la memoria.
