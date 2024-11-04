@@ -41,20 +41,24 @@ In this repository you can find:
 
 ## Information available
 <div align="justify">
+The research report can be consulted in the UPM Digital Archive.
+
+- Link to the report: [https://oa.upm.es/83722/](https://oa.upm.es/83722/)
+
 The following YouTube channel is available where they can be found the first tests performed with instant-ngp, the robustness tests of the 3D model generation capability for environments considered difficult and the video demonstration of the deployment of the technology.
 
-YouTube channel: [https://www.youtube.com/@JavierJimenezFernandez-upm](https://www.youtube.com/@JavierJimenezFernandez-upm)
+- YouTube channel: [https://www.youtube.com/@JavierJimenezFernandez-upm](https://www.youtube.com/@JavierJimenezFernandez-upm)
 
 The list of videos on the YouTube channel is as follows:
-- instant-ngp - Yellow Flowers Training
-- 3DGS Robustness Testing - Environments with Repetitive Elements
-- 3DGS Robustness Testing - Small Object Sizes
-- 3DGS Robustness Testing - Elements with Complex Geometry
-- 3DGS Robustness Testing - Smoky or Foggy Scenes
-- 3DGS Robustness Testing - Night Scenes
-- 3DGS Robustness Testing - Thermal Camera Recordings
-- 3DGS Robustness Testing - Reflected and Refracted Scenes
-- Demonstration of the complete workflow
+1. Demonstration of the complete workflow
+2. instant-ngp - Yellow Flowers Training
+3. 3DGS Robustness Testing - Environments with Repetitive Elements
+4. 3DGS Robustness Testing - Small Object Sizes
+5. 3DGS Robustness Testing - Elements with Complex Geometry
+6. 3DGS Robustness Testing - Smoky or Foggy Scenes
+7. 3DGS Robustness Testing - Night Scenes
+8. 3DGS Robustness Testing - Thermal Camera Recordings
+9. 3DGS Robustness Testing - Reflected and Refracted Scenes
 
 </div>
 
@@ -104,20 +108,24 @@ En este repositorio podrán encontrar:
 
 ## Información accesible
 <div align="justify">
-Se pone a disposición el siguiente canal de YouTube donde se pueden encontrar las primeras pruebas llevadas a cabo con instant-ngp, los ensayos de robustez de la capacidad de generación de modelos 3D para entornos considerados difíciles y el vídeo demostrativo del despliegue de la tecnología.
+La memoria del trabajo se puede consultar en el Archivo Digital UPM.
 
-Canal de YouTube: [https://www.youtube.com/@JavierJimenezFernandez-upm](https://www.youtube.com/@JavierJimenezFernandez-upm)
+- Enlace a la memoria: [https://oa.upm.es/83722/](https://oa.upm.es/83722/)
+
+Adicionalmente, se pone a disposición el siguiente canal de YouTube donde se pueden encontrar las primeras pruebas llevadas a cabo con instant-ngp, los ensayos de robustez de la capacidad de generación de modelos 3D para entornos considerados difíciles y el vídeo demostrativo del despliegue de la tecnología.
+
+- Canal de YouTube: [https://www.youtube.com/@JavierJimenezFernandez-upm](https://www.youtube.com/@JavierJimenezFernandez-upm)
 
 La relación de vídeos que se encuentran en el canal de YouTube es la siguiente:
-- instant-ngp - Entrenamiento Flores Amarillas
-- Ensayos de robustez de 3DGS - Entornos con elementos repetitivos
-- Ensayos de robustez de 3DGS - Objetos de tamaño reducido
-- Ensayos de robustez de 3DGS - Elementos con geometrías complejas
-- Ensayos de robustez de 3DGS - Escenas con humo o niebla
-- Ensayos de robustez de 3DGS - Escenas nocturnas
-- Ensayos de robustez de 3DGS - Grabaciones con cámara térmica
-- Ensayos de robustez de 3DGS - Escenas con reflejos y refracción
-- Demostración del flujo de trabajo completo
+1. Demostración del flujo de trabajo completo
+2. instant-ngp - Entrenamiento Flores Amarillas
+3. Ensayos de robustez de 3DGS - Entornos con elementos repetitivos
+4. Ensayos de robustez de 3DGS - Objetos de tamaño reducido
+5. Ensayos de robustez de 3DGS - Elementos con geometrías complejas
+6. Ensayos de robustez de 3DGS - Escenas con humo o niebla
+7. Ensayos de robustez de 3DGS - Escenas nocturnas
+8. Ensayos de robustez de 3DGS - Grabaciones con cámara térmica
+9. Ensayos de robustez de 3DGS - Escenas con reflejos y refracción
 </div>
 
 ## Descripción general
